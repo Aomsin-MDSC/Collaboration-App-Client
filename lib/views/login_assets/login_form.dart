@@ -1,5 +1,7 @@
 import 'package:collaboration_app_client/controllers/register_controller.dart';
+import 'package:collaboration_app_client/views/home_view.dart';
 import 'package:collaboration_app_client/views/register_view.dart';
+import 'package:collaboration_app_client/views/testfetch.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -72,6 +74,10 @@ class _LoginFormState extends State<LoginForm> {
                 style: ElevatedButton.styleFrom(foregroundColor: Colors.white, backgroundColor: Colors.black87),
                   onPressed: () => (
                         //text controller
+                  Get.to(
+                      // TestFetch()
+                  HomeView()
+                  )
                       ),
                   child: Text('Login'.toUpperCase())
               )
