@@ -1,4 +1,6 @@
 import 'package:collaboration_app_client/views/Login_View.dart';
+import 'package:collaboration_app_client/views/home_view.dart';
+import 'package:collaboration_app_client/views/new_project_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black,primary: Colors.black),
         useMaterial3: true,
       ),
-      home: const LoginView(),
+      home: const NewProjectView(),
     );
   }
 }

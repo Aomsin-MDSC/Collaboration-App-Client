@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'login_assets/login_form.dart';
-import 'login_assets/login_header.dart';
+import 'package:collaboration_app_client/views/new_project_assets/new_project_form.dart';
 
-class LoginView extends StatelessWidget {
-  const LoginView({Key? key}) : super(key: key);
+class NewProjectView extends StatelessWidget {
+  const NewProjectView ({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +14,7 @@ class LoginView extends StatelessWidget {
             padding: const EdgeInsets.all(30),
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [LoginHeader(),LoginForm()],
+              children: [NewProjectForm()],
             ),
           ),
         ),
