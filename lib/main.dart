@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black,primary: Colors.black),
         useMaterial3: true,
       ),
-      home: const NewProjectView(),
+      home: const LoginView(),
     );
   }
 }
