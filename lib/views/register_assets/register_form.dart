@@ -3,6 +3,8 @@ import 'package:collaboration_app_client/views/Login_View.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/register_controller.dart';
+
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
 
@@ -14,7 +16,7 @@ class RegisterForm extends StatefulWidget {
 class _LoginFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LoginController());
+    final controller = Get.put(RegisterController());
     return Form(
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 5),
@@ -53,9 +55,10 @@ class _LoginFormState extends State<RegisterForm> {
                   width: double.infinity,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(foregroundColor: Colors.white, backgroundColor: Colors.black87),
-                      onPressed: () => (
-                      //text controller
-                      ),
+                      onPressed: () {
+                        controller.registerUser(
+                          controller.username.text,
+                          controller.password.text);},
                       child: Text('register'.toUpperCase())
                   )
               ),
