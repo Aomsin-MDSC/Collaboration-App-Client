@@ -2,10 +2,12 @@ import 'package:collaboration_app_client/controllers/new_project_controller.dart
 import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
 import 'package:collaboration_app_client/views/Login_View.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
-import 'package:collaboration_app_client/views/new_tag_view.dart';
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../new_tag_view.dart';
 
 class NewProjectForm extends StatefulWidget {
   const NewProjectForm({super.key});
