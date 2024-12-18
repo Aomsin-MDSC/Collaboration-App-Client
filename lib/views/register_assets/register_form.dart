@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/register_controller.dart';
+import '../home_view.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
