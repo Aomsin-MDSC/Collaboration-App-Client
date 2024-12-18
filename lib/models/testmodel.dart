@@ -1,7 +1,7 @@
-
 class Product {
   final int userId;
   final String name;
+  // Uncomment the below fields as needed
   // final double price;
   // final String description;
   // final String category;
@@ -20,14 +20,13 @@ class Product {
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-      userId: json['userId'],
-      name: json['name'],
-      // price: json['price'].toDouble(),
-      // description: json['description'],
-      // category: json['category'],
-      // image: json['image'],
-      // rating: json['rating']['rate'].toDouble(),
+      userId: json['userId'] ?? 0, // Provide a default value if null
+      name: json['name'] ?? 'Unknown', // Default for missing name
+      // price: (json['price'] ?? 0).toDouble(),
+      // description: json['description'] ?? 'No description available',
+      // category: json['category'] ?? 'General',
+      // image: json['image'] ?? '',
+      // rating: (json['rating']?['rate'] ?? 0).toDouble(),
     );
   }
 }
-

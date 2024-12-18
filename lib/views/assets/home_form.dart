@@ -1,7 +1,6 @@
 import 'package:collaboration_app_client/models/testmodel.dart';
 import 'package:flutter/material.dart';
 
-
 class ProjectCard extends StatelessWidget {
   final Product product;
 
@@ -18,7 +17,9 @@ class ProjectCard extends StatelessWidget {
           ),
         ),
       ),
-      onPressed: () {print(product.id);},
+      onPressed: () {
+        print(product.userId);
+      },
       child: Card(
         // margin: EdgeInsets.zero,
         child: Padding(

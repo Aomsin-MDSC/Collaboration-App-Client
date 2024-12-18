@@ -23,7 +23,7 @@ class ProductController extends GetxController {
         products.value =
             jsonData.map((data) => Product.fromJson(data)).toList();
       } else {
-        throw Exception('Failed to load products');
+        print('Failed to load products');
       }
     } finally {
       isLoading(false);
