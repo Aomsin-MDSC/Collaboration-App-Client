@@ -75,7 +75,7 @@ class _HomeViewState extends State<HomeView> {
                   itemBuilder: (context, index) {
                     final product = projectController.products[index];
                     return ProjectCard(
-                      key: ValueKey(product.Project_id),
+                      key: ValueKey(product.projectId),
                       product: product,
                     );
                   },

@@ -16,12 +16,14 @@ class ProjectController extends GetxController {
   Future<void> fetchApi() async {
     try {
       isLoading(true);
+      print("Fetching API...");
       final response =
           await http.get(Uri.parse('http://10.24.8.16:5263/api/GetProjects'));
       if (response.statusCode == 200) {
         List<dynamic> jsonData = json.decode(response.body);
         products.value =
             jsonData.map((data) => Project.fromJson(data)).toList();
+        print("Products loaded: ${products.length}");
       } else {
         print('Failed to load products');
       }

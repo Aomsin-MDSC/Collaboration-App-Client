@@ -1,25 +1,22 @@
-
 class Project {
-  final int Project_id;
-  final String Project_name;
-  final int Tag_id;
-  final int User_id;
+  final int projectId;
+  final String projectName;
+  final String userName;
+  final String tagName;
 
   Project({
-    required this.Project_id,
-    required this.Tag_id,
-    required this.User_id,
-    required this.Project_name
-
+    required this.projectId,
+    required this.projectName,
+    required this.userName,
+    required this.tagName,
   });
 
   factory Project.fromJson(Map<String, dynamic> json) {
     return Project(
-      Project_id: json['Project_id'],
-      Project_name: json['Project_name'],
-      Tag_id: json['Tag_id'],
-      User_id: json['User_id'],
+      projectId: json['projectId'],
+      projectName: json['projectName'],
+      userName: json['userName'],
+      tagName: json['tagName'],
     );
   }
 }
-
