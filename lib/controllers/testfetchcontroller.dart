@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import '../models/testmodel.dart';
 
 class ProjectController extends GetxController {
-  var products = <Project>[].obs;
+  var project = <Project>[].obs;
   var isLoading = true.obs;
 
   @override
@@ -21,9 +21,8 @@ class ProjectController extends GetxController {
           await http.get(Uri.parse('http://10.24.8.16:5263/api/GetProjects'));
       if (response.statusCode == 200) {
         List<dynamic> jsonData = json.decode(response.body);
-        products.value =
-            jsonData.map((data) => Project.fromJson(data)).toList();
-        print("Products loaded: ${products.length}");
+        project.value = jsonData.map((data) => Project.fromJson(data)).toList();
+        print("Products loaded: ${project.length}");
       } else {
         print('Failed to load products');
       }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get/get.dart';
 import '../controllers/testfetchcontroller.dart'; // Adjust the import paths as needed
-import '../models/testmodel.dart';
 import 'assets/home_form.dart'; // Adjust the import paths as needed
 // import 'project_card.dart'; // Ensure your ProjectCard widget is correctly imported
 
@@ -64,16 +63,16 @@ class _HomeViewState extends State<HomeView> {
           child: Obx(() {
             if (projectController.isLoading.value) {
               return const Center(child: CircularProgressIndicator());
-            } else if (projectController.products.isEmpty) {
-              return const Center(child: Text('No products found'));
+            } else if (projectController.project.isEmpty) {
+              return const Center(child: Text('No project found'));
             } else {
               return RefreshIndicator(
                 onRefresh: projectController.fetchApi,
                 child: ReorderableListView.builder(
-                  itemCount: projectController.products.length,
+                  itemCount: projectController.project.length,
                   padding: const EdgeInsets.only(bottom: 120),
                   itemBuilder: (context, index) {
-                    final product = projectController.products[index];
+                    final product = projectController.project[index];
                     return ProjectCard(
                       key: ValueKey(product.projectId),
                       product: product,
@@ -102,8 +101,8 @@ class _HomeViewState extends State<HomeView> {
                     if (newIndex > oldIndex) {
                       newIndex -= 1;
                     }
-                    final items = projectController.products.removeAt(oldIndex);
-                    projectController.products.insert(newIndex, items);
+                    final items = projectController.project.removeAt(oldIndex);
+                    projectController.project.insert(newIndex, items);
                     projectController.updateReorder();
                   },
                 ),

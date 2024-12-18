@@ -12,7 +12,7 @@ class LoginController extends GetxController {
   final username = TextEditingController();
   final password = TextEditingController();
 
- //Login Func
+  //Login Func
   Future<void> login() async {
     final url = Uri.parse('http://10.24.8.16:5263/api/login'); // URL ของ API
     final response = await http.post(
@@ -27,12 +27,9 @@ class LoginController extends GetxController {
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       Get.to(
-        // TestFetch()
-          HomeView()
-      );
-
-    }
-    else{
+          // TestFetch()
+          HomeView());
+    } else {
       print("Fail");
     }
   }
