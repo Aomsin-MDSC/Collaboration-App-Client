@@ -14,7 +14,7 @@ class LoginController extends GetxController {
 
  //Login Func
   Future<void> login() async {
-    final url = Uri.parse('http://10.0.2.2:5263/api/user/login'); // URL ของ API
+    final url = Uri.parse('http://10.24.8.16:5263/api/login'); // URL ของ API
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},

@@ -12,7 +12,7 @@ class RegisterController extends GetxController {
   final password = TextEditingController();
 
   Future<void> registerUser() async {
-    final url = Uri.parse('http://10.0.2.2:5263/api/user/register');
+    final url = Uri.parse('http://10.24.8.16:5263/api/register');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},

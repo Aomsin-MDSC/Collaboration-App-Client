@@ -1,32 +1,24 @@
 
-class Product {
-  final int userId;
-  final String name;
-  // final double price;
-  // final String description;
-  // final String category;
-  // final String image;
-  // final double rating;
+class Project {
+  final int Project_id;
+  final String Project_name;
+  final int Tag_id;
+  final int User_id;
 
-  Product({
-    required this.userId,
-    required this.name,
-    // required this.price,
-    // required this.description,
-    // required this.category,
-    // required this.image,
-    // required this.rating,
+  Project({
+    required this.Project_id,
+    required this.Tag_id,
+    required this.User_id,
+    required this.Project_name
+
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
-      userId: json['userId'],
-      name: json['name'],
-      // price: json['price'].toDouble(),
-      // description: json['description'],
-      // category: json['category'],
-      // image: json['image'],
-      // rating: json['rating']['rate'].toDouble(),
+  factory Project.fromJson(Map<String, dynamic> json) {
+    return Project(
+      Project_id: json['Project_id'],
+      Project_name: json['Project_name'],
+      Tag_id: json['Tag_id'],
+      User_id: json['User_id'],
     );
   }
 }

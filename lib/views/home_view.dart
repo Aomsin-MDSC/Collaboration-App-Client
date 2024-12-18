@@ -18,13 +18,13 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     // Initialize the ProductController
-    Get.put(ProductController());
+    Get.put(ProjectController());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final ProductController productController = Get.find<ProductController>();
+    final ProjectController projectController = Get.find<ProjectController>();
 
     return SafeArea(
       child: Scaffold(
@@ -62,20 +62,20 @@ class _HomeViewState extends State<HomeView> {
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Obx(() {
-            if (productController.isLoading.value) {
+            if (projectController.isLoading.value) {
               return const Center(child: CircularProgressIndicator());
-            } else if (productController.products.isEmpty) {
+            } else if (projectController.products.isEmpty) {
               return const Center(child: Text('No products found'));
             } else {
               return RefreshIndicator(
-                onRefresh: productController.fetchApi,
+                onRefresh: projectController.fetchApi,
                 child: ReorderableListView.builder(
-                  itemCount: productController.products.length,
+                  itemCount: projectController.products.length,
                   padding: const EdgeInsets.only(bottom: 120),
                   itemBuilder: (context, index) {
-                    final product = productController.products[index];
+                    final product = projectController.products[index];
                     return ProjectCard(
-                      key: ValueKey(product.id),
+                      key: ValueKey(product.Project_id),
                       product: product,
                     );
                   },
@@ -102,9 +102,9 @@ class _HomeViewState extends State<HomeView> {
                     if (newIndex > oldIndex) {
                       newIndex -= 1;
                     }
-                    final items = productController.products.removeAt(oldIndex);
-                    productController.products.insert(newIndex, items);
-                    productController.updateReorder();
+                    final items = projectController.products.removeAt(oldIndex);
+                    projectController.products.insert(newIndex, items);
+                    projectController.updateReorder();
                   },
                 ),
               );

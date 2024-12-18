@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 
 class ProjectCard extends StatelessWidget {
-  final Product product;
+  final Project product;
 
   const ProjectCard({super.key, required this.product});
 
@@ -18,7 +18,7 @@ class ProjectCard extends StatelessWidget {
           ),
         ),
       ),
-      onPressed: () {print(product.id);},
+      onPressed: (){},
       child: Card(
         // margin: EdgeInsets.zero,
         child: Padding(
@@ -26,8 +26,8 @@ class ProjectCard extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                title: Text(product.name),
-                subtitle: Text('${product.userId} \$'),
+                title: Text(product.Project_name),
+                subtitle: Text('${product.Tag_id} \$'),
                 trailing: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.settings),

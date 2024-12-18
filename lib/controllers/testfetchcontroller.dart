@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../models/testmodel.dart';
 
-class ProductController extends GetxController {
-  var products = <Product>[].obs;
+class ProjectController extends GetxController {
+  var products = <Project>[].obs;
   var isLoading = true.obs;
 
   @override
@@ -17,11 +17,11 @@ class ProductController extends GetxController {
     try {
       isLoading(true);
       final response =
-          await http.get(Uri.parse('http://10.0.2.2:5263/api/users'));
+          await http.get(Uri.parse('http://10.24.8.16:5263/api/GetProjects'));
       if (response.statusCode == 200) {
         List<dynamic> jsonData = json.decode(response.body);
         products.value =
-            jsonData.map((data) => Product.fromJson(data)).toList();
+            jsonData.map((data) => Project.fromJson(data)).toList();
       } else {
         throw Exception('Failed to load products');
       }
