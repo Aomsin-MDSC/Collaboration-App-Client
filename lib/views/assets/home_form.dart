@@ -1,10 +1,6 @@
 import 'package:collaboration_app_client/models/testmodel.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
-import '../../controllers/testfetchcontroller.dart';
 
 class ProjectCard extends StatelessWidget {
   final Product product;
@@ -14,8 +10,17 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      style: ButtonStyle(
+        // padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero), // Set padding to zero
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+        ),
+      ),
+      onPressed: () {print(product.id);},
       child: Card(
+        // margin: EdgeInsets.zero,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

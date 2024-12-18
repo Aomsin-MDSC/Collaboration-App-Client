@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../models/testmodel.dart';
+
 class ProductController extends GetxController {
   var products = <Product>[].obs;
   var isLoading = true.obs;
@@ -27,5 +28,25 @@ class ProductController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  Future<void> updateReorder() async {
+    // try {
+
+    //   final response = await http.put(
+    //     Uri.parse(
+    //         'https://fakestoreapi.com/'), // Replace with your correct endpoint
+    //     headers: {"Content-Type": "application/json"},
+    //     body: ,
+    //   );
+
+    //   if (response.statusCode == 200) {
+    //     print("Reorder successfully updated!");
+    //   } else {
+    //     print("Failed to update reorder: ${response.body}");
+    //   }
+    // } catch (e) {
+    //   print("Error while updating reorder: $e");
+    // }
   }
 }
