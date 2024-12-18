@@ -10,7 +10,11 @@ class NewProjectController extends GetxController {
     'shouta',
     'thank',
     'pob',
-    'fam'
+    'fam',
+    'who',
+    'who1',
+    'who2',
+    'who3',
   ].obs;
 
   // get memberlist for show
