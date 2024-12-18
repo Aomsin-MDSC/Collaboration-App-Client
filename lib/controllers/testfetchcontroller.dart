@@ -17,7 +17,7 @@ class ProductController extends GetxController {
     try {
       isLoading(true);
       final response =
-          await http.get(Uri.parse('https://fakestoreapi.com/products'));
+          await http.get(Uri.parse('http://10.0.2.2:5263/api/users'));
       if (response.statusCode == 200) {
         List<dynamic> jsonData = json.decode(response.body);
         products.value =

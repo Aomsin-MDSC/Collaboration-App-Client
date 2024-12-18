@@ -26,8 +26,8 @@ class ProjectCard extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                title: Text(product.title),
-                subtitle: Text('${product.price} \$'),
+                title: Text(product.name),
+                subtitle: Text('${product.userId} \$'),
                 trailing: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.settings),
