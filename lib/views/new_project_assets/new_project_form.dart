@@ -25,11 +25,12 @@ class _NewProjectFormState extends State<NewProjectForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            //  Project --------------------
             const SizedBox(height: 30,),
             Text("NEW PROJECT".toUpperCase(),style: TextStyle(fontSize: 50),),
-            const SizedBox(height: 30,),
+            const SizedBox(height: 20,),
             Text("Project Name",style: TextStyle(fontSize: 18),),
-            const SizedBox(height: 30,),
+            const SizedBox(height: 10,),
             TextField(
               controller: projectcontroller.projectname,
               decoration: const InputDecoration(
@@ -40,8 +41,8 @@ class _NewProjectFormState extends State<NewProjectForm> {
               ),
             ),
 
-            //Member
-            const SizedBox(height: 30,),
+            //  Member  --------------------
+            const SizedBox(height: 20,),
             Text("Member",style: TextStyle(fontSize: 18),),
             const SizedBox(height: 10,),
             Obx(() {
@@ -70,10 +71,15 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 //    ),
                 //  ),
                 //),
-                // --------------------
+                // // --------------------
+                // popupProps: PopupProps.menu(
+                //
+                // ),
               );
             }),
-            const SizedBox(height: 30,),
+
+            //  Tag --------------------
+            const SizedBox(height: 20,),
             Text("Tag",style: TextStyle(fontSize: 18),),
             const SizedBox(height: 10,),
             Obx(() {
@@ -93,13 +99,100 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 },
               );
             }),
-            const SizedBox(height: 30),
-            SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min, // ใช้ MainAxisSize.min เพื่อลดปัญหา infinite size
-                children: [
 
-                ],
+            //  Task  --------------------
+            const SizedBox(height: 20),
+            Text("Task", style: TextStyle(fontSize: 18),),
+            const SizedBox(height: 10,),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 130, child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(13),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row( // Example 1
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Task 1 etc.", style: TextStyle(fontSize: 16),),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                print("delete task");
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10,),
+                      Container(
+                        padding: const EdgeInsets.all(13),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row( // Example 2
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Task 2 etc.", style: TextStyle(fontSize: 16),),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                print("delete task");
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+
+                      // button add task
+                      const SizedBox(height: 10,),
+                      Container(
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () {
+                              print("AddTask");
+                            },
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),)
+              ],
+            ),
+
+            // button Save New project page
+            const SizedBox(height: 40,),
+            SizedBox(
+              width: double.infinity, 
+              height: 60,
+              child: ElevatedButton(
+                onPressed: () {
+                  print("gogogo");
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                ),
+                child: Text("Save",style: TextStyle(fontSize: 18),),
               ),
             ),
           ],

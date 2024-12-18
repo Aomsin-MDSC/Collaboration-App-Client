@@ -1,6 +1,5 @@
 import 'package:collaboration_app_client/controllers/register_controller.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
-import 'package:collaboration_app_client/views/new_project_view.dart';
 import 'package:collaboration_app_client/views/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
