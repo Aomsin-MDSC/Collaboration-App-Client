@@ -19,4 +19,14 @@ class NewProjectController extends GetxController {
 
   // get memberlist for show
   var selectedmember = <String>[].obs;
+
+  var taglist = <String>[
+    'work',
+    'job',
+    'present',
+    'Add Tag',
+  ].obs;
+
+  // get tag for show
+  var selectedtag = <String>[].obs;
 }

@@ -2,6 +2,7 @@ import 'package:collaboration_app_client/controllers/new_project_controller.dart
 import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
 import 'package:collaboration_app_client/views/Login_View.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
+import 'package:collaboration_app_client/views/new_tag_view.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,8 +29,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
       "9",
       "10",
     ];
-    final projectcontroller = Get.put(NewProjectController());
-    final tagcontroller = Get.put(NewTagController());
+    final controller = Get.put(NewProjectController());
 
     return Form(
       child: Container(
@@ -47,7 +47,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
             Text("Project Name", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             TextField(
-              controller: projectcontroller.projectname,
+              controller: controller.projectname,
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
@@ -61,8 +61,8 @@ class _NewProjectFormState extends State<NewProjectForm> {
             const SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>.multiSelection(
-                items: tagcontroller.taglist.toList(),
-                selectedItems: projectcontroller.selectedmember.toList(),
+                items: controller.taglist.toList(),
+                selectedItems: controller.selectedmember.toList(),
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
                   filled: true,
@@ -78,7 +78,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
             const SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>(
-                items: tagcontroller.taglist.toList(),
+                items: controller.taglist.toList(),
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
                   filled: true,
@@ -87,7 +87,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 )),
                 onChanged: (value) {
                   if (value == "Add Tag") {
-                    Get.to(HomeView());
+                    Get.to(NewTagView());
                   }
                 },
               );
@@ -129,7 +129,9 @@ class _NewProjectFormState extends State<NewProjectForm> {
                           foregroundColor: Colors.white,
                         ),
                         onPressed: () {},
-                        child: const Icon(Icons.add)))
+                        child: const Icon(Icons.add, color: Colors.white,)
+                    )
+                )
               ],
             ),
 
