@@ -1,10 +1,10 @@
-import 'package:collaboration_app_client/models/testmodel.dart';
+import 'package:collaboration_app_client/models/project_model.dart';
 import 'package:flutter/material.dart';
 
 class ProjectCard extends StatelessWidget {
-  final Project product;
+  final Project project;
 
-  const ProjectCard({super.key, required this.product});
+  const ProjectCard({super.key, required this.project});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +25,8 @@ class ProjectCard extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                title: Text(product.projectName),
-                subtitle: Text(product.tagName),
+                title: Text(project.projectName),
+                subtitle: Text(project.tagName),
                 trailing: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.settings),

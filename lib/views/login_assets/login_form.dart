@@ -1,10 +1,8 @@
-import 'package:collaboration_app_client/controllers/register_controller.dart';
-import 'package:collaboration_app_client/views/home_view.dart';
 import 'package:collaboration_app_client/views/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/login_controller.dart';
+import '../../controllers/authentication_controller.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -23,7 +21,7 @@ void initState() {
 class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LoginController());
+    final controller = Get.put(AuthenticationController());
     return Form(
         child: Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
@@ -72,15 +70,14 @@ class _LoginFormState extends State<LoginForm> {
               height: 50,
               width: double.infinity,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(foregroundColor: Colors.white, backgroundColor: Colors.black87),
+                  style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.black87),
                   onPressed: () => (
-                      controller.login(),
+                        controller.login(),
                         //text controller
-
                       ),
-                  child: Text('Login'.toUpperCase())
-              )
-          ),
+                  child: Text('Login'.toUpperCase()))),
           const SizedBox(
             height: 20,
           ),
@@ -102,7 +99,6 @@ class _LoginFormState extends State<LoginForm> {
           )
         ],
       ),
-     )
-    );
+    ));
   }
 }

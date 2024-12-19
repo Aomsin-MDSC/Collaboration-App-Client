@@ -4,7 +4,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 
 class NewTagForm extends StatefulWidget {
-  const NewTagForm ({super.key});
+  const NewTagForm({super.key});
 
   @override
   State<NewTagForm> createState() => _NewTagFormState();
@@ -17,41 +17,40 @@ class _NewTagFormState extends State<NewTagForm> {
 
     //
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Pick a Color"),
-          content: SingleChildScrollView(
-            child: ColorPicker( // spectrum color
-              pickerColor: currentColor,
-              onColorChanged: (Color color) {
-                currentColor = color;
-              },
-              showLabel: true,
-              pickerAreaHeightPercent: 0.8,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Pick a Color"),
+            content: SingleChildScrollView(
+              child: ColorPicker(
+                // spectrum color
+                pickerColor: currentColor,
+                onColorChanged: (Color color) {
+                  currentColor = color;
+                },
+                showLabel: true,
+                pickerAreaHeightPercent: 0.8,
+              ),
             ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-
-                Get.back();
-              },
-              child: const Text("Cancel"),
-            ),
-            TextButton(
-              onPressed: () {
-                tagcontroller.changeColor(currentColor); // update color controller
-                Get.back();
-              },
-              child: const Text("Select"),
-            ),
-          ],
-        );
-      }
-    );
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text("Cancel"),
+              ),
+              TextButton(
+                onPressed: () {
+                  tagcontroller
+                      .changeColor(currentColor); // update color controller
+                  Get.back();
+                },
+                child: const Text("Select"),
+              ),
+            ],
+          );
+        });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +61,25 @@ class _NewTagFormState extends State<NewTagForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 30,),
-            Text("NEW TAG",style: TextStyle(fontSize: 50),),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 30,
+            ),
+            Text(
+              "NEW TAG",
+              style: TextStyle(fontSize: 50),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
 
             // tag name ---------------
-            Text("Tag Name",style: TextStyle(fontSize: 18),),
-            const SizedBox(height: 10,),
+            Text(
+              "Tag Name",
+              style: TextStyle(fontSize: 18),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             TextField(
               controller: tagcontroller.tagname,
               decoration: const InputDecoration(
@@ -77,10 +88,16 @@ class _NewTagFormState extends State<NewTagForm> {
                 //prefixIcon: Icon(Icons.person),
                 border: OutlineInputBorder(),
               ),
+              onChanged: (value) {
+                tagcontroller.updateTagName(
+                    tagcontroller.tagname.text); // Update tag name
+              },
             ),
 
             // circle color ---------------
-            const SizedBox(height: 50,),
+            const SizedBox(
+              height: 50,
+            ),
             GetBuilder<NewTagController>(builder: (controller) {
               return CircleAvatar(
                 radius: 40,
@@ -89,7 +106,9 @@ class _NewTagFormState extends State<NewTagForm> {
             }),
 
             //select color ---------------
-            const SizedBox(height: 30,),
+            const SizedBox(
+              height: 30,
+            ),
             ElevatedButton(
               onPressed: () => _spectrumColorPicker(context),
               style: ElevatedButton.styleFrom(
@@ -104,16 +123,18 @@ class _NewTagFormState extends State<NewTagForm> {
             // Tag review
             const SizedBox(height: 50),
             GetBuilder<NewTagController>(builder: (controller) {
-
               // preview [container] Taxt
               return Container(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 decoration: BoxDecoration(
                   color: controller.currenttagColor,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                controller.tagname.text.isNotEmpty ? controller.tagname.text : "Tag Preview",
+                  controller.tagname.text.isNotEmpty
+                      ? controller.tagname.text
+                      : "Tag Preview",
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,

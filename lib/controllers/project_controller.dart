@@ -2,13 +2,12 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/testmodel.dart';
+import '../models/project_model.dart';
 
 class ProjectController extends GetxController {
   static ProjectController get instance => Get.find();
   var project = <Project>[].obs;
   var isLoading = true.obs;
-
 
   @override
   void onInit() async {
@@ -20,23 +19,27 @@ class ProjectController extends GetxController {
     }
     super.onInit();
   }
+
   Future<String> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('token') ?? '';
   }
+
   Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
   }
+
   Future<void> fetchApi(String token) async {
     try {
       isLoading(true);
       print("Fetching API...");
-      final response =
-      await http.get(Uri.parse('http://10.24.8.16:5263/api/GetProjects'),
+      final response = await http.get(
+        Uri.parse('http://10.24.8.16:5263/api/GetProjects'),
         headers: {
           'Authorization': 'Bearer $token',
-        },);
+        },
+      );
       if (response.statusCode == 200) {
         List<dynamic> jsonData = json.decode(response.body);
         project.value = jsonData.map((data) => Project.fromJson(data)).toList();
@@ -48,8 +51,6 @@ class ProjectController extends GetxController {
       isLoading(false);
     }
   }
-
-
 
   Future<void> updateReorder() async {
     // try {

@@ -12,5 +12,12 @@ class NewTagController extends GetxController {
     update();
   }
 
-  Color get currenttagColor => Color(int.parse(tagcolor.replaceFirst('#','0xff')));
+  void updateTagName(String name) {
+    tagname.text = name;
+
+    update();
+  }
+
+  Color get currenttagColor =>
+      Color(int.parse(tagcolor.replaceFirst('#', '0xff')));
 }

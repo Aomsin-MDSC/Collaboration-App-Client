@@ -1,7 +1,4 @@
 import 'package:collaboration_app_client/controllers/new_project_controller.dart';
-import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
-import 'package:collaboration_app_client/views/Login_View.dart';
-import 'package:collaboration_app_client/views/home_view.dart';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +60,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
             const SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>.multiSelection(
-                items: controller.taglist.toList(),
+                items: controller.memberlist.toList(),
                 selectedItems: controller.selectedmember.toList(),
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
@@ -104,16 +101,36 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 Container(
                   height: task.length < 4 ? null : 300,
                   color: Colors.black38,
-                  padding: EdgeInsets.all(13),
+                  padding: const EdgeInsets.all(13),
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: task.length,
                     itemBuilder: (context, index) {
-                      return Card(
-                        child: ListTile(
-                          title: Text(
-                            task[index],
-                            textAlign: TextAlign.center,
+                      return TextButton(
+                        style: ButtonStyle(
+                            padding: WidgetStateProperty.all<EdgeInsets>(
+                              EdgeInsets.zero,
+                            ),
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                            )
+                            // Set padding to zero
+                            ),
+                        onPressed: () {
+                          Get.snackbar('Index', '${task[index]}',
+                              duration: Duration(seconds: 1),
+                              colorText: Colors.white,
+                              backgroundColor: Colors.black54);
+                        },
+                        child: Card(
+                          child: ListTile(
+                            title: Text(
+                              task[index],
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                       );
@@ -131,9 +148,10 @@ class _NewProjectFormState extends State<NewProjectForm> {
                           foregroundColor: Colors.white,
                         ),
                         onPressed: () {},
-                        child: const Icon(Icons.add, color: Colors.white,)
-                    )
-                )
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        )))
               ],
             ),
 
