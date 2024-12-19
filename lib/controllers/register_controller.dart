@@ -17,8 +17,8 @@ class RegisterController extends GetxController {
       url,
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
-        'User_name': username.text.trim(),
-        'User_password': password.text.trim(),
+        'user_name': username.text.trim(),
+        'user_password': password.text.trim(),
       }),
     );
     if (response.statusCode == 200) {

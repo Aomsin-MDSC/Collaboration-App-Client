@@ -15,16 +15,6 @@ class LoginController extends GetxController {
 
   //Login Func
   Future<void> login() async {
-    if (username.text.trim().isEmpty || password.text.trim().isEmpty) {
-      Get.snackbar('Error', 'Username and password are required');
-      return;
-    }
-
-    Get.dialog(
-      const Center(child: CircularProgressIndicator()),
-      barrierDismissible: false,
-    );
-
     final url = Uri.parse('http://10.24.8.16:5263/api/login'); // URL ของ API
 
     try {
