@@ -17,7 +17,7 @@ class ProjectCard extends StatelessWidget {
           ),
         ),
       ),
-      onPressed: (){},
+      onPressed: () {},
       child: Card(
         // margin: EdgeInsets.zero,
         child: Padding(
@@ -26,7 +26,7 @@ class ProjectCard extends StatelessWidget {
             children: [
               ListTile(
                 title: Text(product.projectName),
-                subtitle: Text('${product.tagName} \$'),
+                subtitle: Text(product.tagName),
                 trailing: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.settings),
