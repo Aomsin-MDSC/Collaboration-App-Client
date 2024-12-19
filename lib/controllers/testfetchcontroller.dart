@@ -1,19 +1,33 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/testmodel.dart';
 
 class ProjectController extends GetxController {
+  static ProjectController get instance => Get.find();
   var project = <Project>[].obs;
   var isLoading = true.obs;
 
+
   @override
-  void onInit() {
-    String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IlRlc3QwMSIsImV4cCI6MTczNDYxMTk4NSwiaXNzIjoibXktYXBpIiwiYXVkIjoibW9iaWxlLWFwcCJ9._s5HC6F8MvjdR88huSP7LLco4jUsu5QP3PXRSlw95tQ"; // Token ที่ได้จากการ login หรือที่เก็บไว้
-    fetchApi(token);
+  void onInit() async {
+    String token = await getToken();
+    if (token.isNotEmpty) {
+      fetchApi(token);
+    } else {
+      print("Token not found");
+    }
     super.onInit();
   }
-
+  Future<String> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token') ?? '';
+  }
+  Future<void> saveToken(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', token);
+  }
   Future<void> fetchApi(String token) async {
     try {
       isLoading(true);

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collaboration_app_client/controllers/testfetchcontroller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import '../views/home_view.dart';
 
 class LoginController extends GetxController {
   static LoginController get instance => Get.find();
+
 
   final username = TextEditingController();
   final password = TextEditingController();
@@ -30,13 +32,19 @@ class LoginController extends GetxController {
       Get.back(); // Close loading dialog
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
+        String token = data['token'];
+        Get.put(ProjectController());
+
+        await ProjectController.instance.saveToken(token);  // เก็บ token ไว้ใน SharedPreferences
+        print('Token saved: $token');
+
         Get.snackbar('Login successful', 'Welcome : ${username.text}',
             duration: const Duration(seconds: 5),
             margin: const EdgeInsets.all(8),
             backgroundColor: Colors.black54,
             colorText: Colors.white);
         print('Login successful: $data');
-        Get.to(const HomeView());
+        Get.off(const HomeView());
       } else if (response.statusCode == 401) {
         Get.snackbar('Login Failed', 'Invalid username or password',
             duration: const Duration(seconds: 5),

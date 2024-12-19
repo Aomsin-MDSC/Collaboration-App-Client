@@ -66,43 +66,53 @@ class _HomeViewState extends State<HomeView> {
             } else if (projectController.project.isEmpty) {
               return const Center(child: Text('No project found'));
             } else {
-              return ReorderableListView.builder(
-                itemCount: projectController.project.length,
-                padding: const EdgeInsets.only(bottom: 120),
-                itemBuilder: (context, index) {
-                  final product = projectController.project[index];
-                  return ProjectCard(
-                    key: ValueKey(product.projectId),
-                    product: product,
-                  );
-                },
-                proxyDecorator:
-                    (Widget child, int index, Animation<double> animation) {
-                  return Material(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(18),
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //     color: Colors.black26,
-                        //     blurRadius: 10,
-                        //     offset: Offset(0, 5),
-                        //   ),
-                        // ],
-                      ),
-                      child: child,
-                    ),
-                  );
-                },
-                onReorder: (int oldIndex, int newIndex) {
-                  if (newIndex > oldIndex) {
-                    newIndex -= 1;
+              return RefreshIndicator(
+                onRefresh: () async {
+                  final String token = await projectController.getToken();
+                  if (token.isNotEmpty) {
+                    projectController.fetchApi(token);
+                  } else {
+                    print("Token not found");
                   }
-                  final items = projectController.project.removeAt(oldIndex);
-                  projectController.project.insert(newIndex, items);
-                  projectController.updateReorder();
                 },
+                child: ReorderableListView.builder(
+                  itemCount: projectController.project.length,
+                  padding: const EdgeInsets.only(bottom: 120),
+                  itemBuilder: (context, index) {
+                    final product = projectController.project[index];
+                    return ProjectCard(
+                      key: ValueKey(product.projectId),
+                      product: product,
+                    );
+                  },
+                  proxyDecorator:
+                      (Widget child, int index, Animation<double> animation) {
+                    return Material(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(18),
+                          // boxShadow: [
+                          //   BoxShadow(
+                          //     color: Colors.black26,
+                          //     blurRadius: 10,
+                          //     offset: Offset(0, 5),
+                          //   ),
+                          // ],
+                        ),
+                        child: child,
+                      ),
+                    );
+                  },
+                  onReorder: (int oldIndex, int newIndex) {
+                    if (newIndex > oldIndex) {
+                      newIndex -= 1;
+                    }
+                    final items = projectController.project.removeAt(oldIndex);
+                    projectController.project.insert(newIndex, items);
+                    projectController.updateReorder();
+                  },
+                ),
               );
             }
           }),
