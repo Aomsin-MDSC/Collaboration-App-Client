@@ -9,7 +9,6 @@ class NewTagController extends GetxController {
 
   void changeColor(Color color) {
     tagcolor = "#${color.value.toRadixString(16).substring(2)}";
-
     update();
   }
 
