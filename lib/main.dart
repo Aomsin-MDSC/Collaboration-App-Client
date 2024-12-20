@@ -12,7 +12,7 @@ void main() async {
 
 Future<bool> checkToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? token = prefs.getString('token');
+  String? token = prefs.getString('jwt_token');
   return token != null && token.isNotEmpty;
 }
 

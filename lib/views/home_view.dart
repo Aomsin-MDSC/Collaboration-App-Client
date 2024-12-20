@@ -84,8 +84,8 @@ class _HomeViewState extends State<HomeView> {
             } else {
               return RefreshIndicator(
                 onRefresh: () async {
-                  final String token = await projectController.getToken();
-                  if (token.isNotEmpty) {
+                  final String? token = await projectController.getToken();
+                  if (token != null && token.isNotEmpty) {
                     projectController.fetchApi(token);
                   } else {
                     print("Token not found");

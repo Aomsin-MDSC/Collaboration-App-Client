@@ -1,13 +1,14 @@
 import 'package:collaboration_app_client/controllers/new_project_controller.dart';
-import 'package:collaboration_app_client/views/new_announce_assets/new_announce_form.dart';
-import 'package:collaboration_app_client/views/new_announce_view.dart';
-import 'package:collaboration_app_client/views/new_task_view.dart';
+import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
+import 'package:collaboration_app_client/views/Login_View.dart';
+import 'package:collaboration_app_client/views/home_view.dart';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../new_tag_view.dart';
+import '../new_task_view.dart';
 
 class NewProjectForm extends StatefulWidget {
   const NewProjectForm({super.key});
@@ -71,6 +72,10 @@ class _NewProjectFormState extends State<NewProjectForm> {
                   fillColor: Colors.white,
                   border: OutlineInputBorder(),
                 )),
+                onChanged: (newValue) {
+                  controller.selectedmember.clear();
+                  controller.selectedmember.addAll(newValue);
+                },
               );
             }),
 
@@ -87,11 +92,15 @@ class _NewProjectFormState extends State<NewProjectForm> {
                   fillColor: Colors.white,
                   border: OutlineInputBorder(),
                 )),
-                onChanged: (value) {
-                  if (value == "Add Tag") {
-                    Get.to(NewTagView());
+                  onChanged: (value) {
+                    controller.selectedtag.clear();
+                    if (value != null) {
+                      controller.selectedtag.add(value);
+                    }
+                    if (value == "Add Tag") {
+                      Get.to(NewTagView());
+                    }
                   }
-                },
               );
             }),
 
@@ -104,7 +113,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 Container(
                   height: task.length < 4 ? null : 300,
                   color: Colors.black38,
-                  padding: const EdgeInsets.all(13),
+                  padding: EdgeInsets.all(13),
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: task.length,
@@ -167,8 +176,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  print("gogogo"); // action
-                  // Get.to(NewAnnounceView());
+                  controller.createProject();
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

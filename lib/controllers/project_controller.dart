@@ -11,25 +11,28 @@ class ProjectController extends GetxController {
 
   @override
   void onInit() async {
-    String token = await getToken();
-    if (token.isNotEmpty) {
-      fetchApi(token);
+    super.onInit();
+    String? token = await getToken(); // รับ Token จาก SharedPreferences
+    if (token != null && token.isNotEmpty) {
+      fetchApi(token);  // ถ้ามี Token ให้เรียก API
     } else {
       print("Token not found");
     }
-    super.onInit();
   }
 
-  Future<String> getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token') ?? '';
+  // ฟังก์ชันดึง Token จาก SharedPreferences
+  Future<String?> getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('jwt_token'); // ใช้ key เดียวกันในทุกจุด
   }
 
+  // ฟังก์ชันบันทึก Token ลง SharedPreferences
   Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', token);
+    await prefs.setString('jwt_token', token); // ใช้ key เดียวกัน
   }
 
+  // ฟังก์ชัน fetch API
   Future<void> fetchApi(String token) async {
     try {
       isLoading(true);
@@ -38,37 +41,31 @@ class ProjectController extends GetxController {
         Uri.parse('http://10.24.8.16:5263/api/GetProjects'),
         headers: {
           'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
         },
       );
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      print('Token used: $token');
+
       if (response.statusCode == 200) {
         List<dynamic> jsonData = json.decode(response.body);
+        print('Decoded data: $jsonData');
         project.value = jsonData.map((data) => Project.fromJson(data)).toList();
-        print("Products loaded: ${project.length}");
+        print("Projects loaded: ${project.length}");
       } else {
-        print('Failed to load products');
+        print('Failed to load projects');
+        print('Response: ${response.body}');
       }
+    } catch (e) {
+      print('Error fetching projects: $e');
     } finally {
       isLoading(false);
     }
   }
 
+  // ฟังก์ชันอัปเดตข้อมูล (ยังไม่ได้ใช้ในตัวอย่าง)
   Future<void> updateReorder() async {
-    // try {
-
-    //   final response = await http.put(
-    //     Uri.parse(
-    //         'https://fakestoreapi.com/'), // Replace with your correct endpoint
-    //     headers: {"Content-Type": "application/json"},
-    //     body: ,
-    //   );
-
-    //   if (response.statusCode == 200) {
-    //     print("Reorder successfully updated!");
-    //   } else {
-    //     print("Failed to update reorder: ${response.body}");
-    //   }
-    // } catch (e) {
-    //   print("Error while updating reorder: $e");
-    // }
+    // Implementation of update reorder logic
   }
 }
