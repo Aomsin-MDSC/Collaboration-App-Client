@@ -1,7 +1,10 @@
 import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
+import 'package:collaboration_app_client/views/new_project_assets/new_project_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
+
+import '../new_project_view.dart';
 
 class NewTagForm extends StatefulWidget {
   const NewTagForm({super.key});
@@ -173,8 +176,9 @@ class _NewTagFormState extends State<NewTagForm> {
               width: double.infinity,
               height: 60,
               child: ElevatedButton(
-                onPressed: () {
-                  print("gogogo"); // action
+                onPressed: () async {
+                  await tagcontroller.createTag();
+                  Get.to(NewProjectView());
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

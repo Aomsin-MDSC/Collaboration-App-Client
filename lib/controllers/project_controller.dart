@@ -20,19 +20,16 @@ class ProjectController extends GetxController {
     }
   }
 
-  // ฟังก์ชันดึง Token จาก SharedPreferences
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('jwt_token'); // ใช้ key เดียวกันในทุกจุด
+    return prefs.getString('jwt_token');
   }
 
-  // ฟังก์ชันบันทึก Token ลง SharedPreferences
   Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('jwt_token', token); // ใช้ key เดียวกัน
+    await prefs.setString('jwt_token', token);
   }
 
-  // ฟังก์ชัน fetch API
   Future<void> fetchApi(String token) async {
     try {
       isLoading(true);

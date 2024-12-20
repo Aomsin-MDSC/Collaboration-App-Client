@@ -192,7 +192,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  print("gogogo"); // action
+                  controller.createTask(); // action
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
