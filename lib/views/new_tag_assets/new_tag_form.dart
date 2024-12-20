@@ -13,7 +13,6 @@ class NewTagForm extends StatefulWidget {
 class _NewTagFormState extends State<NewTagForm> {
   void _spectrumColorPicker(BuildContext context) {
     final tagcontroller = Get.find<NewTagController>();
-    Color currentColor = tagcontroller.currenttagColor; // get update color
 
     //
     showDialog(
@@ -24,32 +23,25 @@ class _NewTagFormState extends State<NewTagForm> {
             content: SingleChildScrollView(
               child: ColorPicker(
                 // spectrum color
-                pickerColor: currentColor,
+                pickerColor: tagcontroller.currenttagColor,
                 onColorChanged: (Color color) {
-                  currentColor = color;
+                  tagcontroller.changeColor(color);
                 },
                 showLabel: true,
                 pickerAreaHeightPercent: 0.8,
               ),
             ),
-            actions: [
+            actions: <Widget>[
               TextButton(
-                onPressed: () {
-                  Get.back();
-                },
-                child: const Text("Cancel"),
-              ),
-              TextButton(
-                onPressed: () {
-                  tagcontroller
-                      .changeColor(currentColor); // update color controller
+                onPressed: () {// update color controller
                   Get.back();
                 },
                 child: const Text("Select"),
               ),
             ],
           );
-        });
+        },
+    );
   }
 
   @override
@@ -174,6 +166,29 @@ class _NewTagFormState extends State<NewTagForm> {
               //   ),
               // );
             }),
+
+            // Save Button
+            const SizedBox(height: 70),
+            SizedBox(
+              width: double.infinity,
+              height: 60,
+              child: ElevatedButton(
+                onPressed: () {
+                  print("gogogo"); // action
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                ),
+                child: Text(
+                  "Save",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+            ),
           ],
         ),
       ),

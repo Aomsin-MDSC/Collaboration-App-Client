@@ -1,4 +1,7 @@
 import 'package:collaboration_app_client/controllers/new_project_controller.dart';
+import 'package:collaboration_app_client/views/new_announce_assets/new_announce_form.dart';
+import 'package:collaboration_app_client/views/new_announce_view.dart';
+import 'package:collaboration_app_client/views/new_task_view.dart';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -147,7 +150,9 @@ class _NewProjectFormState extends State<NewProjectForm> {
                           backgroundColor: Colors.black,
                           foregroundColor: Colors.white,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(NewTaskView());
+                        },
                         child: const Icon(
                           Icons.add,
                           color: Colors.white,
@@ -162,7 +167,8 @@ class _NewProjectFormState extends State<NewProjectForm> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  print("gogogo");
+                  print("gogogo"); // action
+                  // Get.to(NewAnnounceView());
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

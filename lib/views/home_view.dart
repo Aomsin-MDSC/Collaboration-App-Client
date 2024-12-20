@@ -3,7 +3,7 @@ import 'package:collaboration_app_client/views/new_project_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get/get.dart';
-import '../controllers/testfetchcontroller.dart'; // Adjust the import paths as needed
+import '../controllers/project_controller.dart';// Adjust the import paths as needed
 import 'assets/home_form.dart'; // Adjust the import paths as needed
 
 class HomeView extends StatefulWidget {

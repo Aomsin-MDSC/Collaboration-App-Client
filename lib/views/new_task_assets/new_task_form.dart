@@ -202,7 +202,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   foregroundColor: Colors.white,
                 ),
                 child: Text(
-                  "Save",
+                  "Make a Task",
                   style: TextStyle(fontSize: 18),
                 ),
               ),

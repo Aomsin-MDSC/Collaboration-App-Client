@@ -9,6 +9,7 @@ class NewTaskController extends GetxController {
   String taskcolor = "#808080";
   DateTime? selectedDate; // get day selected
 
+  // member
   var memberlist = <String>[
     'shouta',
     'thank',
@@ -23,6 +24,7 @@ class NewTaskController extends GetxController {
   // get memberlist for show
   var selectedmember = <String>[].obs;
 
+  // tag
   var taglist = <String>[
     'work',
     'job',
@@ -33,6 +35,8 @@ class NewTaskController extends GetxController {
   // get tag for show
   var selectedtag = <String>[].obs;
 
+
+  // colors
   void taskchangeColor(Color color) {
     taskcolor = "#${color.value.toRadixString(16).substring(2)}";
     update();

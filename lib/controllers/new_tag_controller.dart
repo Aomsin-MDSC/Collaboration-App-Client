@@ -14,7 +14,6 @@ class NewTagController extends GetxController {
 
   void updateTagName(String name) {
     tagname.text = name;
-
     update();
   }
 
