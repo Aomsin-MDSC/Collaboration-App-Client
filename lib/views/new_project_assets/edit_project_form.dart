@@ -2,26 +2,24 @@ import 'package:collaboration_app_client/controllers/new_project_controller.dart
 import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
 import 'package:collaboration_app_client/views/Login_View.dart';
 import 'package:collaboration_app_client/views/edit_announce_view.dart';
-import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/edit_tag_view.dart';
 import 'package:collaboration_app_client/views/edit_task_view.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
-
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../../controllers/edit_project_controller.dart';
 import '../new_tag_view.dart';
 import '../new_task_view.dart';
 
-class NewProjectForm extends StatefulWidget {
-  const NewProjectForm({super.key});
+class EditProjectForm extends StatefulWidget {
+  const EditProjectForm({super.key});
 
   @override
-  State<NewProjectForm> createState() => _NewProjectFormState();
+  State<EditProjectForm> createState() => _EditProjectFormState();
 }
 
-class _NewProjectFormState extends State<NewProjectForm> {
+class _EditProjectFormState extends State<EditProjectForm> {
   @override
   Widget build(BuildContext context) {
     final List<String> task = [
@@ -36,7 +34,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
       "9",
       "10",
     ];
-    final controller = Get.put(NewProjectController());
+    final controller = Get.put(EditProjectController());
 
     return Form(
       child: Container(
@@ -47,20 +45,10 @@ class _NewProjectFormState extends State<NewProjectForm> {
             // Project Header
             const SizedBox(height: 30),
             Text(
-              "NEW PROJECT".toUpperCase(),
+              "EDIT PROJECT".toUpperCase(),
               style: const TextStyle(fontSize: 50),
             ),
-            const SizedBox(height: 20),
-            const Text("Project Name", style: TextStyle(fontSize: 18)),
-            const SizedBox(height: 10),
-            TextField(
-              controller: controller.projectname,
-              decoration: const InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(),
-              ),
-            ),
+
 
             // Member Dropdown
             const SizedBox(height: 20),
@@ -68,17 +56,17 @@ class _NewProjectFormState extends State<NewProjectForm> {
             const SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>.multiSelection(
-                items: controller.memberlist.toList(),
-                selectedItems: controller.selectedmember.toList(),
+                items: controller.editmemberlist.toList(),
+                selectedItems: controller.editselectedmember.toList(),
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                )),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(),
+                    )),
                 onChanged: (newValue) {
-                  controller.selectedmember.clear();
-                  controller.selectedmember.addAll(newValue);
+                  controller.editselectedmember.clear();
+                  controller.editselectedmember.addAll(newValue);
                 },
               );
             }),
@@ -92,21 +80,21 @@ class _NewProjectFormState extends State<NewProjectForm> {
                   popupProps: PopupProps.menu(
                       title: ElevatedButton(
                           onPressed: () {
-                            controller.selectedtag.clear();
+                            controller.editselectedtag.clear();
                             Get.to(const NewTagView());
                           },
                           child: const Text("Add Tag"))),
-                  items: controller.taglist.toList(),
+                  items: controller.edittaglist.toList(),
                   dropdownDecoratorProps: const DropDownDecoratorProps(
                       dropdownSearchDecoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(),
-                  )),
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                      )),
                   onChanged: (value) {
-                    controller.selectedtag.clear();
+                    controller.editselectedtag.clear();
                     if (value != null) {
-                      controller.selectedtag.add(value);
+                      controller.editselectedtag.add(value);
                     }
                   });
             }),
@@ -131,13 +119,13 @@ class _NewProjectFormState extends State<NewProjectForm> {
                               EdgeInsets.zero,
                             ),
                             shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                            WidgetStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
                               ),
                             )
-                            // Set padding to zero
-                            ),
+                          // Set padding to zero
+                        ),
                         onPressed: () {
                           Get.snackbar('Index', '${task[index]}',
                               duration: const Duration(seconds: 1),
@@ -178,26 +166,51 @@ class _NewProjectFormState extends State<NewProjectForm> {
 
             // Save Button
             const SizedBox(height: 40),
-            SizedBox(
-              width: double.infinity,
-              height: 60,
-              child: ElevatedButton(
-                onPressed: () {
-                  controller.createProject();
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  width: 150,
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      print("makemakemake"); // action
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                    ),
+                    child: Text(
+                      "SAVE",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
                 ),
-                child: const Text(
-                  "Save",
-                  style: TextStyle(fontSize: 18),
+                SizedBox(
+                  width: 157,
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      print("deldeldel"); // action
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                    ),
+                    child: Text(
+                      "DELETE",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
                 ),
-              ),
-            ),
+              ],
+            )
           ],
         ),
       ),

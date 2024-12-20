@@ -1,16 +1,16 @@
-import 'package:collaboration_app_client/controllers/new_announce_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controllers/edit_announce_controller.dart';
 
-class NewAnnounceForm extends StatefulWidget {
-  const NewAnnounceForm ({super.key});
+class EditAnnounceForm extends StatefulWidget {
+  const EditAnnounceForm ({super.key});
 
   @override
-  State<NewAnnounceForm> createState() => _NewAnnounceFormState(); 
+  State<EditAnnounceForm> createState() => _EditAnnounceFormState();
 }
 
-class _NewAnnounceFormState extends State<NewAnnounceForm> {
-  final controller = Get.put(NewAnnounceController());
+class _EditAnnounceFormState extends State<EditAnnounceForm> {
+  final controller = Get.put(EditAnnounceController());
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -22,12 +22,12 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
 
             // title
             const SizedBox(height: 30,),
-            Text("NEW ANNOUNCE".toUpperCase(),style: TextStyle(fontSize: 44),),
+            Text("EDIT ANNOUNCE".toUpperCase(),style: TextStyle(fontSize: 44),),
             const SizedBox(height: 20,),
             Text("Title",style: TextStyle(fontSize: 18),),
             const SizedBox(height: 10,),
             TextField(
-              controller: controller.announcename,
+              controller: controller.editannouncename,
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
@@ -42,7 +42,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
             Text("Details", style: TextStyle(fontSize: 18),),
             const SizedBox(height: 10,),
             TextField(
-              controller: controller.announcedetail,
+              controller: controller.editannouncedetail,
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
@@ -66,18 +66,18 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                       onTap: () async {
                         DateTime? selectedDate = await showDatePicker(
                           context: context,
-                          initialDate: controller.selectedDate ?? DateTime.now(),
+                          initialDate: controller.editselectedDate ?? DateTime.now(),
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2101),
                         );
                         if (selectedDate != null) {
                           TimeOfDay? selectedTime = await showTimePicker(
                             context: context,
-                            initialTime: TimeOfDay.fromDateTime(controller.selectedDate ?? DateTime.now()),
+                            initialTime: TimeOfDay.fromDateTime(controller.editselectedDate ?? DateTime.now()),
                           );
                           if (selectedTime != null) {
                             setState(() {
-                              controller.selectedDate = DateTime(
+                              controller.editselectedDate = DateTime(
                                 selectedDate.year,
                                 selectedDate.month,
                                 selectedDate.day,
@@ -89,12 +89,12 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                         }
                       },
                       child: Tooltip(
-                        message: controller.selectedDate != null
-                            ? 'Selected Date: ${controller.selectedDate!.toLocal()}'
+                        message: controller.editselectedDate != null
+                            ? 'Selected Date: ${controller.editselectedDate!.toLocal()}'
                             :  'No date selected',
                         child: Icon(
                           Icons.date_range,
-                          color: controller.selectedDate != null ? Colors.red : Colors.black,
+                          color: controller.editselectedDate != null ? Colors.red : Colors.black,
                           size: 70,
                         ),
                       ),
@@ -106,27 +106,51 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
 
             // button set announce
             const SizedBox(height: 60),
-            SizedBox(
-              width: double.infinity,
-              height: 60,
-              child: ElevatedButton(
-                onPressed: () {
-                  print("setsetset"); // action
-                  // Get.to(NewAnnounceView());
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  width: 150,
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      print("makemakemake"); // action
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                    ),
+                    child: Text(
+                      "SAVE",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
                 ),
-                child: Text(
-                  "Set an Announcement",
-                  style: TextStyle(fontSize: 18),
+                SizedBox(
+                  width: 157,
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      print("deldeldel"); // action
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                    ),
+                    child: Text(
+                      "DELETE",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
                 ),
-              ),
-            ),
+              ],
+            )
           ],
         ),
       ),
