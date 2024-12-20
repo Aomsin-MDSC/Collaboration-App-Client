@@ -44,10 +44,10 @@ class _NewProjectFormState extends State<NewProjectForm> {
             const SizedBox(height: 30),
             Text(
               "NEW PROJECT".toUpperCase(),
-              style: TextStyle(fontSize: 50),
+              style: const TextStyle(fontSize: 50),
             ),
             const SizedBox(height: 20),
-            Text("Project Name", style: TextStyle(fontSize: 18)),
+            const Text("Project Name", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             TextField(
               controller: controller.projectname,
@@ -60,7 +60,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
 
             // Member Dropdown
             const SizedBox(height: 20),
-            Text("Member", style: TextStyle(fontSize: 18)),
+            const Text("Member", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>.multiSelection(
@@ -81,39 +81,42 @@ class _NewProjectFormState extends State<NewProjectForm> {
 
             // Tag Dropdown
             const SizedBox(height: 20),
-            Text("Tag", style: TextStyle(fontSize: 18)),
+            const Text("Tag", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>(
-                items: controller.taglist.toList(),
-                dropdownDecoratorProps: const DropDownDecoratorProps(
-                    dropdownSearchDecoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                )),
+                  popupProps: PopupProps.menu(
+                      title: ElevatedButton(
+                          onPressed: () {
+                            controller.selectedtag.clear();
+                            Get.to(const NewTagView());
+                          },
+                          child: const Text("Add Tag"))),
+                  items: controller.taglist.toList(),
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                  )),
                   onChanged: (value) {
                     controller.selectedtag.clear();
                     if (value != null) {
                       controller.selectedtag.add(value);
                     }
-                    if (value == "Add Tag") {
-                      Get.to(NewTagView());
-                    }
-                  }
-              );
+                  });
             }),
 
             // Task List
             const SizedBox(height: 20),
-            Text("Task", style: TextStyle(fontSize: 18)),
+            const Text("Task", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Column(
               children: [
                 Container(
                   height: task.length < 4 ? null : 300,
                   color: Colors.black38,
-                  padding: EdgeInsets.all(13),
+                  padding: const EdgeInsets.all(13),
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: task.length,
@@ -133,7 +136,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                             ),
                         onPressed: () {
                           Get.snackbar('Index', '${task[index]}',
-                              duration: Duration(seconds: 1),
+                              duration: const Duration(seconds: 1),
                               colorText: Colors.white,
                               backgroundColor: Colors.black54);
                         },
@@ -160,7 +163,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                           foregroundColor: Colors.white,
                         ),
                         onPressed: () {
-                          Get.to(NewTaskView());
+                          Get.to(const NewTaskView());
                         },
                         child: const Icon(
                           Icons.add,
@@ -185,7 +188,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
                 ),
-                child: Text(
+                child: const Text(
                   "Save",
                   style: TextStyle(fontSize: 18),
                 ),
