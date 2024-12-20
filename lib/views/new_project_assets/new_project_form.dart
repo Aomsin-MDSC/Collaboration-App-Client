@@ -85,13 +85,20 @@ class _NewProjectFormState extends State<NewProjectForm> {
             const SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>(
-                items: controller.taglist.toList(),
-                dropdownDecoratorProps: const DropDownDecoratorProps(
-                    dropdownSearchDecoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                )),
+                  popupProps: PopupProps.menu(
+                      title: ElevatedButton(
+                          onPressed: () {
+                            controller.selectedtag.clear();
+                            Get.to(const NewTagView());
+                          },
+                          child: const Text("Add Tag"))),
+                  items: controller.taglist.toList(),
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                      )),
                   onChanged: (value) {
                     controller.selectedtag.clear();
                     if (value != null) {
