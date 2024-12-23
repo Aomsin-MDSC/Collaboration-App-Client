@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +11,6 @@ class EditProjectController extends GetxController {
   var editmemberlist = <String>[].obs;
   var editselectedmember = <String>[].obs;
   var editmembersMap = <String, int>{}.obs;
-
 
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -41,11 +39,13 @@ class EditProjectController extends GetxController {
 
   Future<void> fetchMembers() async {
     try {
-      final response = await http.get(Uri.parse('http://10.24.8.16:5263/api/GetMembers'));
+      final response =
+          await http.get(Uri.parse('http://10.24.8.16:5263/api/GetMembers'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
-        editmemberlist.value = data.map((e) => e['user_name'] as String).toList();
+        editmemberlist.value =
+            data.map((e) => e['user_name'] as String).toList();
         editmembersMap.value = {
           for (var e in data) e['user_name'] as String: e['user_id'] as int,
         };
@@ -59,7 +59,8 @@ class EditProjectController extends GetxController {
 
   Future<void> fetchTags() async {
     try {
-      final response = await http.get(Uri.parse('http://10.24.8.16:5263/api/GetTags'));
+      final response =
+          await http.get(Uri.parse('http://10.24.8.16:5263/api/GetTags'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
@@ -97,10 +98,10 @@ class EditProjectController extends GetxController {
         return;
       }
 
-      final memberIds = editselectedmember.map((e) => {'UserId': editmembersMap[e]}).toList();
+      final memberIds =
+          editselectedmember.map((e) => {'UserId': editmembersMap[e]}).toList();
       final tagId = editTagsMap[editselectedtag.first];
       print("Selected TagId: $tagId");
-
 
       final response = await http.post(
         Uri.parse('http://10.24.8.16:5263/api/CreateProject'),

@@ -1,10 +1,3 @@
-import 'package:collaboration_app_client/controllers/new_project_controller.dart';
-import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
-import 'package:collaboration_app_client/views/Login_View.dart';
-import 'package:collaboration_app_client/views/edit_announce_view.dart';
-import 'package:collaboration_app_client/views/edit_tag_view.dart';
-import 'package:collaboration_app_client/views/edit_task_view.dart';
-import 'package:collaboration_app_client/views/home_view.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,7 +42,6 @@ class _EditProjectFormState extends State<EditProjectForm> {
               style: const TextStyle(fontSize: 50),
             ),
 
-
             // Member Dropdown
             const SizedBox(height: 20),
             const Text("Member", style: TextStyle(fontSize: 18)),
@@ -60,10 +52,10 @@ class _EditProjectFormState extends State<EditProjectForm> {
                 selectedItems: controller.editselectedmember.toList(),
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(),
-                    )),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                )),
                 onChanged: (newValue) {
                   controller.editselectedmember.clear();
                   controller.editselectedmember.addAll(newValue);
@@ -87,10 +79,10 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   items: controller.edittaglist.toList(),
                   dropdownDecoratorProps: const DropDownDecoratorProps(
                       dropdownSearchDecoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(),
-                      )),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                  )),
                   onChanged: (value) {
                     controller.editselectedtag.clear();
                     if (value != null) {
@@ -119,13 +111,13 @@ class _EditProjectFormState extends State<EditProjectForm> {
                               EdgeInsets.zero,
                             ),
                             shape:
-                            WidgetStateProperty.all<RoundedRectangleBorder>(
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
                               ),
                             )
-                          // Set padding to zero
-                        ),
+                            // Set padding to zero
+                            ),
                         onPressed: () {
                           Get.snackbar('Index', '${task[index]}',
                               duration: const Duration(seconds: 1),
@@ -183,7 +175,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
                     ),
-                    child: Text(
+                    child: const Text(
                       "SAVE",
                       style: TextStyle(fontSize: 18),
                     ),
@@ -203,7 +195,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
                     ),
-                    child: Text(
+                    child: const Text(
                       "DELETE",
                       style: TextStyle(fontSize: 18),
                     ),

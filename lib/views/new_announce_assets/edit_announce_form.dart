@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../../controllers/edit_announce_controller.dart';
 
 class EditAnnounceForm extends StatefulWidget {
-  const EditAnnounceForm ({super.key});
+  const EditAnnounceForm({super.key});
 
   @override
   State<EditAnnounceForm> createState() => _EditAnnounceFormState();
@@ -19,13 +19,24 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             // title
-            const SizedBox(height: 30,),
-            Text("EDIT ANNOUNCE".toUpperCase(),style: TextStyle(fontSize: 44),),
-            const SizedBox(height: 20,),
-            Text("Title",style: TextStyle(fontSize: 18),),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 30,
+            ),
+            Text(
+              "EDIT ANNOUNCE".toUpperCase(),
+              style: const TextStyle(fontSize: 44),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              "Title",
+              style: const TextStyle(fontSize: 18),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             TextField(
               controller: controller.editannouncename,
               decoration: const InputDecoration(
@@ -36,11 +47,17 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
               ),
             ),
 
-
             // details
-            const SizedBox(height: 20,),
-            Text("Details", style: TextStyle(fontSize: 18),),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              "Details",
+              style: TextStyle(fontSize: 18),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             TextField(
               controller: controller.editannouncedetail,
               decoration: const InputDecoration(
@@ -48,32 +65,45 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                 fillColor: Colors.white,
                 // prefixIcon: Icon(Icons.abc),
                 border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.only(top: 50, left: 10, right: 10,),
+                contentPadding: EdgeInsets.only(
+                  top: 50,
+                  left: 10,
+                  right: 10,
+                ),
               ),
               maxLines: null,
             ),
 
             // text icon [etc.]
-            const SizedBox(height: 50,),
+            const SizedBox(
+              height: 50,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   children: [
-                    Text("Set DateTime".toUpperCase(), style: TextStyle(fontSize: 20),),
-                    const SizedBox(height: 10,),
+                    Text(
+                      "Set DateTime".toUpperCase(),
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     GestureDetector(
                       onTap: () async {
                         DateTime? selectedDate = await showDatePicker(
                           context: context,
-                          initialDate: controller.editselectedDate ?? DateTime.now(),
+                          initialDate:
+                              controller.editselectedDate ?? DateTime.now(),
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2101),
                         );
                         if (selectedDate != null) {
                           TimeOfDay? selectedTime = await showTimePicker(
                             context: context,
-                            initialTime: TimeOfDay.fromDateTime(controller.editselectedDate ?? DateTime.now()),
+                            initialTime: TimeOfDay.fromDateTime(
+                                controller.editselectedDate ?? DateTime.now()),
                           );
                           if (selectedTime != null) {
                             setState(() {
@@ -91,10 +121,12 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                       child: Tooltip(
                         message: controller.editselectedDate != null
                             ? 'Selected Date: ${controller.editselectedDate!.toLocal()}'
-                            :  'No date selected',
+                            : 'No date selected',
                         child: Icon(
                           Icons.date_range,
-                          color: controller.editselectedDate != null ? Colors.red : Colors.black,
+                          color: controller.editselectedDate != null
+                              ? Colors.red
+                              : Colors.black,
                           size: 70,
                         ),
                       ),
@@ -123,7 +155,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
                     ),
-                    child: Text(
+                    child: const Text(
                       "SAVE",
                       style: TextStyle(fontSize: 18),
                     ),
@@ -143,7 +175,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
                     ),
-                    child: Text(
+                    child: const Text(
                       "DELETE",
                       style: TextStyle(fontSize: 18),
                     ),

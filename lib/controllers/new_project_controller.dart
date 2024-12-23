@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -12,7 +13,6 @@ class NewProjectController extends GetxController {
   var memberlist = <String>[].obs;
   var selectedmember = <String>[].obs;
   var membersMap = <String, int>{}.obs;
-
 
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -41,7 +41,8 @@ class NewProjectController extends GetxController {
 
   Future<void> fetchMembers() async {
     try {
-      final response = await http.get(Uri.parse('http://10.24.8.16:5263/api/GetMembers'));
+      final response =
+          await http.get(Uri.parse('http://10.24.8.16:5263/api/GetMembers'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
@@ -59,7 +60,8 @@ class NewProjectController extends GetxController {
 
   Future<void> fetchTags() async {
     try {
-      final response = await http.get(Uri.parse('http://10.24.8.16:5263/api/GetTags'));
+      final response =
+          await http.get(Uri.parse('http://10.24.8.16:5263/api/GetTags'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
@@ -97,10 +99,10 @@ class NewProjectController extends GetxController {
         return;
       }
 
-      final memberIds = selectedmember.map((e) => {'UserId': membersMap[e]}).toList();
+      final memberIds =
+          selectedmember.map((e) => {'UserId': membersMap[e]}).toList();
       final tagId = TagsMap[selectedtag.first];
       print("Selected TagId: $tagId");
-
 
       final response = await http.post(
         Uri.parse('http://10.24.8.16:5263/api/CreateProject'),
@@ -118,6 +120,7 @@ class NewProjectController extends GetxController {
 
       if (response.statusCode == 200) {
         print('Project created successfully');
+        Get.off(ProjectView());
       } else {
         print('Failed to create project');
         print('Response body: ${response.body}');

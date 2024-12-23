@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import '../new_tag_view.dart';
 
 class NewTaskForm extends StatefulWidget {
-  const NewTaskForm ({super.key});
+  const NewTaskForm({super.key});
 
   @override
   State<NewTaskForm> createState() => _NewTaskFormState();
@@ -23,26 +23,37 @@ class _NewTaskFormState extends State<NewTaskForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // taskname ---------------
-            const SizedBox(height: 30,),
-            Text("NEW TASK".toUpperCase(), style: TextStyle(fontSize: 50), ),
+            // taskName ---------------
+            const SizedBox(
+              height: 30,
+            ),
+            Text(
+              "NEW TASK".toUpperCase(),
+              style: const TextStyle(fontSize: 50),
+            ),
             const SizedBox(height: 20),
-            Text("Task Name", style: TextStyle(fontSize: 18)),
+            const Text("Task Name", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             TextField(
-              controller: controller.taskname,
-              decoration: const InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                // prefixIcon: Icon(Icons.add),
-                border: OutlineInputBorder(),
-              )
-            ),
+                controller: controller.taskName,
+                decoration: const InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  // prefixIcon: Icon(Icons.add),
+                  border: OutlineInputBorder(),
+                )),
 
             // detail ---------------
-            const SizedBox(height: 20,),
-            Text("Details", style: TextStyle(fontSize: 18),),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              "Details",
+              style: TextStyle(fontSize: 18),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             TextField(
               controller: controller.taskdetails,
               decoration: const InputDecoration(
@@ -55,7 +66,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
 
             // member ---------------
             const SizedBox(height: 20),
-            Text("Member", style: TextStyle(fontSize: 18)),
+            const Text("Member", style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>.multiSelection(
@@ -63,54 +74,64 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 selectedItems: controller.selectedmember.toList(),
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(),
-                    )),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                )),
               );
             }),
 
             // Add Tag
             const SizedBox(height: 20),
-            Text("Tag", style: TextStyle(fontSize: 18)),
+            const Text("Tag", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>(
                 items: controller.taglist.toList(),
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(),
-                    )),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                )),
                 onChanged: (value) {
                   if (value == "Add Tag") {
-                    Get.to(NewTagView());
+                    Get.to(const NewTagView());
                   }
                 },
               );
             }),
 
             // Text, Icon [Dead line, Color, Add tag]
-            const SizedBox(height: 30,),
+            const SizedBox(
+              height: 30,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   children: [
-                    Text("Dead Line".toUpperCase(), style: TextStyle(fontSize: 20),),
-                    const SizedBox(height: 10,),
+                    Text(
+                      "Dead Line".toUpperCase(),
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     GestureDetector(
                       onTap: () async {
                         DateTime? selected = await showDatePicker(
                           context: context,
-                          initialDate: controller.selectedDate ?? DateTime.now(), // used selected day
+                          initialDate: controller.selectedDate ??
+                              DateTime.now(), // used selected day
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2101),
                         );
-                        if (selected != null && selected != controller.selectedDate) {
+                        if (selected != null &&
+                            selected != controller.selectedDate) {
                           setState(() {
-                            controller.selectedDate = selected; // save day [new selected]
+                            controller.selectedDate =
+                                selected; // save day [new selected]
                           });
                         }
                       },
@@ -120,7 +141,9 @@ class _NewTaskFormState extends State<NewTaskForm> {
                             : 'No date selected',
                         child: Icon(
                           Icons.date_range,
-                          color: controller.selectedDate != null ? Colors.red : Colors.black,
+                          color: controller.selectedDate != null
+                              ? Colors.red
+                              : Colors.black,
                           size: 70,
                         ),
                       ),
@@ -129,17 +152,23 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 ),
                 Column(
                   children: [
-                    Text("Color".toUpperCase(), style: TextStyle(fontSize: 20),),
-                    const SizedBox(height: 10,),
+                    Text(
+                      "Color".toUpperCase(),
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     GestureDetector(
                       onTap: () {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('Pick a Color'),
+                              title: const Text('Pick a Color'),
                               content: SingleChildScrollView(
-                                child: ColorPicker( // spectrum color
+                                child: ColorPicker(
+                                  // spectrum color
                                   pickerColor: controller.taskcurrenttagColor,
                                   onColorChanged: (Color color) {
                                     setState(() {
@@ -160,7 +189,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                               ),
                               actions: <Widget>[
                                 TextButton(
-                                  child: Text('Select'),
+                                  child: const Text('Select'),
                                   onPressed: () {
                                     Get.back();
                                   },
@@ -173,7 +202,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                       child: CircleAvatar(
                         backgroundColor: controller.taskcurrenttagColor,
                         radius: 35,
-                        child: Icon(
+                        child: const Icon(
                           Icons.color_lens_rounded,
                           color: Colors.white,
                           size: 40,
@@ -192,7 +221,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  controller.createTask(); // action
+                  // controller.createTask(); // action
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -201,7 +230,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
                 ),
-                child: Text(
+                child: const Text(
                   "Make a Task",
                   style: TextStyle(fontSize: 18),
                 ),

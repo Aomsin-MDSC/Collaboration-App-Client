@@ -1,4 +1,3 @@
-import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
@@ -34,7 +33,8 @@ class _EditTagFormState extends State<EditTagForm> {
           ),
           actions: <Widget>[
             TextButton(
-              onPressed: () {// update color controller
+              onPressed: () {
+                // update color controller
                 Get.back();
               },
               child: const Text("Select"),
@@ -119,7 +119,7 @@ class _EditTagFormState extends State<EditTagForm> {
               // preview [container] Taxt
               return Container(
                 padding:
-                const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 decoration: BoxDecoration(
                   color: controller.editcurrenttagColor,
                   borderRadius: BorderRadius.circular(10),

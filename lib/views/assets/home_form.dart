@@ -1,5 +1,8 @@
 import 'package:collaboration_app_client/models/project_model.dart';
+import 'package:collaboration_app_client/views/edit_project_view.dart';
+import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProjectCard extends StatelessWidget {
   final Project project;
@@ -17,9 +20,11 @@ class ProjectCard extends StatelessWidget {
           ),
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        Get.to(() => const ProjectView());
+      },
       child: Card(
-        // margin: EdgeInsets.zero,
+        margin: EdgeInsets.zero,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -28,7 +33,9 @@ class ProjectCard extends StatelessWidget {
                 title: Text(project.projectName),
                 subtitle: Text(project.tagName),
                 trailing: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => const EditProjectView());
+                  },
                   icon: const Icon(Icons.settings),
                   iconSize: 30,
                 ),

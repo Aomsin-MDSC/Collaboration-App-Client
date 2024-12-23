@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -92,10 +91,9 @@ class AuthenticationController extends GetxController {
 
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
+    await prefs.remove('jwt_token');
     print("Token deleted");
 
     Get.off(() => const LoginView());
   }
 }
-

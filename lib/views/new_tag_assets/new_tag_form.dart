@@ -1,5 +1,4 @@
 import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
-import 'package:collaboration_app_client/views/new_project_assets/new_project_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
@@ -19,31 +18,32 @@ class _NewTagFormState extends State<NewTagForm> {
 
     //
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Pick a Color"),
-            content: SingleChildScrollView(
-              child: ColorPicker(
-                // spectrum color
-                pickerColor: tagcontroller.currenttagColor,
-                onColorChanged: (Color color) {
-                  tagcontroller.changeColor(color);
-                },
-                showLabel: true,
-                pickerAreaHeightPercent: 0.8,
-              ),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Pick a Color"),
+          content: SingleChildScrollView(
+            child: ColorPicker(
+              // spectrum color
+              pickerColor: tagcontroller.currenttagColor,
+              onColorChanged: (Color color) {
+                tagcontroller.changeColor(color);
+              },
+              showLabel: true,
+              pickerAreaHeightPercent: 0.8,
             ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {// update color controller
-                  Get.back();
-                },
-                child: const Text("Select"),
-              ),
-            ],
-          );
-        },
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // update color controller
+                Get.back();
+              },
+              child: const Text("Select"),
+            ),
+          ],
+        );
+      },
     );
   }
 
