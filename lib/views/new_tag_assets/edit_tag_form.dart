@@ -1,3 +1,4 @@
+import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,7 @@ class EditTagForm extends StatefulWidget {
 class _EditTagFormState extends State<EditTagForm> {
   void _spectrumColorPicker(BuildContext context) {
     final tagcontroller = Get.find<EditTagController>();
-
+    final screenres = MediaQuery.of(context).size.width;
     //
     showDialog(
       context: context,
@@ -28,13 +29,12 @@ class _EditTagFormState extends State<EditTagForm> {
                 tagcontroller.editchangeColor(color);
               },
               showLabel: true,
-              pickerAreaHeightPercent: 0.8,
+              pickerAreaHeightPercent: screenres * 0.002,
             ),
           ),
           actions: <Widget>[
             TextButton(
-              onPressed: () {
-                // update color controller
+              onPressed: () {// update color controller
                 Get.back();
               },
               child: const Text("Select"),
@@ -48,30 +48,20 @@ class _EditTagFormState extends State<EditTagForm> {
   @override
   Widget build(BuildContext context) {
     final tagcontroller = Get.put(EditTagController());
+    final screenres = MediaQuery.of(context).size.width;
     return Form(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 5),
+        padding: EdgeInsets.symmetric(vertical: screenres * 0.01),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 30,
-            ),
-            Text(
-              "EDIT TAG",
-              style: TextStyle(fontSize: 50),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-
             // tag name ---------------
             Text(
               "Tag Name",
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: screenres * 0.05),
             ),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: screenres * 0.02,
             ),
             TextField(
               controller: tagcontroller.edittagname,
@@ -88,49 +78,49 @@ class _EditTagFormState extends State<EditTagForm> {
             ),
 
             // circle color ---------------
-            const SizedBox(
-              height: 50,
+            SizedBox(
+              height: screenres * 0.1,
             ),
             GetBuilder<EditTagController>(builder: (controller) {
               return CircleAvatar(
-                radius: 40,
+                radius: screenres * 0.1,
                 backgroundColor: controller.editcurrenttagColor,
               );
             }),
 
             //select color ---------------
-            const SizedBox(
-              height: 30,
+            SizedBox(
+              height: screenres * 0.05,
             ),
             ElevatedButton(
               onPressed: () => _spectrumColorPicker(context),
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(screenres * 0.02),
                 ),
-                minimumSize: const Size(200, 50),
+                minimumSize: Size(screenres * 0.1, screenres * 0.1),
               ),
               child: const Text("Select Color"),
             ),
 
             // Tag review
-            const SizedBox(height: 50),
+            SizedBox(height: screenres * 0.15),
             GetBuilder<EditTagController>(builder: (controller) {
               // preview [container] Taxt
               return Container(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                EdgeInsets.symmetric(vertical: screenres * 0.02, horizontal: screenres * 0.05),
                 decoration: BoxDecoration(
                   color: controller.editcurrenttagColor,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(screenres * 0.02),
                 ),
                 child: Text(
                   controller.edittagname.text.isNotEmpty
                       ? controller.edittagname.text
                       : "Tag Preview",
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: screenres * 0.05,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -169,47 +159,47 @@ class _EditTagFormState extends State<EditTagForm> {
             }),
 
             // Save Button
-            const SizedBox(height: 60),
+            SizedBox(height: screenres * 0.15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SizedBox(
-                  width: 150,
-                  height: 60,
+                  width: screenres * 0.35,
+                  height: screenres * 0.15,
                   child: ElevatedButton(
                     onPressed: () {
                       print("makemakemake"); // action
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(screenres * 0.03),
                       ),
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
                     ),
                     child: Text(
                       "SAVE",
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: screenres * 0.05),
                     ),
                   ),
                 ),
                 SizedBox(
-                  width: 157,
-                  height: 60,
+                  width: screenres * 0.35,
+                  height: screenres * 0.15,
                   child: ElevatedButton(
                     onPressed: () {
                       print("deldeldel"); // action
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(screenres * 0.03),
                       ),
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
                     ),
                     child: Text(
                       "DELETE",
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: screenres * 0.05),
                     ),
                   ),
                 ),

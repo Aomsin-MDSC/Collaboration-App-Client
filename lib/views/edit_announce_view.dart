@@ -8,6 +8,9 @@ class EditAnnounceView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.amber,
+        ),
         backgroundColor: const Color.fromRGBO(161, 182, 255, 1),
         body: SingleChildScrollView(
           child: Container(

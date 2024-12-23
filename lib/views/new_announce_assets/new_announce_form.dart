@@ -21,7 +21,6 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
           children: [
 
             // title
-            const SizedBox(height: 30,),
             Text("NEW ANNOUNCE".toUpperCase(),style: TextStyle(fontSize: 44),),
             const SizedBox(height: 20,),
             Text("Title",style: TextStyle(fontSize: 18),),

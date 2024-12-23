@@ -69,9 +69,6 @@ class NewProjectController extends GetxController {
         TagsMap.value = {
           for (var e in data) e['tag_name'] as String: e['tag_id'] as int,
         };
-        if (!taglist.contains('Add Tag')) {
-          taglist.add('Add Tag');
-        }
       } else {
         throw Exception('Failed to load tags');
       }

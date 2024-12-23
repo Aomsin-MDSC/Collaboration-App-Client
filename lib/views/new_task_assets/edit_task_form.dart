@@ -1,4 +1,5 @@
 import 'package:collaboration_app_client/controllers/edit_task_controller.dart';
+import 'package:collaboration_app_client/views/edit_tag_view.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -7,7 +8,7 @@ import 'package:get/get.dart';
 import '../new_tag_view.dart';
 
 class EditTaskForm extends StatefulWidget {
-  const EditTaskForm({super.key});
+  const EditTaskForm ({super.key});
 
   @override
   State<EditTaskForm> createState() => _EditTaskFormState();
@@ -17,23 +18,16 @@ class _EditTaskFormState extends State<EditTaskForm> {
   final controller = Get.put(EditTaskController());
   @override
   Widget build(BuildContext context) {
+    final screenres = MediaQuery.of(context).size.width;
     return Form(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 5),
+        padding: EdgeInsets.symmetric(vertical: screenres * 0.01),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // taskname ---------------
-            const SizedBox(
-              height: 30,
-            ),
-            Text(
-              "EDIT TASK".toUpperCase(),
-              style: const TextStyle(fontSize: 50),
-            ),
-            const SizedBox(height: 20),
-            const Text("Task Name", style: TextStyle(fontSize: 18)),
-            const SizedBox(height: 10),
+            Text("Task Name", style: TextStyle(fontSize: screenres * 0.05)),
+            SizedBox(height: screenres * 0.05),
             TextField(
                 controller: controller.edittaskname,
                 decoration: const InputDecoration(
@@ -41,19 +35,13 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   fillColor: Colors.white,
                   // prefixIcon: Icon(Icons.add),
                   border: OutlineInputBorder(),
-                )),
+                )
+            ),
 
             // detail ---------------
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              "Details",
-              style: TextStyle(fontSize: 18),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
+            SizedBox(height: screenres * 0.05,),
+            Text("Details", style: TextStyle(fontSize: screenres * 0.05),),
+            SizedBox(height: screenres * 0.05,),
             TextField(
               controller: controller.edittaskdetails,
               decoration: const InputDecoration(
@@ -66,73 +54,65 @@ class _EditTaskFormState extends State<EditTaskForm> {
             ),
 
             // member ---------------
-            const SizedBox(height: 20),
-            const Text("Member", style: TextStyle(fontSize: 18)),
-            const SizedBox(height: 10),
+            SizedBox(height: screenres * 0.05),
+            Text("Member", style: TextStyle(fontSize: screenres * 0.05)),
+            SizedBox(height: screenres * 0.05),
             Obx(() {
               return DropdownSearch<String>.multiSelection(
                 items: controller.editmemberlist.toList(),
                 selectedItems: controller.editselectedmember.toList(),
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                )),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(),
+                    )),
               );
             }),
 
             // Add Tag
-            const SizedBox(height: 20),
-            const Text("Tag", style: TextStyle(fontSize: 18)),
-            const SizedBox(height: 10),
+            SizedBox(height: screenres * 0.05),
+            Text("Tag", style: TextStyle(fontSize: screenres * 0.05)),
+            SizedBox(height: screenres * 0.05),
             Obx(() {
               return DropdownSearch<String>(
+                popupProps: PopupProps.menu(
+                    title: ElevatedButton(
+                        onPressed: () {
+                          controller.editselectedtag.clear();
+                          Get.to(const EditTagView());
+                        },
+                        child: const Text("Add Tag"))),
                 items: controller.edittaglist.toList(),
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                )),
-                onChanged: (value) {
-                  if (value == "Add Tag") {
-                    Get.to(const NewTagView());
-                  }
-                },
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(),
+                    )),
               );
             }),
 
             // Text, Icon [Dead line, Color, Add tag]
-            const SizedBox(
-              height: 30,
-            ),
+            SizedBox(height: screenres * 0.05,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   children: [
-                    Text(
-                      "Dead Line".toUpperCase(),
-                      style: const TextStyle(fontSize: 20),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    Text("Dead Line".toUpperCase(), style: TextStyle(fontSize: screenres * 0.04),),
+                    SizedBox(height: screenres * 0.05,),
                     GestureDetector(
                       onTap: () async {
                         DateTime? selected = await showDatePicker(
                           context: context,
-                          initialDate: controller.editselectedDate ??
-                              DateTime.now(), // used selected day
+                          initialDate: controller.editselectedDate ?? DateTime.now(), // used selected day
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2101),
                         );
-                        if (selected != null &&
-                            selected != controller.editselectedDate) {
+                        if (selected != null && selected != controller.editselectedDate) {
                           setState(() {
-                            controller.editselectedDate =
-                                selected; // save day [new selected]
+                            controller.editselectedDate = selected; // save day [new selected]
                           });
                         }
                       },
@@ -142,10 +122,8 @@ class _EditTaskFormState extends State<EditTaskForm> {
                             : 'No date selected',
                         child: Icon(
                           Icons.date_range,
-                          color: controller.editselectedDate != null
-                              ? Colors.red
-                              : Colors.black,
-                          size: 70,
+                          color: controller.editselectedDate != null ? Colors.red : Colors.black,
+                          size: screenres * 0.19,
                         ),
                       ),
                     ),
@@ -153,23 +131,17 @@ class _EditTaskFormState extends State<EditTaskForm> {
                 ),
                 Column(
                   children: [
-                    Text(
-                      "Color".toUpperCase(),
-                      style: const TextStyle(fontSize: 20),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    Text("Color".toUpperCase(), style: TextStyle(fontSize: screenres * 0.04),),
+                    SizedBox(height: screenres * 0.05,),
                     GestureDetector(
                       onTap: () {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: const Text('Pick a Color'),
+                              title: Text('Pick a Color'),
                               content: SingleChildScrollView(
-                                child: ColorPicker(
-                                  // spectrum color
+                                child: ColorPicker( // spectrum color
                                   pickerColor: controller.taskcurrenttagColor,
                                   onColorChanged: (Color color) {
                                     setState(() {
@@ -177,7 +149,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                                     });
                                   },
                                   showLabel: true,
-                                  pickerAreaHeightPercent: 0.8,
+                                  pickerAreaHeightPercent: screenres * 0.002,
                                 ),
                                 // child: BlockPicker(
                                 //   pickerColor: controller.taskcurrenttagColor,
@@ -190,7 +162,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                               ),
                               actions: <Widget>[
                                 TextButton(
-                                  child: const Text('Select'),
+                                  child: Text('Select'),
                                   onPressed: () {
                                     Get.back();
                                   },
@@ -202,11 +174,11 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       },
                       child: CircleAvatar(
                         backgroundColor: controller.taskcurrenttagColor,
-                        radius: 35,
-                        child: const Icon(
+                        radius: screenres * 0.095,
+                        child: Icon(
                           Icons.color_lens_rounded,
                           color: Colors.white,
-                          size: 40,
+                          size: screenres * 0.15,
                         ),
                       ),
                     )
@@ -216,50 +188,50 @@ class _EditTaskFormState extends State<EditTaskForm> {
             ),
 
             // Save Button
-            const SizedBox(height: 30),
+            SizedBox(height: screenres * 0.05),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SizedBox(
-                  width: 150,
-                  height: 60,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      print("makemakemake"); // action
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                    SizedBox(
+                      width: screenres * 0.35,
+                      height: screenres * 0.15,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          print("makemakemake"); // action
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(screenres * 0.03),
+                          ),
+                          backgroundColor: Colors.black,
+                          foregroundColor: Colors.white,
+                        ),
+                        child: Text(
+                          "SAVE",
+                          style: TextStyle(fontSize: screenres * 0.05),
+                        ),
                       ),
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
                     ),
-                    child: const Text(
-                      "SAVE",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 157,
-                  height: 60,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      print("deldeldel"); // action
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                    SizedBox(
+                      width: screenres * 0.35,
+                      height: screenres * 0.15,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          print("deldeldel"); // action
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(screenres * 0.03),
+                          ),
+                          backgroundColor: Colors.black,
+                          foregroundColor: Colors.white,
+                        ),
+                        child: Text(
+                          "DELETE",
+                          style: TextStyle(fontSize: screenres * 0.05),
+                        ),
                       ),
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
                     ),
-                    child: const Text(
-                      "DELETE",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                ),
               ],
             )
 

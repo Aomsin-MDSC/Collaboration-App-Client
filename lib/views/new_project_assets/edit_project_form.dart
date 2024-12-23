@@ -36,7 +36,6 @@ class _EditProjectFormState extends State<EditProjectForm> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Project Header
-            const SizedBox(height: 30),
             Text(
               "EDIT PROJECT".toUpperCase(),
               style: const TextStyle(fontSize: 50),

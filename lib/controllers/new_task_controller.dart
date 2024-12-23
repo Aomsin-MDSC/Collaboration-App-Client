@@ -1,11 +1,13 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'new_project_controller.dart';
 
 class NewTaskController extends GetxController {
   static NewTaskController get instance => Get.find();
-  var isLoading = true.obs;
   final controller = Get.put(NewProjectController());
 
   final taskName = TextEditingController();
@@ -45,6 +47,7 @@ class NewTaskController extends GetxController {
 
   // get tag for show
   var selectedtag = <String>[].obs;
+  var TagsMap = <String, int>{}.obs;
 
   // colors
   void taskchangeColor(Color color) {
