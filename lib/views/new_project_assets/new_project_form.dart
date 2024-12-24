@@ -40,7 +40,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Project Header
-            const SizedBox(height: 60),
+            // const SizedBox(height: 60),
             const Text("Project Name", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             TextField(
@@ -93,7 +93,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
                         ),
                         child: const Text("Add Tag"))),
                 items: controller.taglist.toList(),
-
                 onChanged: (newValue) {
                   controller.selectedtag.clear();
                   controller.selectedtag.add(newValue!);
@@ -177,7 +176,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
             // ),
 
             // Save Button
-            const SizedBox(height: 200),
+            const SizedBox(height: 150),
             SizedBox(
               width: double.infinity,
               height: 60,

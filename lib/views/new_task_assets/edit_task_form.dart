@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 
+import '../../utils/color.dart';
 import '../new_tag_view.dart';
 
 class EditTaskForm extends StatefulWidget {
@@ -18,16 +19,15 @@ class _EditTaskFormState extends State<EditTaskForm> {
   final controller = Get.put(EditTaskController());
   @override
   Widget build(BuildContext context) {
-    final screenres = MediaQuery.of(context).size.width;
     return Form(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: screenres * 0.01),
+        padding: EdgeInsets.symmetric(vertical: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // taskname ---------------
-            Text("Task Name", style: TextStyle(fontSize: screenres * 0.05)),
-            SizedBox(height: screenres * 0.05),
+            Text("Task Name", style: TextStyle(fontSize: 18)),
+            SizedBox(height: 10),
             TextField(
                 controller: controller.edittaskname,
                 decoration: const InputDecoration(
@@ -35,13 +35,12 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   fillColor: Colors.white,
                   // prefixIcon: Icon(Icons.add),
                   border: OutlineInputBorder(),
-                )
-            ),
+                )),
 
             // detail ---------------
-            SizedBox(height: screenres * 0.05,),
-            Text("Details", style: TextStyle(fontSize: screenres * 0.05),),
-            SizedBox(height: screenres * 0.05,),
+            SizedBox(height: 60,),
+            Text("Details", style: TextStyle(fontSize: 18),),
+            SizedBox(height: 10,),
             TextField(
               controller: controller.edittaskdetails,
               decoration: const InputDecoration(
@@ -50,13 +49,12 @@ class _EditTaskFormState extends State<EditTaskForm> {
                 // prefixIcon: Icon(Icons.abc),
                 border: OutlineInputBorder(),
               ),
-              maxLines: null,
             ),
 
             // member ---------------
-            SizedBox(height: screenres * 0.05),
-            Text("Member", style: TextStyle(fontSize: screenres * 0.05)),
-            SizedBox(height: screenres * 0.05),
+            SizedBox(height: 60),
+            Text("Member", style: TextStyle(fontSize: 18)),
+            SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>.multiSelection(
                 items: controller.editmemberlist.toList(),
@@ -71,17 +69,23 @@ class _EditTaskFormState extends State<EditTaskForm> {
             }),
 
             // Add Tag
-            SizedBox(height: screenres * 0.05),
-            Text("Tag", style: TextStyle(fontSize: screenres * 0.05)),
-            SizedBox(height: screenres * 0.05),
+            SizedBox(height: 60),
+            Text("Tag", style: TextStyle(fontSize: 18)),
+            SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>(
                 popupProps: PopupProps.menu(
                     title: ElevatedButton(
                         onPressed: () {
                           controller.editselectedtag.clear();
-                          Get.to(const EditTagView());
+                          Get.to(const NewTagView());
                         },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: btcolor,
+                          shape: const RoundedRectangleBorder(
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                        ),
                         child: const Text("Add Tag"))),
                 items: controller.edittaglist.toList(),
                 dropdownDecoratorProps: const DropDownDecoratorProps(
@@ -94,14 +98,14 @@ class _EditTaskFormState extends State<EditTaskForm> {
             }),
 
             // Text, Icon [Dead line, Color, Add tag]
-            SizedBox(height: screenres * 0.05,),
+            SizedBox(height: 60,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   children: [
-                    Text("Dead Line".toUpperCase(), style: TextStyle(fontSize: screenres * 0.04),),
-                    SizedBox(height: screenres * 0.05,),
+                    Text("Dead Line".toUpperCase(), style: TextStyle(fontSize: 18),),
+                    SizedBox(height: 10),
                     GestureDetector(
                       onTap: () async {
                         DateTime? selected = await showDatePicker(
@@ -122,8 +126,10 @@ class _EditTaskFormState extends State<EditTaskForm> {
                             : 'No date selected',
                         child: Icon(
                           Icons.date_range,
-                          color: controller.editselectedDate != null ? Colors.red : Colors.black,
-                          size: screenres * 0.19,
+                          color: controller.editselectedDate != null
+                              ? Colors.red
+                              : Colors.black,
+                          size: 70,
                         ),
                       ),
                     ),
@@ -131,8 +137,8 @@ class _EditTaskFormState extends State<EditTaskForm> {
                 ),
                 Column(
                   children: [
-                    Text("Color".toUpperCase(), style: TextStyle(fontSize: screenres * 0.04),),
-                    SizedBox(height: screenres * 0.05,),
+                    Text("Color".toUpperCase(), style: TextStyle(fontSize: 18),),
+                    SizedBox(height: 10),
                     GestureDetector(
                       onTap: () {
                         showDialog(
@@ -149,7 +155,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                                     });
                                   },
                                   showLabel: true,
-                                  pickerAreaHeightPercent: screenres * 0.002,
+                                  pickerAreaHeightPercent: 0.8,
                                 ),
                                 // child: BlockPicker(
                                 //   pickerColor: controller.taskcurrenttagColor,
@@ -162,7 +168,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                               ),
                               actions: <Widget>[
                                 TextButton(
-                                  child: Text('Select'),
+                                  child: const Text('Select'),
                                   onPressed: () {
                                     Get.back();
                                   },
@@ -174,11 +180,11 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       },
                       child: CircleAvatar(
                         backgroundColor: controller.taskcurrenttagColor,
-                        radius: screenres * 0.095,
+                        radius: 35,
                         child: Icon(
                           Icons.color_lens_rounded,
                           color: Colors.white,
-                          size: screenres * 0.15,
+                          size: 40,
                         ),
                       ),
                     )
@@ -188,47 +194,45 @@ class _EditTaskFormState extends State<EditTaskForm> {
             ),
 
             // Save Button
-            SizedBox(height: screenres * 0.05),
+            SizedBox(height: 60),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                     SizedBox(
-                      width: screenres * 0.35,
-                      height: screenres * 0.15,
+                      width: 150,
+                      height: 60,
                       child: ElevatedButton(
                         onPressed: () {
                           print("makemakemake"); // action
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(screenres * 0.03),
+                            borderRadius: BorderRadius.circular(16),
                           ),
-                          backgroundColor: Colors.black,
-                          foregroundColor: Colors.white,
+                          backgroundColor: btcolor,
                         ),
                         child: Text(
                           "SAVE",
-                          style: TextStyle(fontSize: screenres * 0.05),
+                          style: TextStyle(fontSize: 18),
                         ),
                       ),
                     ),
                     SizedBox(
-                      width: screenres * 0.35,
-                      height: screenres * 0.15,
+                      width: 157,
+                      height: 60,
                       child: ElevatedButton(
                         onPressed: () {
                           print("deldeldel"); // action
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(screenres * 0.03),
+                            borderRadius: BorderRadius.circular(16),
                           ),
-                          backgroundColor: Colors.black,
-                          foregroundColor: Colors.white,
+                          backgroundColor: btcolor,
                         ),
                         child: Text(
                           "DELETE",
-                          style: TextStyle(fontSize: screenres * 0.05),
+                          style: TextStyle(fontSize: 18),
                         ),
                       ),
                     ),

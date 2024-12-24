@@ -12,7 +12,6 @@ class NewTaskView extends StatelessWidget {
           title: const Text("NEW TASK",
           ),
         ),
-        backgroundColor: const Color.fromRGBO(150, 180, 80, 1),
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(30),

@@ -33,7 +33,6 @@ class NewTaskController extends GetxController {
     'work',
     'job',
     'present',
-    'Add Tag',
   ].obs;
 
   final taskList = RxList<Task>([

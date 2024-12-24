@@ -1,3 +1,4 @@
+import 'package:collaboration_app_client/views/edit_announce_view.dart';
 import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/new_announce_view.dart';
 import 'package:collaboration_app_client/views/project_assets/project_form.dart';
@@ -40,7 +41,6 @@ class _ProjectViewState extends State<ProjectView> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.amber,
             title: const Text("Project Page"),
           ),
           floatingActionButtonLocation: ExpandableFab.location,

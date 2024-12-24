@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 
+import '../../utils/color.dart';
 import '../new_tag_view.dart';
 
 class NewTaskForm extends StatefulWidget {
@@ -18,16 +19,15 @@ class _NewTaskFormState extends State<NewTaskForm> {
 
   @override
   Widget build(BuildContext context) {
-    final screenres = MediaQuery.of(context).size.width; // responsive
     return Form(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: screenres * 0.01),
+        padding: EdgeInsets.symmetric(vertical: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // taskname ---------------
-            Text("Task Name", style: TextStyle(fontSize: screenres * 0.05)),
-            SizedBox(height: screenres * 0.05),
+            Text("Task Name", style: TextStyle(fontSize: 18)),
+            SizedBox(height: 10),
             TextField(
                 controller: controller.taskName,
                 decoration: const InputDecoration(
@@ -38,9 +38,9 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 )),
 
             // detail ---------------
-            SizedBox(height: screenres * 0.05,),
-            Text("Details", style: TextStyle(fontSize: screenres * 0.05),),
-            SizedBox(height: screenres * 0.05,),
+            SizedBox(height: 60,),
+            Text("Details", style: TextStyle(fontSize: 18),),
+            SizedBox(height: 10,),
             TextField(
               controller: controller.taskdetails,
               decoration: const InputDecoration(
@@ -52,9 +52,9 @@ class _NewTaskFormState extends State<NewTaskForm> {
             ),
 
             // member ---------------
-            SizedBox(height: screenres * 0.05),
-            Text("Member", style: TextStyle(fontSize: screenres * 0.05)),
-            SizedBox(height: screenres * 0.05),
+            SizedBox(height: 60),
+            Text("Member", style: TextStyle(fontSize: 18)),
+            SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>.multiSelection(
                 items: controller.memberlist.toList(),
@@ -69,9 +69,9 @@ class _NewTaskFormState extends State<NewTaskForm> {
             }),
 
             // Add Tag
-            SizedBox(height: screenres * 0.05),
-            Text("Tag", style: TextStyle(fontSize: screenres * 0.05)),
-            SizedBox(height: screenres * 0.05),
+            SizedBox(height: 60),
+            Text("Tag", style: TextStyle(fontSize: 18)),
+            SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>(
                 popupProps: PopupProps.menu(
@@ -80,6 +80,12 @@ class _NewTaskFormState extends State<NewTaskForm> {
                           controller.selectedtag.clear();
                           Get.to(const NewTagView());
                         },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: btcolor,
+                          shape: const RoundedRectangleBorder(
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                        ),
                         child: const Text("Add Tag"))),
                 items: controller.taglist.toList(),
                 dropdownDecoratorProps: const DropDownDecoratorProps(
@@ -88,23 +94,18 @@ class _NewTaskFormState extends State<NewTaskForm> {
                       fillColor: Colors.white,
                       border: OutlineInputBorder(),
                     )),
-                onChanged: (value) {
-                  if (value == "Add Tag") {
-                    Get.to(NewTagView());
-                  }
-                },
               );
             }),
 
             // Text, Icon [Dead line, Color, Add tag]
-            SizedBox(height: screenres * 0.05,),
+            SizedBox(height: 60,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   children: [
-                    Text("Dead Line".toUpperCase(), style: TextStyle(fontSize: screenres * 0.04),),
-                    SizedBox(height: screenres * 0.05,),
+                    Text("Dead Line".toUpperCase(), style: TextStyle(fontSize: 18),),
+                    SizedBox(height: 10),
                     GestureDetector(
                       onTap: () async {
                         DateTime? selected = await showDatePicker(
@@ -128,7 +129,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                           color: controller.selectedDate != null
                               ? Colors.red
                               : Colors.black,
-                          size: screenres * 0.19,
+                          size: 70,
                         ),
                       ),
                     ),
@@ -136,8 +137,8 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 ),
                 Column(
                   children: [
-                    Text("Color".toUpperCase(), style: TextStyle(fontSize: screenres * 0.04),),
-                    SizedBox(height: screenres * 0.05,),
+                    Text("Color".toUpperCase(), style: TextStyle(fontSize: 18),),
+                    SizedBox(height: 10),
                     GestureDetector(
                       onTap: () {
                         showDialog(
@@ -154,7 +155,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                                     });
                                   },
                                   showLabel: true,
-                                  pickerAreaHeightPercent: screenres * 0.002,
+                                  pickerAreaHeightPercent: 0.8,
                                 ),
                                 // child: BlockPicker(
                                 //   pickerColor: controller.taskcurrenttagColor,
@@ -167,7 +168,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                               ),
                               actions: <Widget>[
                                 TextButton(
-                                  child: Text('Select'),
+                                  child: const Text('Select'),
                                   onPressed: () {
                                     Get.back();
                                   },
@@ -179,11 +180,11 @@ class _NewTaskFormState extends State<NewTaskForm> {
                       },
                       child: CircleAvatar(
                         backgroundColor: controller.taskcurrenttagColor,
-                        radius: screenres * 0.095,
+                        radius: 35,
                         child: Icon(
                           Icons.color_lens_rounded,
                           color: Colors.white,
-                          size: screenres * 0.15,
+                          size: 40,
                         ),
                       ),
                     )
@@ -193,24 +194,23 @@ class _NewTaskFormState extends State<NewTaskForm> {
             ),
 
             // Save Button
-            SizedBox(height: screenres * 0.05),
+            SizedBox(height: 60),
             SizedBox(
               width: double.infinity,
-              height: screenres * 0.15,
+              height: 60,
               child: ElevatedButton(
                 onPressed: () {
                   // controller.createTask(); // action
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(screenres * 0.03),
+                    borderRadius: BorderRadius.circular(16),
                   ),
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
+                  backgroundColor: btcolor,
                 ),
                 child: Text(
                   "Make a Task",
-                  style: TextStyle(fontSize: screenres * 0.05),
+                  style: TextStyle(fontSize: 18),
                 ),
               ),
             ),

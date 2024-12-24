@@ -127,7 +127,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
             ),
 
             // button set announce
-            const SizedBox(height: 60),
+            const SizedBox(height: 150),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

@@ -29,7 +29,6 @@ class EditTaskController extends GetxController {
     'work',
     'job',
     'present',
-    'Add Tag',
   ].obs;
 
   // get tag for show
