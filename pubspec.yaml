@@ -41,6 +41,8 @@ dependencies:
   flutter_expandable_fab: ^2.3.0
   shared_preferences: ^2.3.4
   jwt_decoder: ^2.0.1
+  animated_toggle_switch: ^0.8.4
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
