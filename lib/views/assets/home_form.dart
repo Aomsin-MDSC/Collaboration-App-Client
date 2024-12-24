@@ -3,11 +3,16 @@ import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../edit_project_view.dart';
+import 'package:get/get.dart';
 
 class ProjectCard extends StatelessWidget {
   final Project project;
+  final int currentUserId;
 
-  const ProjectCard({super.key, required this.project});
+  const ProjectCard({super.key, required this.project, required this.currentUserId});
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +37,17 @@ class ProjectCard extends StatelessWidget {
               ListTile(
                 title: Text(project.projectName),
                 subtitle: Text(project.tagName),
-                trailing: IconButton(
+                trailing: project.userId == currentUserId
+                    ? IconButton(
                   onPressed: () {
-                    Get.to(() => const EditProjectView());
+                    print('User ID matches, navigating to edit');
+                    Get.to(EditProjectView(),
+                        arguments: {'projectId': project.projectId});
                   },
                   icon: const Icon(Icons.settings),
                   iconSize: 30,
-                ),
+                )
+                    : null,
               ),
             ],
           ),

@@ -12,9 +12,9 @@ class ProjectController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    String? token = await getToken(); // รับ Token จาก SharedPreferences
+    String? token = await getToken();
     if (token != null && token.isNotEmpty) {
-      fetchApi(token);  // ถ้ามี Token ให้เรียก API
+      fetchApi(token);
     } else {
       print("Token not found");
     }
@@ -50,6 +50,9 @@ class ProjectController extends GetxController {
         print('Decoded data: $jsonData');
         project.value = jsonData.map((data) => Project.fromJson(data)).toList();
         print("Projects loaded: ${project.length}");
+        project.forEach((project) {
+          print('Project ID: ${project.projectId}, User ID: ${project.userId}');
+        });
       } else {
         print('Failed to load projects');
         print('Response: ${response.body}');

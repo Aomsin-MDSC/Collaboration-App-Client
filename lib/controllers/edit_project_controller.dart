@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +12,8 @@ class EditProjectController extends GetxController {
   var editmemberlist = <String>[].obs;
   var editselectedmember = <String>[].obs;
   var editmembersMap = <String, int>{}.obs;
+  // late int projectId;
+  final projectname = TextEditingController();
 
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -78,60 +81,109 @@ class EditProjectController extends GetxController {
       print('Error fetching tags: $e');
     }
   }
+  // Future<void> loadProjectDetails(int projectId) async {
+  //   try {
+  //     final token = await getToken();
+  //     if (token == null) {
+  //       print("Token not found!");
+  //       return;
+  //     }
+  //     final userId = await getUserIdFromToken();
+  //     if (userId == null) {
+  //       print("User ID not found!");
+  //       return;
+  //     }
+  //     final response = await http.get(Uri.parse('http://10.24.8.16:5263/api/GetProject/$projectId'),
+  //       headers: {
+  //         'Authorization': 'Bearer $token',
+  //         'Content-Type': 'application/json',
+  //       },);
+  //
+  //
+  //     print("Response status: ${response.statusCode}");
+  //     print("Response body: ${response.body}");
+  //
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+  //       editmemberlist.value = (data['Members'] as List)
+  //           .map((e) => e['UserName'] as String)
+  //           .toList();
+  //       editmembersMap.value = {
+  //         for (var e in data['Members']) e['UserName'] as String: e['UserId'] as int,
+  //       };
+  //       editselectedmember.value = (data['Members'] as List)
+  //           .map((e) => e['UserName'] as String)
+  //           .toList();
+  //
+  //       // Set the selected tag
+  //       if (data['TagName'] != null && data['TagId'] != null) {
+  //         edittaglist.value = [data['TagName']];
+  //         editTagsMap.value = {
+  //           data['TagName']: data['TagId'],
+  //         };
+  //         editselectedtag.value = [data['TagName']];
+  //       }
+  //     } else {
+  //       print("Failed with status code: ${response.statusCode}");
+  //       Get.snackbar("Error", "Failed to load project details");
+  //     }
+  //
+  //   } catch (e) {
+  //     print("Error: ${e.toString()}");
+  //     Get.snackbar("Error", "Something went wrong: ${e.toString()}");
+  //   }
+  // }
 
-  Future<void> createProject() async {
-    try {
-      final token = await getToken();
-      if (token == null) {
-        print("Token not found!");
-        return;
-      }
-      final userId = await getUserIdFromToken();
-      if (userId == null) {
-        print("User ID not found!");
-        return;
-      }
-      print("Selected members: $editselectedmember");
 
-      if (editselectedmember.isEmpty) {
-        print('No members selected!');
-        return;
-      }
+  // Future<void> updateProject() async {
+  //   try {
+  //     final token = await getToken();
+  //     if (token == null) {
+  //       print("Token not found!");
+  //       return;
+  //     }
+  //     final userId = await getUserIdFromToken();
+  //     if (userId == null) {
+  //       print("User ID not found!");
+  //       return;
+  //     }
+  //
+  //     final memberIds =
+  //         editselectedmember.map((e) => {'UserId': editmembersMap[e]}).toList();
+  //     final tagId = editTagsMap[editselectedtag.first];
+  //
+  //     final response = await http.post(
+  //       Uri.parse('http://10.24.8.16:5263/api/UpdateProject/$projectId'),
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer $token',
+  //       },
+  //       body: jsonEncode({
+  //         // 'ProjectName': editprojectname.text,
+  //         'TagId': tagId,
+  //         'CreatorId': userId,
+  //         'Members': memberIds,
+  //       }),
+  //     );
+  //
+  //     if (response.statusCode == 200) {
+  //       print('Project updated successfully');
+  //     } else {
+  //       print('Failed to update project');
+  //       print('Response body: ${response.body}');
+  //     }
+  //   } catch (e) {
+  //     print('Error updating project: $e');
+  //   }
+  // }
 
-      final memberIds =
-          editselectedmember.map((e) => {'UserId': editmembersMap[e]}).toList();
-      final tagId = editTagsMap[editselectedtag.first];
-      print("Selected TagId: $tagId");
-
-      final response = await http.post(
-        Uri.parse('http://10.24.8.16:5263/api/CreateProject'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: jsonEncode({
-          // 'ProjectName': editprojectname.text,
-          'TagId': tagId,
-          'CreatorId': userId,
-          'Members': memberIds,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        print('Project created successfully');
-      } else {
-        print('Failed to create project');
-        print('Response body: ${response.body}');
-      }
-    } catch (e) {
-      print('Error creating project: $e');
-    }
-  }
 
   @override
   void onInit() {
     fetchMembers();
     fetchTags();
+    // projectId = Get.arguments['projectId'];
+    // loadProjectDetails(projectId);
     super.onInit();
   }
 }

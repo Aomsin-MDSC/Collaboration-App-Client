@@ -1,6 +1,7 @@
 import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/Login_View.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
+import 'package:collaboration_app_client/views/new_announce_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';

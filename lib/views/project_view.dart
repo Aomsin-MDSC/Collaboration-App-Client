@@ -22,15 +22,18 @@ class _ProjectViewState extends State<ProjectView> {
   // bool isSearchVisible = false; // To control the visibility of the search bar
   // // final TextEditingController _searchController = TextEditingController();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Get.put(ProjectController());
-  //   newTaskController = Get.put(NewTaskController());
-  // }
+  @override
+  void initState() {
+    super.initState();
+    Get.put(ProjectController());
+    // newTaskController = Get.put(NewTaskController());
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    final ProjectController projectController = Get.find<ProjectController>();
+
     // Check if the keyboard is visible using MediaQuery
     bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
 
@@ -75,7 +78,9 @@ class _ProjectViewState extends State<ProjectView> {
                                 heroTag: null,
                                 child: const Icon(Icons.edit),
                                 onPressed: () {
-                                  Get.to(const EditProjectView());
+                                  // final product = projectController.project[index];
+                                    Get.to(EditProjectView());
+                                    // arguments: {'projectId': project.projectId});
                                 },
                               ),
                             ],

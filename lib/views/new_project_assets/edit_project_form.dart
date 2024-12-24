@@ -76,6 +76,9 @@ class _EditProjectFormState extends State<EditProjectForm> {
                           },
                           child: const Text("Add Tag"))),
                   items: controller.edittaglist.toList(),
+                  selectedItem: controller.editselectedtag.isNotEmpty
+                      ? controller.editselectedtag.first
+                      : null,
                   dropdownDecoratorProps: const DropDownDecoratorProps(
                       dropdownSearchDecoration: InputDecoration(
                     filled: true,
@@ -165,7 +168,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () {
-                      print("makemakemake"); // action
+                      // controller.updateProject(); // action
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
