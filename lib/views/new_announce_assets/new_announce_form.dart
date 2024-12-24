@@ -19,12 +19,14 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             // title
-            Text("NEW ANNOUNCE".toUpperCase(),style: TextStyle(fontSize: 44),),
-            const SizedBox(height: 20,),
-            Text("Title",style: TextStyle(fontSize: 18),),
-            const SizedBox(height: 10,),
+            const Text(
+              "Title",
+              style: const TextStyle(fontSize: 18),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             TextField(
               controller: controller.announcename,
               decoration: const InputDecoration(
@@ -35,11 +37,17 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
               ),
             ),
 
-
             // details
-            const SizedBox(height: 20,),
-            Text("Details", style: TextStyle(fontSize: 18),),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              "Details",
+              style: TextStyle(fontSize: 18),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             TextField(
               controller: controller.announcedetail,
               decoration: const InputDecoration(
@@ -47,32 +55,45 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                 fillColor: Colors.white,
                 // prefixIcon: Icon(Icons.abc),
                 border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.only(top: 50, left: 10, right: 10,),
+                contentPadding: EdgeInsets.only(
+                  top: 50,
+                  left: 10,
+                  right: 10,
+                ),
               ),
               maxLines: null,
             ),
 
             // text icon [etc.]
-            const SizedBox(height: 50,),
+            const SizedBox(
+              height: 50,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   children: [
-                    Text("Set DateTime".toUpperCase(), style: TextStyle(fontSize: 20),),
-                    const SizedBox(height: 10,),
+                    Text(
+                      "Set DateTime".toUpperCase(),
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     GestureDetector(
                       onTap: () async {
                         DateTime? selectedDate = await showDatePicker(
                           context: context,
-                          initialDate: controller.selectedDate ?? DateTime.now(),
+                          initialDate:
+                          controller.selectedDate ?? DateTime.now(),
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2101),
                         );
                         if (selectedDate != null) {
                           TimeOfDay? selectedTime = await showTimePicker(
                             context: context,
-                            initialTime: TimeOfDay.fromDateTime(controller.selectedDate ?? DateTime.now()),
+                            initialTime: TimeOfDay.fromDateTime(
+                                controller.selectedDate ?? DateTime.now()),
                           );
                           if (selectedTime != null) {
                             setState(() {
@@ -90,10 +111,12 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                       child: Tooltip(
                         message: controller.selectedDate != null
                             ? 'Selected Date: ${controller.selectedDate!.toLocal()}'
-                            :  'No date selected',
+                            : 'No date selected',
                         child: Icon(
                           Icons.date_range,
-                          color: controller.selectedDate != null ? Colors.red : Colors.black,
+                          color: controller.selectedDate != null
+                              ? Colors.red
+                              : Colors.black,
                           size: 70,
                         ),
                       ),
@@ -104,7 +127,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
             ),
 
             // button set announce
-            const SizedBox(height: 60),
+            SizedBox(height: 10),
             SizedBox(
               width: double.infinity,
               height: 60,

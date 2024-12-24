@@ -20,16 +20,6 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // title
-            const SizedBox(
-              height: 30,
-            ),
-            Text(
-              "EDIT ANNOUNCE".toUpperCase(),
-              style: const TextStyle(fontSize: 44),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
             const Text(
               "Title",
               style: const TextStyle(fontSize: 18),

@@ -9,9 +9,9 @@ class EditAnnounceView extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.amber,
+          title: const Text("EDIT ANNOUNCE",
+          ),
         ),
-        backgroundColor: const Color.fromRGBO(161, 182, 255, 1),
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(30),
