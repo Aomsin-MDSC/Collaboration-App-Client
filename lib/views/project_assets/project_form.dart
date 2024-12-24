@@ -1,5 +1,6 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:collaboration_app_client/controllers/in_project_controller.dart';
 import 'package:collaboration_app_client/controllers/new_task_controller.dart';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:collaboration_app_client/views/edit_task_view.dart';
@@ -21,16 +22,20 @@ class _ProjectFormState extends State<ProjectForm> {
   String searchQuery = ''; // Track the search query
   bool isSearchVisible = false; // To control the visibility of the search bar
   // final TextEditingController _searchController = TextEditingController();
+  final controller = Get.put(TaskController());
 
   @override
   void initState() {
     super.initState();
-    Get.put(ProjectController());
+    Get.put(TaskController());
     newTaskController = Get.put(NewTaskController());
   }
 
   @override
   Widget build(BuildContext context) {
+    final TaskController taskController = Get.find<TaskController>();
+
+
     final List<String> announce = [
       "Announce 1",
       "Announce 2",
@@ -114,7 +119,7 @@ class _ProjectFormState extends State<ProjectForm> {
                       child: Card(
                         margin: const EdgeInsets.all(0),
                         child: ListTile(
-                          title: Text(taskList.taskName!),
+                          // title: Text(controller.taskName!),
                           subtitle: Text(taskList.taskName!),
                           trailing: AnimatedToggleSwitch<bool>.dual(
                             indicatorSize: const Size.fromWidth(40),

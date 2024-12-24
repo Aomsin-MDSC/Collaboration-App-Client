@@ -95,24 +95,30 @@ class NewProjectController extends GetxController {
         print('No members selected!');
         return;
       }
-
+      if (selectedtag.isEmpty) {
+        print('No tag selected!');
+        return;
+      }
       final memberIds =
           selectedmember.map((e) => {'UserId': membersMap[e]}).toList();
-      final tagId = TagsMap[selectedtag.first];
-      print("Selected TagId: $tagId");
 
+      final tagId = TagsMap[selectedtag.first];
+      print("Selected TagId: $memberIds");
+      print("Selected TagId: $tagId");
+      String body = jsonEncode({
+        'ProjectName': projectname.text,
+        'TagId': tagId,
+        'CreatorId': userId,
+        'Members': memberIds,
+      });
+      print(body);
       final response = await http.post(
         Uri.parse('http://10.24.8.16:5263/api/CreateProject'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode({
-          'ProjectName': projectname.text,
-          'TagId': tagId,
-          'CreatorId': userId,
-          'Members': memberIds,
-        }),
+        body: body,
       );
 
       if (response.statusCode == 200) {
@@ -123,7 +129,7 @@ class NewProjectController extends GetxController {
         print('Response body: ${response.body}');
       }
     } catch (e) {
-      print('Error creating project: $e');
+      throw('Error creating project: $e');
     }
   }
 

@@ -93,6 +93,12 @@ class _NewProjectFormState extends State<NewProjectForm> {
                         ),
                         child: const Text("Add Tag"))),
                 items: controller.taglist.toList(),
+
+                onChanged: (newValue) {
+                  controller.selectedtag.clear();
+                  controller.selectedtag.add(newValue!);
+                },
+
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
                       filled: true,
@@ -178,7 +184,9 @@ class _NewProjectFormState extends State<NewProjectForm> {
               child: ElevatedButton(
                 onPressed: () {
                   // Api Here
-                  Get.off(const ProjectView());
+                  controller.createProject();
+                  // Get.off(const ProjectView());
+
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
