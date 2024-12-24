@@ -1,3 +1,4 @@
+import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/Login_View.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,14 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white),
+          centerTitle: true,
+          backgroundColor: topiccolor,
+          elevation: 0,
+          iconTheme: IconThemeData(color: iconAppColor),
+        ),
+        scaffoldBackgroundColor: bgcolor,
         colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.black, primary: Colors.black),
         useMaterial3: true,

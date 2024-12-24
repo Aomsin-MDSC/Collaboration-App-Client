@@ -9,15 +9,9 @@ class NewTagView extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.amber,
           title: const Text("NEW TAG",
-            style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold),
           ),
-          centerTitle: true,
         ),
-        backgroundColor: const Color.fromRGBO(255, 237, 122, 1),
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(30),

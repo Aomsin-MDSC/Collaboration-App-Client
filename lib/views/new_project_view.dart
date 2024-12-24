@@ -1,3 +1,4 @@
+import 'package:collaboration_app_client/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:collaboration_app_client/views/new_project_assets/new_project_form.dart';
 
@@ -9,9 +10,9 @@ class NewProjectView extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.amber,
+          title: const Text("NEW PROJECT",
+          ),
         ),
-        backgroundColor: const Color.fromRGBO(161, 182, 255, 1),
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(30),

@@ -29,7 +29,6 @@ class _HomeViewState extends State<HomeView> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.amber,
           title: const Text("Home Page"),
           actions: [
             IconButton(

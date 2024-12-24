@@ -9,7 +9,6 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromRGBO(161, 182, 255, 1),
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(30),

@@ -36,7 +36,6 @@ class _ProjectViewState extends State<ProjectView> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.amber,
           title: const Text("Project Page"),
         ),
         floatingActionButtonLocation: ExpandableFab.location,
