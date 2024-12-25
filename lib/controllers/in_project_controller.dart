@@ -42,18 +42,19 @@ class TaskController extends GetxController {
         print('Response: ${response.body}');
       }
     } catch (e) {
-      throw('Error fetching projects: $e');
+      throw ('Error fetching projects: $e');
     } finally {
       isLoading(false);
     }
   }
+
   Future<void> updateTaskStatus(int taskId, bool taskStatus) async {
     try {
       final response = await http.put(
         Uri.parse('http://10.24.8.16:5263/api/UpdateStatus/$taskId'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          'taskStatus': taskStatus,
+          'task_status': taskStatus,
         }),
       );
       print('Response status code: ${response.statusCode}');

@@ -35,7 +35,6 @@ class _ProjectFormState extends State<ProjectForm> {
   Widget build(BuildContext context) {
     final TaskController taskController = Get.find<TaskController>();
 
-
     final List<String> announce = [
       "Announce 1",
       "Announce 2",
@@ -79,6 +78,8 @@ class _ProjectFormState extends State<ProjectForm> {
           padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
           child: TextField(
             decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
               labelText: 'Search',
               prefixIcon: const Icon(Icons.search),
               border: OutlineInputBorder(
@@ -95,11 +96,6 @@ class _ProjectFormState extends State<ProjectForm> {
         const SizedBox(height: 10),
         Expanded(
           child: Obx(() {
-             if (taskController.isLoading.value) {
-                return const Center(child: CircularProgressIndicator());
-             } else if (taskController.task.isEmpty) {
-                return const Center(child: Text('No project found'));
-             } else {
             return RefreshIndicator(
               onRefresh: () async {
                 taskController.fetchTask();
@@ -139,9 +135,10 @@ class _ProjectFormState extends State<ProjectForm> {
                                 ),
                               ],
                             ),
-                            onChanged: (value) async{
+                            onChanged: (value) async {
                               // API Here
-                              TaskController.instance.updateTaskStatus(taskList.taskId, value);
+                              await TaskController.instance
+                                  .updateTaskStatus(taskList.taskId, value);
                               await taskController.fetchTask();
                             },
                             textBuilder: (value) => value
@@ -203,7 +200,7 @@ class _ProjectFormState extends State<ProjectForm> {
                 },
               ),
             );
-          }}),
+          }),
         ),
       ],
     );
