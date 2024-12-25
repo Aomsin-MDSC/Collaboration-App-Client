@@ -29,6 +29,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
     //   "10",
     // ];
     final controller = Get.put(EditProjectController());
+    final int projectId = Get.arguments['projectId'];
 
     return Form(
       child: Container(
@@ -41,7 +42,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
             const Text("Project Name", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             TextField(
-              controller: controller.projectname,
+              controller: controller.editprojectname,
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
@@ -90,6 +91,10 @@ class _EditProjectFormState extends State<EditProjectForm> {
                         ),
                         child: const Text("Add Tag"))),
                 items: controller.edittaglist.toList(),
+                onChanged: (newValue) {
+                  controller.editselectedtag.clear();
+                  controller.editselectedtag.add(newValue!);
+                },
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
                       filled: true,
@@ -174,7 +179,8 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () {
-                      // controller.updateProject(); // action
+                      controller.updateProject(projectId); // action
+
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -193,7 +199,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () {
-                      print("deldeldel"); // action
+                      controller.deleteProject(projectId); // action
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

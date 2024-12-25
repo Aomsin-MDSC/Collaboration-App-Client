@@ -8,13 +8,22 @@ import 'package:http/http.dart' as http;
 class EditProjectController extends GetxController {
   static EditProjectController get instance => Get.find();
 
-  // final editprojectname = TextEditingController();
+  final editprojectname = TextEditingController();
   var editmemberlist = <String>[].obs;
   var editselectedmember = <String>[].obs;
   var editmembersMap = <String, int>{}.obs;
   // late int projectId;
   final projectname = TextEditingController();
 
+  var edittaglist = <String>[
+    'work',
+    'job',
+    'present',
+    'Add Tag',
+  ].obs;
+
+  var editselectedtag = <String>[].obs;
+  var editTagsMap = <String, int>{}.obs;
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("Retrieved token: ${prefs.getString('jwt_token')}");
@@ -29,16 +38,6 @@ class EditProjectController extends GetxController {
     }
     return null;
   }
-
-  var edittaglist = <String>[
-    'work',
-    'job',
-    'present',
-    'Add Tag',
-  ].obs;
-
-  var editselectedtag = <String>[].obs;
-  var editTagsMap = <String, int>{}.obs;
 
   Future<void> fetchMembers() async {
     try {
@@ -135,54 +134,83 @@ class EditProjectController extends GetxController {
   // }
 
 
-  // Future<void> updateProject() async {
-  //   try {
-  //     final token = await getToken();
-  //     if (token == null) {
-  //       print("Token not found!");
-  //       return;
-  //     }
-  //     final userId = await getUserIdFromToken();
-  //     if (userId == null) {
-  //       print("User ID not found!");
-  //       return;
-  //     }
-  //
-  //     final memberIds =
-  //         editselectedmember.map((e) => {'UserId': editmembersMap[e]}).toList();
-  //     final tagId = editTagsMap[editselectedtag.first];
-  //
-  //     final response = await http.post(
-  //       Uri.parse('http://10.24.8.16:5263/api/UpdateProject/$projectId'),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': 'Bearer $token',
-  //       },
-  //       body: jsonEncode({
-  //         // 'ProjectName': editprojectname.text,
-  //         'TagId': tagId,
-  //         'CreatorId': userId,
-  //         'Members': memberIds,
-  //       }),
-  //     );
-  //
-  //     if (response.statusCode == 200) {
-  //       print('Project updated successfully');
-  //     } else {
-  //       print('Failed to update project');
-  //       print('Response body: ${response.body}');
-  //     }
-  //   } catch (e) {
-  //     print('Error updating project: $e');
-  //   }
-  // }
+  Future<void> updateProject(int projectId) async {
+    try {
+      final token = await getToken();
+      final userId = await getUserIdFromToken();
+
+      final memberIds = editselectedmember.map((e) => editmembersMap[e]).toList();
+      final tagId = editTagsMap[editselectedtag.first];
+
+
+      // print("$memberIds");
+      // print("$tagId");
+
+      final response = await http.put(
+        Uri.parse('http://10.24.8.16:5263/api/UpdateProject/$projectId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'ProjectName': editprojectname.text,
+          'TagId': tagId,
+          'CreatorId': userId,
+          'Members': memberIds,
+        }),
+      );
+
+      print("Response status: ${response.statusCode}");
+      print("Response body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        print('Project updated successfully');
+      } else {
+        print('Failed to update project');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      throw('Error updating project: $e');
+    }
+  }
+  Future<void> deleteProject(int projectId) async {
+    try {
+      final token = await getToken();
+      if (token == null) {
+        print("Token not found!");
+        return;
+      }
+
+      final response = await http.delete(
+        Uri.parse('http://10.24.8.16:5263/api/DeleteProject/$projectId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      print("Response status: ${response.statusCode}");
+      print("Response body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        print('Project deleted successfully');
+        Get.snackbar("Success", "Project deleted successfully");
+      } else {
+        print('Failed to delete project');
+        Get.snackbar("Error", "Failed to delete project");
+      }
+    } catch (e) {
+      print('Error deleting project: $e');
+      Get.snackbar("Error", "Something went wrong: $e");
+    }
+  }
+
 
 
   @override
   void onInit() {
     fetchMembers();
     fetchTags();
-    // projectId = Get.arguments['projectId'];
     // loadProjectDetails(projectId);
     super.onInit();
   }

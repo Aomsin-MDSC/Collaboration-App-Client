@@ -86,8 +86,6 @@ class _ProjectFormState extends State<ProjectForm> {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              filled: true,
-              fillColor: Colors.white
             ),
             onChanged: (value) {
               setState(() {
