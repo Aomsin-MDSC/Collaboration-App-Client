@@ -29,6 +29,7 @@ class ProjectCard extends StatelessWidget {
         Get.to(() => const ProjectView());
       },
       child: Card(
+        color: Colors.white,
         margin: EdgeInsets.zero,
         child: Padding(
           padding: const EdgeInsets.all(8.0),

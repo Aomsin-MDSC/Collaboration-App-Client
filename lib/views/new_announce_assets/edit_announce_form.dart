@@ -1,3 +1,4 @@
+import 'package:collaboration_app_client/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/edit_announce_controller.dart';
@@ -39,7 +40,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
 
             // details
             const SizedBox(
-              height: 20,
+              height: 60,
             ),
             const Text(
               "Details",
@@ -55,18 +56,18 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                 fillColor: Colors.white,
                 // prefixIcon: Icon(Icons.abc),
                 border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.only(
-                  top: 50,
-                  left: 10,
-                  right: 10,
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 15,
+                  horizontal: 20,
                 ),
               ),
               maxLines: null,
+              textAlignVertical: TextAlignVertical.top,
             ),
 
             // text icon [etc.]
             const SizedBox(
-              height: 50,
+              height: 60,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -75,7 +76,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                   children: [
                     Text(
                       "Set DateTime".toUpperCase(),
-                      style: const TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 18),
                     ),
                     const SizedBox(
                       height: 10,
@@ -127,7 +128,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
             ),
 
             // button set announce
-            const SizedBox(height: 150),
+            const SizedBox(height: 60),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -140,10 +141,9 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
+                      backgroundColor: btcolor,
                     ),
                     child: const Text(
                       "SAVE",
@@ -152,7 +152,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                   ),
                 ),
                 SizedBox(
-                  width: 157,
+                  width: 150,
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () {
@@ -160,14 +160,13 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
+                      backgroundColor: btcolordelete,
                     ),
                     child: const Text(
                       "DELETE",
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 18,color: Colors.white),
                     ),
                   ),
                 ),

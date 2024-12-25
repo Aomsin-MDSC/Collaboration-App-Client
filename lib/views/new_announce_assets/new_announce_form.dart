@@ -1,4 +1,5 @@
 import 'package:collaboration_app_client/controllers/new_announce_controller.dart';
+import 'package:collaboration_app_client/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,7 +40,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
 
             // details
             const SizedBox(
-              height: 20,
+              height: 60,
             ),
             const Text(
               "Details",
@@ -55,18 +56,18 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                 fillColor: Colors.white,
                 // prefixIcon: Icon(Icons.abc),
                 border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.only(
-                  top: 50,
-                  left: 10,
-                  right: 10,
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 15,
+                  horizontal: 20,
                 ),
               ),
               maxLines: null,
+              textAlignVertical: TextAlignVertical.top,
             ),
 
             // text icon [etc.]
             const SizedBox(
-              height: 50,
+              height: 60,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -75,7 +76,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                   children: [
                     Text(
                       "Set DateTime".toUpperCase(),
-                      style: const TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 18),
                     ),
                     const SizedBox(
                       height: 10,
@@ -127,21 +128,21 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
             ),
 
             // button set announce
-            SizedBox(height: 10),
+            SizedBox(height: 60),
             SizedBox(
               width: double.infinity,
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  print("setsetset"); // action
+                  print("setsetset");
+                  print(controller.selectedDate);// action
                   // Get.to(NewAnnounceView());
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
+                  backgroundColor: btcolor,
                 ),
                 child: Text(
                   "Set an Announcement",

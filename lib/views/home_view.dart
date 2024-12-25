@@ -1,4 +1,5 @@
 import 'package:collaboration_app_client/controllers/authentication_controller.dart';
+import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/new_project_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
@@ -65,36 +66,42 @@ class _HomeViewState extends State<HomeView> {
           ],
         ),
         floatingActionButtonLocation: ExpandableFab.location,
-        floatingActionButton: ExpandableFab(
-          distance: 120,
-          type: ExpandableFabType.up,
-          openButtonBuilder: RotateFloatingActionButtonBuilder(
-            fabSize: ExpandableFabSize.large,
-            child: const Icon(Icons.add),
-          ),
-          closeButtonBuilder: RotateFloatingActionButtonBuilder(
-            fabSize: ExpandableFabSize.large,
-            child: const Icon(Icons.close),
-          ),
-          pos: ExpandableFabPos.center,
-          children: [
-            Column(
-              children: [
-                const Text(
-                  "New Project",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                FloatingActionButton.large(
-                  heroTag: null,
-                  child: const Icon(Icons.edit),
-                  onPressed: () => Get.to(const NewProjectView()),
-                ),
-              ],
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 20, right: 20),
+          child: ExpandableFab(
+            distance: 70,
+            type: ExpandableFabType.up,
+            openButtonBuilder: RotateFloatingActionButtonBuilder(
+              fabSize: ExpandableFabSize.regular,
+              backgroundColor: btcolor,
+              child: const Icon(Icons.add),
             ),
-          ],
+            closeButtonBuilder: RotateFloatingActionButtonBuilder(
+              fabSize: ExpandableFabSize.regular,
+              backgroundColor: btcolor,
+              child: const Icon(Icons.close),
+            ),
+            pos: ExpandableFabPos.right,
+            children: [
+              Row(
+                children: [
+                  const Text(
+                    "New Project",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  FloatingActionButton.small(
+                    heroTag: null,
+                    child: const Icon(Icons.edit),
+                    backgroundColor: btcolor,
+                    onPressed: () => Get.to(const NewProjectView()),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),

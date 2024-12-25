@@ -63,6 +63,7 @@ class _ProjectFormState extends State<ProjectForm> {
                 return SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Card(
+                      color: Colors.white,
                       margin: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: Text(
                         i,
@@ -85,6 +86,8 @@ class _ProjectFormState extends State<ProjectForm> {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
+              filled: true,
+              fillColor: Colors.white
             ),
             onChanged: (value) {
               setState(() {
@@ -114,6 +117,7 @@ class _ProjectFormState extends State<ProjectForm> {
                         Get.to(const EditTaskView());
                       },
                       child: Card(
+                        color: Colors.white,
                         margin: const EdgeInsets.all(0),
                         child: ListTile(
                           // title: Text(controller.taskName!),

@@ -189,7 +189,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   ),
                 ),
                 SizedBox(
-                  width: 157,
+                  width: 150,
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () {
@@ -199,11 +199,11 @@ class _EditProjectFormState extends State<EditProjectForm> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      backgroundColor: btcolor,
+                      backgroundColor: btcolordelete,
                     ),
                     child: const Text(
                       "DELETE",
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 18,color: Colors.white),
                     ),
                   ),
                 ),

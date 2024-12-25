@@ -1,3 +1,4 @@
+import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/edit_announce_view.dart';
 import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/new_announce_view.dart';
@@ -44,89 +45,97 @@ class _ProjectViewState extends State<ProjectView> {
             title: const Text("Project Page"),
           ),
           floatingActionButtonLocation: ExpandableFab.location,
-          floatingActionButton: isKeyboardVisible
-              ? null // Hide FAB when the keyboard is visible
-              : ExpandableFab(
-                  childrenAnimation: ExpandableFabAnimation.rotate,
-                  distance: 125,
-                  openButtonBuilder: RotateFloatingActionButtonBuilder(
-                      angle: -3.14 / 2,
-                      fabSize: ExpandableFabSize.large,
-                      child: const Icon(Icons.add)),
-                  closeButtonBuilder: RotateFloatingActionButtonBuilder(
-                      angle: -3.14 / 2,
-                      fabSize: ExpandableFabSize.large,
-                      child: const Icon(Icons.close)),
-                  type: ExpandableFabType.fan,
-                  pos: ExpandableFabPos.center,
-                  fanAngle: 180,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 110),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              const Text(
-                                "Edit Project",
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(height: 10),
-                              FloatingActionButton.large(
-                                heroTag: null,
-                                child: const Icon(Icons.edit),
-                                onPressed: () {
-                                  // final product = projectController.project[index];
-                                    Get.to(EditProjectView());
-                                    // arguments: {'projectId': project.projectId});
-                                },
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 20),
-                          Column(
-                            children: [
-                              const Text(
-                                "New Task",
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(height: 10),
-                              FloatingActionButton.large(
-                                heroTag: null,
-                                child: const Icon(Icons.task),
-                                onPressed: () {
-                                  Get.to(const NewTaskView());
-                                },
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 10),
-                          Column(
-                            children: [
-                              const Text(
-                                "New Announce",
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(height: 10),
-                              FloatingActionButton.large(
-                                heroTag: null,
-                                child: const Icon(Icons
-                                    .announcement), // Toggle between search and close icon
-                                onPressed: () {
-                                  Get.to(const NewAnnounceView());
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(bottom: 20, right: 20),
+            child: isKeyboardVisible
+                ? null // Hide FAB when the keyboard is visible
+                : ExpandableFab(
+                    childrenAnimation: ExpandableFabAnimation.rotate,
+                    distance: 70,
+                    openButtonBuilder: RotateFloatingActionButtonBuilder(
+                        angle: -3.14 / 2,
+                        fabSize: ExpandableFabSize.regular,
+                        backgroundColor: btcolor,
+                        child: const Icon(Icons.add)),
+                    closeButtonBuilder: RotateFloatingActionButtonBuilder(
+                        angle: -3.14 / 2,
+                        fabSize: ExpandableFabSize.regular,
+                        backgroundColor: btcolor,
+                        child: const Icon(Icons.close)),
+                    type: ExpandableFabType.fan,
+                    pos: ExpandableFabPos.right,
+                    fanAngle: 180,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10, right: 50),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                const Text(
+                                  "Edit Project",
+                                  style: TextStyle(
+                                      fontSize: 17, fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(width: 20),
+                                FloatingActionButton.small(
+                                  heroTag: null,
+                                  backgroundColor: btcolor,
+                                  child: const Icon(Icons.edit),
+                                  onPressed: () {
+                                    // final product = projectController.project[index];
+                                      Get.to(EditProjectView());
+                                      // arguments: {'projectId': project.projectId});
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 20),
+                            Row(
+                              children: [
+                                const Text(
+                                  "New Task",
+                                  style: TextStyle(
+                                      fontSize: 17, fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(width: 35),
+                                FloatingActionButton.small(
+                                  heroTag: null,
+                                  backgroundColor: btcolor,
+                                  child: const Icon(Icons.task),
+                                  onPressed: () {
+                                    Get.to(const NewTaskView());
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 10),
+                            Row(
+                              children: [
+                                const Text(
+                                  "New Announce",
+                                  style: TextStyle(
+                                      fontSize: 17, fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(height: 10),
+                                FloatingActionButton.small(
+                                  heroTag: null,
+                                  backgroundColor: btcolor,
+                                  child: const Icon(Icons
+                                      .announcement), // Toggle between search and close icon
+                                  onPressed: () {
+                                    Get.to(const NewAnnounceView());
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+          ),
           body: const Padding(
             padding: EdgeInsets.all(8.0),
             child: Column(

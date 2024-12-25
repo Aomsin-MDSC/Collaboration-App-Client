@@ -6,6 +6,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../edit_tag_view.dart';
 import '../new_tag_view.dart';
 import '../new_task_view.dart';
 
@@ -83,7 +84,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                     title: ElevatedButton(
                         onPressed: () {
                           controller.selectedtag.clear();
-                          Get.to(const NewTagView());
+                          Get.to(const EditTagView());
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: btcolor,

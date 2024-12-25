@@ -228,11 +228,11 @@ class _EditTaskFormState extends State<EditTaskForm> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          backgroundColor: btcolor,
+                          backgroundColor: btcolordelete,
                         ),
                         child: Text(
                           "DELETE",
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: 18,color: Colors.white),
                         ),
                       ),
                     ),
