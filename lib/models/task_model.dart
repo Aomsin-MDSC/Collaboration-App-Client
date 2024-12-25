@@ -2,9 +2,9 @@ class Task {
   final int taskId;
   final String taskName;
   final String taskDetail;
-  final DateTime taskEnd;
+  final String taskEnd;
   final String taskColor;
-  final bool taskStatus;
+  bool taskStatus;
   final int userId;
   final int tagId;
   final int projectId;

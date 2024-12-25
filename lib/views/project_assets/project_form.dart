@@ -95,23 +95,24 @@ class _ProjectFormState extends State<ProjectForm> {
         const SizedBox(height: 10),
         Expanded(
           child: Obx(() {
-            final filteredList = newTaskController.taskList.where((task) {
-              return task.taskName!.toLowerCase().contains(searchQuery);
-            }).toList();
-
+             if (taskController.isLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+             } else if (taskController.task.isEmpty) {
+                return const Center(child: Text('No project found'));
+             } else {
             return RefreshIndicator(
               onRefresh: () async {
-                newTaskController.taskList.refresh();
+                taskController.fetchTask();
               },
               child: ReorderableListView.builder(
                 padding: EdgeInsets.only(bottom: 120),
                 shrinkWrap: true,
-                itemCount: filteredList.length,
+                itemCount: taskController.task.length,
                 itemBuilder: (context, index) {
-                  final taskList = filteredList[index];
+                  final taskList = taskController.task[index];
 
                   return TextButton(
-                      key: ValueKey(taskList),
+                      key: ValueKey(taskList.taskId),
                       onPressed: () {
                         // Api Here
                         Get.to(const EditTaskView());
@@ -124,7 +125,7 @@ class _ProjectFormState extends State<ProjectForm> {
                           trailing: AnimatedToggleSwitch<bool>.dual(
                             indicatorSize: const Size.fromWidth(40),
                             height: context.height * 0.053,
-                            current: taskList.isToggled,
+                            current: taskList.taskStatus,
                             first: false,
                             second: true,
                             style: const ToggleStyle(
@@ -138,11 +139,10 @@ class _ProjectFormState extends State<ProjectForm> {
                                 ),
                               ],
                             ),
-                            onChanged: (value) {
+                            onChanged: (value) async{
                               // API Here
-                              setState(() {
-                                taskList.isToggled = value;
-                              });
+                              TaskController.instance.updateTaskStatus(taskList.taskId, value);
+                              await taskController.fetchTask();
                             },
                             textBuilder: (value) => value
                                 ? const Center(
@@ -203,7 +203,7 @@ class _ProjectFormState extends State<ProjectForm> {
                 },
               ),
             );
-          }),
+          }}),
         ),
       ],
     );

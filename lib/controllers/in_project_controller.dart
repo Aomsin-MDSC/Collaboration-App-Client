@@ -13,10 +13,10 @@ class TaskController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-      fetchApi();
+    fetchTask();
   }
 
-  Future<void> fetchApi() async {
+  Future<void> fetchTask() async {
     try {
       isLoading(true);
       print("Fetching API...");
@@ -42,9 +42,35 @@ class TaskController extends GetxController {
         print('Response: ${response.body}');
       }
     } catch (e) {
-      print('Error fetching projects: $e');
+      throw('Error fetching projects: $e');
     } finally {
       isLoading(false);
+    }
+  }
+  Future<void> updateTaskStatus(int taskId, bool taskStatus) async {
+    try {
+      final response = await http.put(
+        Uri.parse('http://10.24.8.16:5263/api/UpdateStatus/$taskId'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'taskStatus': taskStatus,
+        }),
+      );
+      print('Response status code: ${response.statusCode}');
+      print('${response.body}');
+
+      if (response.statusCode == 200) {
+        var taskupdate = task.firstWhere((task) => task.taskId == taskId);
+        taskupdate.taskStatus = taskStatus;
+
+        print('Response: ${response.body}');
+        print('Response: ${taskupdate}');
+        Get.snackbar('Success', 'Task status updated successfully');
+      } else {
+        Get.snackbar('Error', 'Fail to update task status');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to update task status: $e');
     }
   }
 
