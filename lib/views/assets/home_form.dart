@@ -26,7 +26,7 @@ class ProjectCard extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        Get.to(() => const ProjectView());
+        Get.to(() => const ProjectView(), arguments: {'projectId': project.projectId});
       },
       child: Card(
         color: Colors.white,

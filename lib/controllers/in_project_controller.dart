@@ -13,15 +13,17 @@ class TaskController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    fetchTask();
+    final Map<String, dynamic> arguments = Get.arguments;
+    final int projectId = arguments['projectId'];
+    fetchTask(projectId);
   }
 
-  Future<void> fetchTask() async {
+  Future<void> fetchTask(int projectId) async {
     try {
       isLoading(true);
       print("Fetching API...");
       final response = await http.get(
-        Uri.parse('http://10.24.8.16:5263/api/GetTasks'),
+        Uri.parse('http://10.24.8.16:5263/api/GetTasks/$projectId'),
         headers: {
           'Content-Type': 'application/json',
         },

@@ -34,6 +34,8 @@ class _ProjectFormState extends State<ProjectForm> {
   @override
   Widget build(BuildContext context) {
     final TaskController taskController = Get.find<TaskController>();
+    final Map<String, dynamic> arguments = Get.arguments;
+    final int projectId = arguments['projectId'];
 
     final List<String> announce = [
       "Announce 1",
@@ -99,7 +101,7 @@ class _ProjectFormState extends State<ProjectForm> {
           child: Obx(() {
             return RefreshIndicator(
               onRefresh: () async {
-                taskController.fetchTask();
+                taskController.fetchTask(projectId);
               },
               child: ReorderableListView.builder(
                 padding: EdgeInsets.only(bottom: 120),
@@ -141,7 +143,7 @@ class _ProjectFormState extends State<ProjectForm> {
                               // API Here
                               await TaskController.instance
                                   .updateTaskStatus(taskList.taskId, value);
-                              await taskController.fetchTask();
+                              await taskController.fetchTask(projectId);
                             },
                             textBuilder: (value) => value
                                 ? const Center(

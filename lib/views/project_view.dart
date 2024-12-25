@@ -6,6 +6,7 @@ import 'package:collaboration_app_client/views/project_assets/project_form.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get/get.dart';
+import '../controllers/in_project_controller.dart';
 import '../controllers/new_task_controller.dart';
 import '../controllers/project_controller.dart';
 import '../views/new_task_view.dart';
@@ -28,6 +29,10 @@ class _ProjectViewState extends State<ProjectView> {
   void initState() {
     super.initState();
     Get.put(ProjectController());
+    final Map<String, dynamic> arguments = Get.arguments;
+    final int projectId = arguments['projectId'];
+    Get.put(TaskController());
+    TaskController.instance.fetchTask(projectId);
     // newTaskController = Get.put(NewTaskController());
   }
 
