@@ -19,6 +19,7 @@ class ProjectView extends StatefulWidget {
 }
 
 class _ProjectViewState extends State<ProjectView> {
+  late int projectId;
   // late final NewTaskController newTaskController;
   // final Map<int, bool> toggleStates = {}; // Track toggle states by index
   // String searchQuery = ''; // Track the search query
@@ -30,7 +31,7 @@ class _ProjectViewState extends State<ProjectView> {
     super.initState();
     Get.put(ProjectController());
     final Map<String, dynamic> arguments = Get.arguments;
-    final int projectId = arguments['projectId'];
+    projectId = arguments['projectId'];
     Get.put(TaskController());
     TaskController.instance.fetchTask(projectId);
     // newTaskController = Get.put(NewTaskController());
@@ -90,7 +91,7 @@ class _ProjectViewState extends State<ProjectView> {
                                   child: const Icon(Icons.edit),
                                   onPressed: () {
                                     // final product = projectController.project[index];
-                                      Get.to(EditProjectView());
+                                      Get.to(EditProjectView(),arguments: {'projectId': projectId});
                                       // arguments: {'projectId': project.projectId});
                                   },
                                 ),
