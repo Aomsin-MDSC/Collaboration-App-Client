@@ -48,7 +48,21 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     final ProjectController projectController = Get.find<ProjectController>();
-    final AuthenticationController authentication_controller = Get.put(AuthenticationController());
+    final AuthenticationController authenticationController =
+        Get.put(AuthenticationController());
+
+    final refresh = Get.arguments?['refresh'] ?? false;
+
+    if (refresh) {
+      Future.delayed(Duration.zero, () async {
+        final String? token = await projectController.getToken();
+        if (token != null && token.isNotEmpty) {
+          projectController.fetchApi(token);
+        } else {
+          print("Token not found");
+        }
+      });
+    }
 
     return SafeArea(
       child: Scaffold(
@@ -56,52 +70,55 @@ class _HomeViewState extends State<HomeView> {
           title: const Text("Home Page"),
           actions: [
             IconButton(
-                onPressed: () {
-                  authentication_controller.logout();
-                },
-                icon: const Icon(
-                  Icons.logout,
-                  size: 30,
-                )),
+              onPressed: () {
+                authenticationController.logout();
+              },
+              icon: const Icon(
+                Icons.logout,
+                size: 30,
+              ),
+            ),
           ],
         ),
         floatingActionButtonLocation: ExpandableFab.location,
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 20, right: 20),
-          child: ExpandableFab(
-            distance: 70,
-            type: ExpandableFabType.up,
-            openButtonBuilder: RotateFloatingActionButtonBuilder(
-              fabSize: ExpandableFabSize.regular,
-              backgroundColor: btcolor,
-              child: const Icon(Icons.add),
-            ),
-            closeButtonBuilder: RotateFloatingActionButtonBuilder(
-              fabSize: ExpandableFabSize.regular,
-              backgroundColor: btcolor,
-              child: const Icon(Icons.close),
-            ),
-            pos: ExpandableFabPos.right,
-            children: [
-              Row(
-                children: [
-                  const Text(
-                    "New Project",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  FloatingActionButton.small(
-                    heroTag: null,
-                    child: const Icon(Icons.edit),
-                    backgroundColor: btcolor,
-                    onPressed: () => Get.to(const NewProjectView()),
-                  ),
-                ],
-              ),
-            ],
+        floatingActionButton: ExpandableFab(
+          overlayStyle: ExpandableFabOverlayStyle(
+            color: Colors.black.withOpacity(0.5),
+            blur: 5,
           ),
+          childrenAnimation: ExpandableFabAnimation.none,
+          distance: 70,
+          type: ExpandableFabType.up,
+          openButtonBuilder: RotateFloatingActionButtonBuilder(
+            fabSize: ExpandableFabSize.regular,
+            backgroundColor: btcolor,
+            child: const Icon(Icons.add),
+          ),
+          closeButtonBuilder: RotateFloatingActionButtonBuilder(
+            fabSize: ExpandableFabSize.regular,
+            backgroundColor: btcolor,
+            child: const Icon(Icons.close),
+          ),
+          pos: ExpandableFabPos.right,
+          children: [
+            Row(
+              children: [
+                const Text(
+                  "New Project",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                FloatingActionButton(
+                  heroTag: null,
+                  backgroundColor: btcolor,
+                  onPressed: () => Get.to(() => const NewProjectView()),
+                  child: const Icon(Icons.edit),
+                ),
+              ],
+            ),
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -113,7 +130,7 @@ class _HomeViewState extends State<HomeView> {
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else if (snapshot.hasData) {
-                final userId = snapshot.data ?? -1; // ใช้ userId จาก snapshot
+                final userId = snapshot.data ?? -1;
 
                 return Obx(() {
                   if (projectController.isLoading.value) {
@@ -123,7 +140,8 @@ class _HomeViewState extends State<HomeView> {
                   } else {
                     return RefreshIndicator(
                       onRefresh: () async {
-                        final String? token = await projectController.getToken();
+                        final String? token =
+                            await projectController.getToken();
                         if (token != null && token.isNotEmpty) {
                           projectController.fetchApi(token);
                         } else {
@@ -134,15 +152,15 @@ class _HomeViewState extends State<HomeView> {
                         itemCount: projectController.project.length,
                         padding: const EdgeInsets.only(bottom: 120),
                         itemBuilder: (context, index) {
-                          final product = projectController.project[index];
-                          print("Project ID: ${product.projectId}, Project User ID: ${product.userId}, Current User ID: $userId");
+                          final project = projectController.project[index];
                           return ProjectCard(
-                            key: ValueKey(product.projectId),
-                            project: product,
-                            currentUserId: userId, // ใช้ userId จาก snapshot
+                            key: ValueKey(project.projectId),
+                            project: project,
+                            currentUserId: userId,
                           );
                         },
-                        proxyDecorator: (Widget child, int index, Animation<double> animation) {
+                        proxyDecorator: (Widget child, int index,
+                            Animation<double> animation) {
                           return Material(
                             child: DecoratedBox(
                               decoration: BoxDecoration(
@@ -157,7 +175,8 @@ class _HomeViewState extends State<HomeView> {
                           if (newIndex > oldIndex) {
                             newIndex -= 1;
                           }
-                          final items = projectController.project.removeAt(oldIndex);
+                          final items =
+                              projectController.project.removeAt(oldIndex);
                           projectController.project.insert(newIndex, items);
                           projectController.updateReorder();
                         },
@@ -175,5 +194,3 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 }
-
-

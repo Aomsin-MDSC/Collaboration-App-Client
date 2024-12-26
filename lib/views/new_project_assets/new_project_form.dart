@@ -88,9 +88,9 @@ class _NewProjectFormState extends State<NewProjectForm> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: btcolor,
-                          shape: RoundedRectangleBorder(
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                          shape: RoundedRectangleBorder(),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 20),
                         ),
                         child: const Text("Add Tag"))),
                 items: controller.taglist.toList(),
@@ -98,13 +98,12 @@ class _NewProjectFormState extends State<NewProjectForm> {
                   controller.selectedtag.clear();
                   controller.selectedtag.add(newValue!);
                 },
-
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(),
-                    )),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                )),
               );
             }),
 
@@ -186,7 +185,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
                   // Api Here
                   controller.createProject();
                   // Get.off(const ProjectView());
-
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

@@ -3,6 +3,7 @@ class Project {
   final String projectName;
   final String userName;
   final String tagName;
+  final int tagId;
   final int userId;
 
   Project({
@@ -10,11 +11,13 @@ class Project {
     required this.projectName,
     required this.userName,
     required this.tagName,
+    required this.tagId,
     required this.userId,
   });
 
   factory Project.fromJson(Map<String, dynamic> json) {
     return Project(
+      tagId: json['tag_id'] ?? 0,
       projectId: json['project_id'] ?? 0,
       projectName: json['project_name'] ?? '',
       userName: json['user_name'] ?? '',

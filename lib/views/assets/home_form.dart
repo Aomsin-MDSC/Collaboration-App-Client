@@ -12,7 +12,8 @@ class ProjectCard extends StatelessWidget {
   final Project project;
   final int currentUserId;
 
-  const ProjectCard({super.key, required this.project, required this.currentUserId});
+  const ProjectCard(
+      {super.key, required this.project, required this.currentUserId});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,8 @@ class ProjectCard extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        Get.to(() => const ProjectView(), arguments: {'projectId': project.projectId});
+        Get.to(() => const ProjectView(),
+            arguments: {'projectId': project.projectId});
       },
       child: Card(
         color: Colors.white,
@@ -39,7 +41,9 @@ class ProjectCard extends StatelessWidget {
                 title: Row(
                   children: [
                     Text(project.projectName),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
                       decoration: BoxDecoration(
@@ -59,14 +63,19 @@ class ProjectCard extends StatelessWidget {
                 subtitle: Text("Owner ???"), // api user
                 trailing: project.userId == currentUserId
                     ? IconButton(
-                  onPressed: () {
-                    print('User ID matches, navigating to edit');
-                    Get.to(EditProjectView(),
-                        arguments: {'projectId': project.projectId});
-                  },
-                  icon: const Icon(Icons.settings),
-                  iconSize: 30,
-                )
+                        onPressed: () {
+                          print('User ID matches, navigating to edit');
+                          Get.to(
+                            EditProjectView(),
+                            arguments: {
+                              'projectId': project.projectId,
+                              'tagId': project.tagId,
+                            },
+                          );
+                        },
+                        icon: const Icon(Icons.settings),
+                        iconSize: 30,
+                      )
                     : null,
               ),
             ],

@@ -8,7 +8,7 @@ import '../controllers/edit_project_controller.dart';
 import '../controllers/new_project_controller.dart';
 
 class NewProjectView extends StatelessWidget {
-  const NewProjectView ({super.key});
+  const NewProjectView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,8 @@ class NewProjectView extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("NEW PROJECT",
+          title: const Text(
+            "NEW PROJECT",
           ),
         ),
         body: SingleChildScrollView(

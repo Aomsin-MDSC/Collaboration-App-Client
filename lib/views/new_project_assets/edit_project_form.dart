@@ -1,3 +1,4 @@
+import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,8 +29,12 @@ class _EditProjectFormState extends State<EditProjectForm> {
     //   "9",
     //   "10",
     // ];
+
     final controller = Get.put(EditProjectController());
+    final projectids = Get.put(ProjectController());
+
     final int projectId = Get.arguments['projectId'];
+    final int tagId = Get.arguments['tagId'];
 
     return Form(
       child: Container(
@@ -43,10 +48,13 @@ class _EditProjectFormState extends State<EditProjectForm> {
             const SizedBox(height: 10),
             TextField(
               controller: controller.editprojectname,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
+                hintText: projectids.project.value
+                    .firstWhere((element) => element.projectId == projectId)
+                    .projectName,
                 filled: true,
                 fillColor: Colors.white,
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
             ),
 
@@ -57,14 +65,22 @@ class _EditProjectFormState extends State<EditProjectForm> {
             Obx(() {
               return DropdownSearch<String>.multiSelection(
                 items: controller.editmemberlist.toList(),
-                selectedItems: controller.editselectedmember.toList(),
+                selectedItems: controller.edit_selected_members_map.toList(),
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(),
-                    )),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                )),
                 onChanged: (newValue) {
+                  // controller.fetchSelectedMembers(projectId);
+                  // controller.fetchMembers();
+                  // Get.snackbar(
+                  //     'Hi', controller.edit_selected_members_map.toString(),
+                  //     duration: const Duration(seconds: 5),
+                  //     colorText: Colors.white,
+                  //     backgroundColor: Colors.black54);
+                  print(controller.editmemberlist);
                   controller.editselectedmember.clear();
                   controller.editselectedmember.addAll(newValue);
                 },
@@ -85,22 +101,29 @@ class _EditProjectFormState extends State<EditProjectForm> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: btcolor,
-                          shape: RoundedRectangleBorder(
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                          shape: RoundedRectangleBorder(),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 20),
                         ),
                         child: const Text("Add Tag"))),
                 items: controller.edittaglist.toList(),
+                selectedItem: controller.selected_tag_map.isNotEmpty
+                    ? controller.selected_tag_map.first
+                    : null,
                 onChanged: (newValue) {
+                  print("projectId::${projectId}");
+                  print("Tag:::${tagId}");
+                  print("Values::: ${newValue}");
+
                   controller.editselectedtag.clear();
                   controller.editselectedtag.add(newValue!);
                 },
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(),
-                    )),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                )),
               );
             }),
 
@@ -179,8 +202,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () {
-                      controller.updateProject(projectId); // action
-
+                      controller.updateProject(projectId, tagId); // action
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -209,7 +231,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                     ),
                     child: const Text(
                       "DELETE",
-                      style: TextStyle(fontSize: 18,color: Colors.white),
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
                 ),

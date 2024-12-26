@@ -100,6 +100,11 @@ class _ProjectFormState extends State<ProjectForm> {
         const SizedBox(height: 10),
         Expanded(
           child: Obx(() {
+            final filteredList = taskController.task.where((task) {
+              return task.taskName
+                  .toLowerCase()
+                  .contains(searchQuery.toLowerCase());
+            }).toList();
             return RefreshIndicator(
               onRefresh: () async {
                 taskController.fetchTask(projectId);
@@ -107,9 +112,9 @@ class _ProjectFormState extends State<ProjectForm> {
               child: ReorderableListView.builder(
                 padding: EdgeInsets.only(bottom: 120),
                 shrinkWrap: true,
-                itemCount: taskController.task.length,
+                itemCount: filteredList.length,
                 itemBuilder: (context, index) {
-                  final taskList = taskController.task[index];
+                  final taskList = filteredList[index];
 
                   return TextButton(
                       key: ValueKey(taskList.taskId),
@@ -124,9 +129,12 @@ class _ProjectFormState extends State<ProjectForm> {
                           title: Row(
                             children: [
                               Text(taskList.taskName!), // api
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 5),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
                                 decoration: BoxDecoration(
                                   color: Colors.blueAccent, // api color
                                   borderRadius: BorderRadius.circular(8),
@@ -144,7 +152,7 @@ class _ProjectFormState extends State<ProjectForm> {
                           subtitle: Text("Owner ???"), // api user
                           trailing: AnimatedToggleSwitch<bool>.dual(
                             indicatorSize: const Size.fromWidth(40),
-                            height: context.height * 0.053,
+                            height: 45,
                             current: taskList.taskStatus,
                             first: false,
                             second: true,

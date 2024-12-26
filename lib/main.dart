@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         appBarTheme: AppBarTheme(
-          titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white),
+          titleTextStyle: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white),
           centerTitle: true,
           backgroundColor: topiccolor,
           elevation: 0,
