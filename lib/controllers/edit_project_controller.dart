@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -166,11 +167,17 @@ class EditProjectController extends GetxController {
 
   Future<void> updateProject(int projectId, int tag_id) async {
     try {
+      final projectids = Get.put(ProjectController());
+
       final token = await getToken();
       final userId = await getUserIdFromToken();
 
-      final memberIds =
-          editselectedmember.map((e) => editmembersMap[e]).toList();
+      final memberIds = editselectedmember
+              .map((e) => editmembersMap[e])
+              .toList()
+              .isNotEmpty
+          ? editselectedmember.map((e) => editmembersMap[e]).toList()
+          : edit_selected_members_map.map((e) => editmembersMap[e]).toList();
       final tagId = editselectedtag.isNotEmpty
           ? editTagsMap[editselectedtag.first]
           : tag_id;
@@ -182,7 +189,11 @@ class EditProjectController extends GetxController {
           'Authorization': 'Bearer $token',
         },
         body: jsonEncode({
-          'ProjectName': editprojectname.text,
+          'ProjectName': editprojectname.text.isNotEmpty
+              ? editprojectname.text
+              : projectids.project.value
+                  .firstWhere((element) => element.projectId == projectId)
+                  .projectName,
           'TagId': tagId,
           'CreatorId': userId,
           'Members': memberIds,
