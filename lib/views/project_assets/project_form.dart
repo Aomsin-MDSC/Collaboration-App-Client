@@ -4,6 +4,7 @@ import 'package:collaboration_app_client/controllers/in_project_controller.dart'
 import 'package:collaboration_app_client/controllers/new_task_controller.dart';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:collaboration_app_client/views/edit_task_view.dart';
+import 'package:collaboration_app_client/views/task_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -114,14 +115,33 @@ class _ProjectFormState extends State<ProjectForm> {
                       key: ValueKey(taskList.taskId),
                       onPressed: () {
                         // Api Here
-                        Get.to(const EditTaskView());
+                        Get.to(const TaskPageView());
                       },
                       child: Card(
                         color: Colors.white,
                         margin: const EdgeInsets.all(0),
                         child: ListTile(
-                          // title: Text(controller.taskName!),
-                          subtitle: Text(taskList.taskName!),
+                          title: Row(
+                            children: [
+                              Text(taskList.taskName!), // api
+                              SizedBox(width: 10,),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 5),
+                                decoration: BoxDecoration(
+                                  color: Colors.blueAccent, // api color
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: const Text(
+                                  "ssss", // api tag
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          subtitle: Text("Owner ???"), // api user
                           trailing: AnimatedToggleSwitch<bool>.dual(
                             indicatorSize: const Size.fromWidth(40),
                             height: context.height * 0.053,

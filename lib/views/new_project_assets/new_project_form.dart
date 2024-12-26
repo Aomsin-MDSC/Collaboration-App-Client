@@ -84,7 +84,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                     title: ElevatedButton(
                         onPressed: () {
                           controller.selectedtag.clear();
-                          Get.to(const EditTagView());
+                          Get.to(const NewTagView());
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: btcolor,

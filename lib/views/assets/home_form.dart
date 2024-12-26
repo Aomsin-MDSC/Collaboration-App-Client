@@ -36,8 +36,27 @@ class ProjectCard extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                title: Text(project.projectName),
-                subtitle: Text(project.tagName),
+                title: Row(
+                  children: [
+                    Text(project.projectName),
+                    SizedBox(width: 10,),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent, // api color
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Text(
+                        "ssss", //api tag
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                subtitle: Text("Owner ???"), // api user
                 trailing: project.userId == currentUserId
                     ? IconButton(
                   onPressed: () {
