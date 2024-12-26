@@ -17,33 +17,16 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late Future<int> _userIdFuture;
+
 
   @override
   void initState() {
     super.initState();
     Get.put(ProjectController());
-    _userIdFuture = _loadUserId();
+
   }
 
-  Future<int> _loadUserId() async {
-    await Future.delayed(const Duration(seconds: 1));
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('jwt_token');
 
-    if (token != null && token.isNotEmpty) {
-      try {
-        Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-        return int.parse(decodedToken['userId']);
-      } catch (e) {
-        print("Error decoding token: $e");
-        return -1;
-      }
-    } else {
-      print('No token found');
-      return -1;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,16 +105,10 @@ class _HomeViewState extends State<HomeView> {
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: FutureBuilder<int>(
-            future: _userIdFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (snapshot.hasData) {
-                final userId = snapshot.data ?? -1;
-
+          child: Obx(() {
+            if (projectController.userId.value == -1) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
                 return Obx(() {
                   if (projectController.isLoading.value) {
                     return const Center(child: CircularProgressIndicator());
@@ -152,11 +129,15 @@ class _HomeViewState extends State<HomeView> {
                         itemCount: projectController.project.length,
                         padding: const EdgeInsets.only(bottom: 120),
                         itemBuilder: (context, index) {
-                          final project = projectController.project[index];
+                          final product = projectController.project[index];
+                          // print( "keyPAOM${ValueKey(product.projectId).value}");
+                          // print("currentPAOM${projectController.userId.value}");
+                          // print("Project ID: ${product.projectId}, Project User ID: ${product.userId}, Current User ID: $userId");
                           return ProjectCard(
-                            key: ValueKey(project.projectId),
-                            project: project,
-                            currentUserId: userId,
+                            key: ValueKey(product.projectId),
+                            project: product,
+                            currentUserId: projectController.userId.value,
+                            // ใช้ userId จาก snapshot
                           );
                         },
                         proxyDecorator: (Widget child, int index,
@@ -184,8 +165,6 @@ class _HomeViewState extends State<HomeView> {
                     );
                   }
                 });
-              } else {
-                return const Center(child: Text('Something went wrong'));
               }
             },
           ),

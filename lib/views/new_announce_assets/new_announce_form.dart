@@ -3,6 +3,8 @@ import 'package:collaboration_app_client/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../project_view.dart';
+
 class NewAnnounceForm extends StatefulWidget {
   const NewAnnounceForm ({super.key});
 
@@ -14,6 +16,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
   final controller = Get.put(NewAnnounceController());
   @override
   Widget build(BuildContext context) {
+    final int projectId = Get.arguments['projectId'];
     return Form(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -29,7 +32,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
               height: 10,
             ),
             TextField(
-              controller: controller.announcename,
+              controller: controller.announcTitle,
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
@@ -50,7 +53,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
               height: 10,
             ),
             TextField(
-              controller: controller.announcedetail,
+              controller: controller.announceText,
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
@@ -134,9 +137,10 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  print("setsetset");
-                  print(controller.selectedDate);// action
-                  // Get.to(NewAnnounceView());
+                  controller.createAnnounce(projectId);
+                  // print("setsetset");
+                  // print(controller.selectedDate);// action
+                  Get.to(ProjectView(),arguments: {'projectId': projectId});
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

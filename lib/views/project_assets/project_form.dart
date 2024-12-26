@@ -3,12 +3,15 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:collaboration_app_client/controllers/in_project_controller.dart';
 import 'package:collaboration_app_client/controllers/new_task_controller.dart';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
+import 'package:collaboration_app_client/views/edit_announce_view.dart';
 import 'package:collaboration_app_client/views/edit_task_view.dart';
 import 'package:collaboration_app_client/views/task_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+
+import '../../controllers/announce_controller.dart';
 
 class ProjectForm extends StatefulWidget {
   const ProjectForm({super.key});
@@ -24,60 +27,78 @@ class _ProjectFormState extends State<ProjectForm> {
   bool isSearchVisible = false; // To control the visibility of the search bar
   // final TextEditingController _searchController = TextEditingController();
   final controller = Get.put(TaskController());
+  final announcecontroller = Get.put(AnnounceController());
+  final projectcontroller = Get.put(ProjectController());
+  late int projectId;
 
   @override
   void initState() {
     super.initState();
-    Get.put(TaskController());
     newTaskController = Get.put(NewTaskController());
+    final Map<String, dynamic> arguments = Get.arguments;
+    projectId = arguments['projectId'];
+    announcecontroller.fetchAnnounce(projectId);
   }
 
   @override
   Widget build(BuildContext context) {
     final TaskController taskController = Get.find<TaskController>();
-    final Map<String, dynamic> arguments = Get.arguments;
-    final int projectId = arguments['projectId'];
-
-    final List<String> announce = [
-      "Announce 1",
-      "Announce 2",
-      "Announce 3",
-      "Announce 4",
-      "Announce 5",
-      "Announce 6",
-      "Announce 7",
-      "Announce 8",
-      "Announce 9",
-      "Announce 10",
-    ];
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // Conditionally show the search bar with animation
-        CarouselSlider(
-          options: CarouselOptions(
-              height: 100,
+        // CarouselSlider with a fallback for empty data
+        Obx(() {
+          if (announcecontroller.announces.isEmpty) {
+            return Container();
+          }
+          return CarouselSlider.builder(
+            options: CarouselOptions(
+              height: MediaQuery.of(context).size.height * 0.15,
               autoPlay: true,
-              autoPlayInterval: const Duration(seconds: 3)),
-          items: announce.map((i) {
-            return Builder(
-              builder: (BuildContext context) {
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Card(
-                      color: Colors.white,
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Text(
-                        i,
-                        style: const TextStyle(fontSize: 16.0),
-                        textAlign: TextAlign.center,
-                      )),
-                );
-              },
-            );
-          }).toList(),
-        ),
+              autoPlayInterval: const Duration(seconds: 3),
+            ),
+            itemCount: announcecontroller.announces.length,
+            itemBuilder: (context, index, realIndex) {
+              final announce = announcecontroller.announces[index];
+              return SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Card(
+                  color: Colors.white,
+                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        title: Text(announce.announceTitle),
+                        subtitle: Text(announce.announceText),
+                        trailing: projectcontroller.userId == announce.userId
+                            ? IconButton(
+                          onPressed: () {
+                            final announceId = announce.announceId;
+                             print("PAOM${announce.announceId}");
+                            if (announceId != null) {
+                              Get.to(
+                                EditAnnounceView(),
+                                arguments: {'announceId': announceId,'projectId': projectId},
+                              );
+                            } else {
+                              print('Announce ID is null');
+                            }
+                          },
+                          icon: const Icon(Icons.settings),
+                          iconSize: 30,
+                        )
+                            : null,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        }),
         Padding(
           padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
           child: TextField(
@@ -108,13 +129,14 @@ class _ProjectFormState extends State<ProjectForm> {
             return RefreshIndicator(
               onRefresh: () async {
                 taskController.fetchTask(projectId);
+                announcecontroller.fetchAnnounce(projectId);
               },
               child: ReorderableListView.builder(
                 padding: EdgeInsets.only(bottom: 120),
                 shrinkWrap: true,
-                itemCount: filteredList.length,
+                itemCount: taskController.task.length,
                 itemBuilder: (context, index) {
-                  final taskList = filteredList[index];
+                  final taskList = taskController.task[index];
 
                   return TextButton(
                       key: ValueKey(taskList.taskId),
@@ -149,7 +171,7 @@ class _ProjectFormState extends State<ProjectForm> {
                               ),
                             ],
                           ),
-                          subtitle: Text("Owner ???"), // api user
+                          subtitle: Text(taskList.userName),
                           trailing: AnimatedToggleSwitch<bool>.dual(
                             indicatorSize: const Size.fromWidth(40),
                             height: 45,

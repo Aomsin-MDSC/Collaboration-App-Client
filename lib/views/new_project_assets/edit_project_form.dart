@@ -1,3 +1,4 @@
+import 'package:collaboration_app_client/views/home_view.dart';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -202,7 +203,10 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () {
-                      controller.updateProject(projectId, tagId); // action
+                      controller.updateProject(projectId, tagId);
+                      Get.to(HomeView());
+                      // action
+
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -221,7 +225,8 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () {
-                      controller.deleteProject(projectId); // action
+                      controller.deleteProject(projectId);
+                      Get.to(HomeView());// action
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

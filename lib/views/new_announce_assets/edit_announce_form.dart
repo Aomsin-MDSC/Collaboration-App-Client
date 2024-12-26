@@ -1,4 +1,5 @@
 import 'package:collaboration_app_client/utils/color.dart';
+import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/edit_announce_controller.dart';
@@ -9,11 +10,29 @@ class EditAnnounceForm extends StatefulWidget {
   @override
   State<EditAnnounceForm> createState() => _EditAnnounceFormState();
 }
-
 class _EditAnnounceFormState extends State<EditAnnounceForm> {
   final controller = Get.put(EditAnnounceController());
+
+
   @override
   Widget build(BuildContext context) {
+    final int projectId = Get.arguments['projectId'];
+    final arguments = Get.arguments  ?? {};
+    if (arguments == null || arguments is! Map<String, dynamic>) {
+      print('Invalid or missing arguments');
+      return Center(
+        child: Text('Error: Missing or invalid arguments'),
+      );
+    }
+
+    final int announceId = arguments['announceId'] ?? 0;
+    if (announceId == null) {
+      print('Announce ID is null');
+      return Center(
+        child: Text('Error: Announce ID is missing'),
+      );
+    }
+
     return Form(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -137,7 +156,9 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () {
-                      print("makemakemake"); // action
+                      print("PBANK${announceId}");
+                      controller.updateAnnounce(announceId);
+                      Get.to(ProjectView(),arguments: {'projectId': projectId} );
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -156,7 +177,8 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () {
-                      print("deldeldel"); // action
+                      controller.deleteAnnounce(announceId);
+                      Get.to(ProjectView(),arguments: {'projectId': projectId} );
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

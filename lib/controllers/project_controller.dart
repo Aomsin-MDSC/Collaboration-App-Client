@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/project_model.dart';
 
@@ -8,6 +9,8 @@ class ProjectController extends GetxController {
   static ProjectController get instance => Get.find();
   var project = <Project>[].obs;
   var isLoading = true.obs;
+  Rx<int> userId = 0.obs;
+
 
   @override
   void onInit() async {
@@ -18,11 +21,37 @@ class ProjectController extends GetxController {
     } else {
       print("Token not found");
     }
+    userId.value = await loadUserId();
   }
 
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('jwt_token');
+  }
+  Future<int> loadUserId() async {
+    await Future.delayed(const Duration(seconds: 1));
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('jwt_token');
+
+    if (token != null && token.isNotEmpty) {
+      try {
+        Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+        print("Decoded tokennnn: $decodedToken");
+        if (decodedToken.containsKey('userId')) {
+          print("User ID found: ${decodedToken['userId']}");
+          return int.parse(decodedToken['userId'].toString());
+        } else {
+          print("userId not found in token");
+          return -1;
+        }
+      } catch (e) {
+        print("Error decoding token: $e");
+        return -1;
+      }
+    } else {
+      print('No token found');
+      return -1;
+    }
   }
 
   Future<void> saveToken(String token) async {

@@ -60,7 +60,7 @@ class ProjectCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                subtitle: Text("Owner ???"), // api user
+                subtitle: Text(project.userName), // api user
                 trailing: project.userId == currentUserId
                     ? IconButton(
                         onPressed: () {
