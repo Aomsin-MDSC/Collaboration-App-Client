@@ -43,6 +43,9 @@ dependencies:
   jwt_decoder: ^2.0.1
   animated_toggle_switch: ^0.8.4
   carousel_slider: ^5.0.0
+  firebase_core: ^3.9.0
+  firebase_messaging: ^15.1.6
+  flutter_local_notifications: ^18.0.1
 
 dev_dependencies:
   flutter_test:

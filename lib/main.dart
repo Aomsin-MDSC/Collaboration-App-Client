@@ -2,12 +2,22 @@ import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/Login_View.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
 import 'package:collaboration_app_client/views/new_announce_view.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  FirebaseMessaging.instance.requestPermission(provisional: true);
+  FirebaseMessaging.instance.getToken().then((value){
+    print(value);
+  });
+  
   final bool hasToken = await checkToken();
   runApp(MyApp(hasToken: hasToken));
 }
