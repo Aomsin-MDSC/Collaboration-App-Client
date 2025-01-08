@@ -113,58 +113,6 @@ class EditProjectController extends GetxController {
     }
   }
 
-  // Future<void> loadProjectDetails(int projectId) async {
-  //   try {
-  //     final token = await getToken();
-  //     if (token == null) {
-  //       print("Token not found!");
-  //       return;
-  //     }
-  //     final userId = await getUserIdFromToken();
-  //     if (userId == null) {
-  //       print("User ID not found!");
-  //       return;
-  //     }
-  //     final response = await http.get(Uri.parse('http://10.24.8.16:5263/api/GetProject/$projectId'),
-  //       headers: {
-  //         'Authorization': 'Bearer $token',
-  //         'Content-Type': 'application/json',
-  //       },);
-
-  //     print("Response status: ${response.statusCode}");
-  //     print("Response body: ${response.body}");
-
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-  //       editmemberlist.value = (data['Members'] as List)
-  //           .map((e) => e['UserName'] as String)
-  //           .toList();
-  //       editmembersMap.value = {
-  //         for (var e in data['Members']) e['UserName'] as String: e['UserId'] as int,
-  //       };
-  //       editselectedmember.value = (data['Members'] as List)
-  //           .map((e) => e['UserName'] as String)
-  //           .toList();
-
-  //       // Set the selected tag
-  //       if (data['TagName'] != null && data['TagId'] != null) {
-  //         edittaglist.value = [data['TagName']];
-  //         editTagsMap.value = {
-  //           data['TagName']: data['TagId'],
-  //         };
-  //         editselectedtag.value = [data['TagName']];
-  //       }
-  //     } else {
-  //       print("Failed with status code: ${response.statusCode}");
-  //       Get.snackbar("Error", "Failed to load project details");
-  //     }
-
-  //   } catch (e) {
-  //     print("Error: ${e.toString()}");
-  //     Get.snackbar("Error", "Something went wrong: ${e.toString()}");
-  //   }
-  // }
-
   Future<void> updateProject(int projectId, int tag_id) async {
     try {
       final projectids = Get.put(ProjectController());
