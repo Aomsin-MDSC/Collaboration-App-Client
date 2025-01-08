@@ -211,7 +211,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
               child: ElevatedButton(
                 onPressed: () {
                   controller.createTask(projectId);
-                  //Get.to(ProjectView(),arguments: {'projectId': projectId});// action
+                  Get.off(ProjectView(),arguments: {'projectId': projectId});// action
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
