@@ -13,10 +13,19 @@ class NewAnnounceForm extends StatefulWidget {
 }
 
 class _NewAnnounceFormState extends State<NewAnnounceForm> {
+
+  final projectId = Get.arguments['projectId'];
   final controller = Get.put(NewAnnounceController());
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
-    final int projectId = Get.arguments['projectId'];
+
     return Form(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5),

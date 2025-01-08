@@ -21,7 +21,8 @@ class ProjectView extends StatefulWidget {
 }
 
 class _ProjectViewState extends State<ProjectView> {
-  late int projectId;
+  final int projectId = Get.arguments['projectId'];
+
   // late final NewTaskController newTaskController;
   // final Map<int, bool> toggleStates = {}; // Track toggle states by index
   // String searchQuery = ''; // Track the search query
@@ -33,17 +34,17 @@ class _ProjectViewState extends State<ProjectView> {
     super.initState();
     Get.put(ProjectController());
 
-    final Map<String, dynamic> arguments = Get.arguments;
-    projectId = arguments['projectId'];
-
     Get.put(TaskController());
     TaskController.instance.fetchTask(projectId);
 
-    Get.put(NewAnnounceController());
-    NewAnnounceController.instance.createAnnounce(projectId);
+    // Get.put(NewAnnounceController());
+    // NewAnnounceController.instance.createAnnounce(projectId);
 
-    Get.put(AnnounceController());
-    AnnounceController.instance.fetchAnnounce(projectId);
+    // Get.put(AnnounceController());
+    // AnnounceController.instance.fetchAnnounce(projectId);
+
+    // Get.put(NewTaskController());
+    // NewTaskController.instance.createTask(projectId,userId);
 
 
     // newTaskController = Get.put(NewTaskController());
@@ -53,6 +54,7 @@ class _ProjectViewState extends State<ProjectView> {
   @override
   Widget build(BuildContext context) {
     final ProjectController projectController = Get.find<ProjectController>();
+
 
     // Check if the keyboard is visible using MediaQuery
     bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
@@ -127,7 +129,7 @@ class _ProjectViewState extends State<ProjectView> {
                                 backgroundColor: btcolor,
                                 child: const Icon(Icons.task),
                                 onPressed: () {
-                                  Get.to(const NewTaskView());
+                                  Get.to(const NewTaskView(), arguments: {'projectId': projectId});
                                 },
                               ),
                             ],
@@ -147,7 +149,8 @@ class _ProjectViewState extends State<ProjectView> {
                                 child: const Icon(Icons
                                     .announcement), // Toggle between search and close icon
                                 onPressed: () {
-                                  Get.to(const NewAnnounceView());
+                                  print('Button Pressed, Project ID: $projectId');
+                                  Get.to(NewAnnounceView(),arguments: {'projectId': projectId});
                                 },
                               ),
                             ],

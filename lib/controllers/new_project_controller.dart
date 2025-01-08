@@ -123,7 +123,6 @@ class NewProjectController extends GetxController {
 
       if (response.statusCode == 200) {
         print('Project created successfully');
-        Get.off(ProjectView());
       } else {
         print('Failed to create project');
         print('Response body: ${response.body}');

@@ -60,6 +60,7 @@ class NewTaskController extends GetxController {
     update();
   }
 
+
   Color get taskcurrenttagColor =>
       Color(int.parse(taskcolor.replaceFirst('#', '0xff')));
   Future<void> fetchMembers() async {
@@ -100,6 +101,52 @@ class NewTaskController extends GetxController {
       }
     } catch (e) {
       print('Error fetching tags: $e');
+    }
+  }
+  Future<void> createTask(projectId) async {
+    try {
+      final url = Uri.parse('http://10.24.8.16:5263/api/CreateTask');
+
+      if (selectedmember.isEmpty) {
+        print('No members selected!');
+        return;
+      }
+      if (selectedtag.isEmpty) {
+        print('No tag selected!');
+        return;
+      }
+
+      final tagId = tagsMap[selectedtag.first];
+      final memberId = membersMap[selectedmember.first];
+      final userId = await controller.getUserIdFromToken();
+
+      print("Selected members: $memberId");
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'task_name': taskName.text,
+          'task_detail': taskdetails.text,
+          'task_end':selectedDate!.toIso8601String(),
+          'task_color': taskcolor,
+          'user_id':userId,
+          'project_id':projectId,
+          'tag_id':tagId,
+          'task_status':false,
+          'task_Owner':memberId,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print("Tag created successfully!");
+      } else {
+        print("Failed to create tag: ${response.body}");
+      }
+    } catch (e) {
+      print('Error in createTask: $e');
+      rethrow;
     }
   }
 }

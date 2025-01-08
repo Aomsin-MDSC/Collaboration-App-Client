@@ -15,7 +15,7 @@ class NewAnnounceView extends StatelessWidget {
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(30),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [NewAnnounceForm()],
             ),

@@ -1,5 +1,7 @@
 import 'package:collaboration_app_client/controllers/new_project_controller.dart';
 import 'package:collaboration_app_client/utils/color.dart';
+import 'package:collaboration_app_client/views/Login_View.dart';
+import 'package:collaboration_app_client/views/home_view.dart';
 import 'package:collaboration_app_client/views/project_view.dart';
 
 import 'package:dropdown_search/dropdown_search.dart';
@@ -184,7 +186,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 onPressed: () {
                   // Api Here
                   controller.createProject();
-                  // Get.off(const ProjectView());
+                  Get.off(HomeView());
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

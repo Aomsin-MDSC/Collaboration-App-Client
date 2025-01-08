@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../../utils/color.dart';
 import '../new_tag_view.dart';
+import '../project_view.dart';
 
 class NewTaskForm extends StatefulWidget {
   const NewTaskForm ({super.key});
@@ -16,9 +17,11 @@ class NewTaskForm extends StatefulWidget {
 
 class _NewTaskFormState extends State<NewTaskForm> {
   final controller = Get.put(NewTaskController());
+  final int projectId = Get.arguments['projectId'];
 
   @override
   Widget build(BuildContext context) {
+
     return Form(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 5),
@@ -56,9 +59,12 @@ class _NewTaskFormState extends State<NewTaskForm> {
             Text("Member", style: TextStyle(fontSize: 18)),
             SizedBox(height: 10),
             Obx(() {
-              return DropdownSearch<String>.multiSelection(
+              return DropdownSearch<String>(
                 items: controller.memberlist.toList(),
-                selectedItems: controller.selectedmember.toList(),
+                onChanged: (newValue) {
+                  controller.selectedmember.clear();
+                  controller.selectedmember.add(newValue!);
+                },
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
                       filled: true,
@@ -88,6 +94,10 @@ class _NewTaskFormState extends State<NewTaskForm> {
                         ),
                         child: const Text("Add Tag"))),
                 items: controller.taglist.toList(),
+                onChanged: (newValue) {
+                  controller.selectedtag.clear();
+                  controller.selectedtag.add(newValue!);
+                },
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
                       filled: true,
@@ -200,7 +210,8 @@ class _NewTaskFormState extends State<NewTaskForm> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  // controller.createTask(); // action
+                  controller.createTask(projectId);
+                  //Get.to(ProjectView(),arguments: {'projectId': projectId});// action
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
