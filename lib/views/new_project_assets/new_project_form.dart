@@ -81,31 +81,102 @@ class _NewProjectFormState extends State<NewProjectForm> {
             const Text("Tag", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Obx(() {
-              return DropdownSearch<String>(
-                popupProps: PopupProps.menu(
-                    title: ElevatedButton(
-                        onPressed: () {
-                          controller.selectedtag.clear();
-                          Get.to(const NewTagView());
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: btcolor,
-                          shape: RoundedRectangleBorder(),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 20),
-                        ),
-                        child: const Text("Add Tag"))),
-                items: controller.taglist.toList(),
-                onChanged: (newValue) {
-                  controller.selectedtag.clear();
-                  controller.selectedtag.add(newValue!);
-                },
-                dropdownDecoratorProps: const DropDownDecoratorProps(
-                    dropdownSearchDecoration: InputDecoration(
+              return DropdownButtonFormField<String>(
+                menuMaxHeight: 300,
+                iconSize: 35,
+                decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                )),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey.shade400),
+                  ),
+                ),
+                icon: Icon(Icons.arrow_drop_down, color: Colors.black54),
+                value: controller.selectedtag.isNotEmpty
+                    ? controller.selectedtag[0]
+                    : null,
+                hint: Text(
+                  "Select Tag",
+                  style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+                ),
+                isExpanded: true,
+                items: [
+                  DropdownMenuItem<String>(
+                    value: controller.selectedtag.toString(),
+                    child: Container(
+                      color: Colors.amberAccent,
+                      child: Center(
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: TextButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.zero),
+                              ),
+                            ),
+                            onPressed: () {
+                              // ฟังก์ชันเมื่อกดปุ่ม "Add Tag"
+                              Get.to(NewTagView());
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //   SnackBar(content: Text("Add new tag action")
+                              //   ),
+                              // );
+                            },
+                            child: Text(
+                              "Add Tag",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  ...controller.taglist.map((tag) {
+                    return DropdownMenuItem<String>(
+                      value: tag,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Chip(
+                            label: Text(
+                              tag,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            backgroundColor: Color(0xffb74093),
+                            labelStyle: TextStyle(color: Colors.white),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.edit, color: Colors.black54),
+                            onPressed: () {
+                              // ฟังก์ชันเมื่อกดปุ่ม "Edit"
+                              Get.to(EditTagView());
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Edit $tag action")),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    if (value != "Add Tag") {
+                      // อัปเดตค่า selectedtag
+                      controller.selectedtag.clear();
+                      if (value != null) {
+                        controller.selectedtag.add(value);
+                      }
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content:
+                                Text("Selected: ${controller.selectedtag}")),
+                      );
+                    }
+                  });
+                },
               );
             }),
 
