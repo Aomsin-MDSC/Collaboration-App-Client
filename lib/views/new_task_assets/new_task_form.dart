@@ -9,7 +9,7 @@ import '../new_tag_view.dart';
 import '../project_view.dart';
 
 class NewTaskForm extends StatefulWidget {
-  const NewTaskForm ({super.key});
+  const NewTaskForm({super.key});
 
   @override
   State<NewTaskForm> createState() => _NewTaskFormState();
@@ -18,10 +18,10 @@ class NewTaskForm extends StatefulWidget {
 class _NewTaskFormState extends State<NewTaskForm> {
   final controller = Get.put(NewTaskController());
   final int projectId = Get.arguments['projectId'];
+  final int tagId = Get.arguments['tagId'];
 
   @override
   Widget build(BuildContext context) {
-
     return Form(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 5),
@@ -41,9 +41,16 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 )),
 
             // detail ---------------
-            SizedBox(height: 60,),
-            Text("Details", style: TextStyle(fontSize: 18),),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 60,
+            ),
+            Text(
+              "Details",
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(
+              height: 10,
+            ),
             TextField(
               controller: controller.taskdetails,
               decoration: const InputDecoration(
@@ -67,10 +74,10 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 },
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(),
-                    )),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                )),
               );
             }),
 
@@ -88,9 +95,9 @@ class _NewTaskFormState extends State<NewTaskForm> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: btcolor,
-                          shape: const RoundedRectangleBorder(
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                          shape: const RoundedRectangleBorder(),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 20),
                         ),
                         child: const Text("Add Tag"))),
                 items: controller.taglist.toList(),
@@ -100,33 +107,41 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 },
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(),
-                    )),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                )),
               );
             }),
 
             // Text, Icon [Dead line, Color, Add tag]
-            SizedBox(height: 60,),
+            SizedBox(
+              height: 60,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   children: [
-                    Text("Dead Line".toUpperCase(), style: TextStyle(fontSize: 18),),
+                    Text(
+                      "Dead Line".toUpperCase(),
+                      style: TextStyle(fontSize: 18),
+                    ),
                     SizedBox(height: 10),
                     GestureDetector(
                       onTap: () async {
                         DateTime? selected = await showDatePicker(
                           context: context,
-                          initialDate: controller.selectedDate ?? DateTime.now(), // used selected day
+                          initialDate: controller.selectedDate ??
+                              DateTime.now(), // used selected day
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2101),
                         );
-                        if (selected != null && selected != controller.selectedDate) {
+                        if (selected != null &&
+                            selected != controller.selectedDate) {
                           setState(() {
-                            controller.selectedDate = selected; // save day [new selected]
+                            controller.selectedDate =
+                                selected; // save day [new selected]
                           });
                         }
                       },
@@ -147,7 +162,10 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 ),
                 Column(
                   children: [
-                    Text("Color".toUpperCase(), style: TextStyle(fontSize: 18),),
+                    Text(
+                      "Color".toUpperCase(),
+                      style: TextStyle(fontSize: 18),
+                    ),
                     SizedBox(height: 10),
                     GestureDetector(
                       onTap: () {
@@ -157,7 +175,8 @@ class _NewTaskFormState extends State<NewTaskForm> {
                             return AlertDialog(
                               title: Text('Pick a Color'),
                               content: SingleChildScrollView(
-                                child: ColorPicker( // spectrum color
+                                child: ColorPicker(
+                                  // spectrum color
                                   pickerColor: controller.taskcurrenttagColor,
                                   onColorChanged: (Color color) {
                                     setState(() {
@@ -211,7 +230,10 @@ class _NewTaskFormState extends State<NewTaskForm> {
               child: ElevatedButton(
                 onPressed: () {
                   controller.createTask(projectId);
-                  Get.off(ProjectView(),arguments: {'projectId': projectId});// action
+                  Get.off(ProjectView(), arguments: {
+                    'projectId': projectId,
+                    'tagId': tagId
+                  }); // action
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

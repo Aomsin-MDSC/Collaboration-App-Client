@@ -129,8 +129,10 @@ class _ProjectViewState extends State<ProjectView> {
                                 backgroundColor: btcolor,
                                 child: const Icon(Icons.task),
                                 onPressed: () {
-                                  Get.to(const NewTaskView(),
-                                      arguments: {'projectId': projectId});
+                                  Get.to(const NewTaskView(), arguments: {
+                                    'projectId': projectId,
+                                    'tagId': tagId
+                                  });
                                 },
                               ),
                             ],
