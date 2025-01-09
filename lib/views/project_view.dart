@@ -155,7 +155,7 @@ class _ProjectViewState extends State<ProjectView> {
                                   print(
                                       'Button Pressed, Project ID: $projectId');
                                   Get.to(NewAnnounceView(),
-                                      arguments: {'projectId': projectId});
+                                      arguments: {'projectId': projectId,'tagId': tagId});
                                 },
                               ),
                             ],

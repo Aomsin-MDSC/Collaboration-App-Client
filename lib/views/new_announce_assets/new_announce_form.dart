@@ -15,6 +15,7 @@ class NewAnnounceForm extends StatefulWidget {
 class _NewAnnounceFormState extends State<NewAnnounceForm> {
 
   final projectId = Get.arguments['projectId'];
+  final tagId = Get.arguments['tagId'];
   final controller = Get.put(NewAnnounceController());
 
   @override
@@ -149,7 +150,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                   controller.createAnnounce(projectId);
                   // print("setsetset");
                   // print(controller.selectedDate);// action
-                  Get.to(ProjectView(),arguments: {'projectId': projectId});
+                  Get.to(ProjectView(),arguments: {'projectId': projectId,'tagId':tagId});
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
