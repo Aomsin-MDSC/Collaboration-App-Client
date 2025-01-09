@@ -36,7 +36,6 @@ class ProjectController extends GetxController {
     if (token != null && token.isNotEmpty) {
       try {
         Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-        print("Decoded tokennnn: $decodedToken");
         if (decodedToken.containsKey('userId')) {
           print("User ID found: ${decodedToken['userId']}");
           return int.parse(decodedToken['userId'].toString());

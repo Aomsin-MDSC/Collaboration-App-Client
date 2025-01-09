@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../views/Login_View.dart';
 import '../views/home_view.dart';
@@ -38,6 +40,11 @@ class AuthenticationController extends GetxController {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('jwt_token', token);
         print('Token saved: ${prefs.getString('jwt_token')}');
+
+        final fcmToken = await FirebaseMessaging.instance.getToken();
+        if (fcmToken != null) {
+          await saveTokenToDatabase(fcmToken, token); // Update token in DB
+        }
 
         // Show a success message
         Get.snackbar(
@@ -88,6 +95,44 @@ class AuthenticationController extends GetxController {
       );
     }
   }
+
+  Future<void> saveTokenToDatabase(String fcmToken, String jwtToken) async {
+    final userId = await getUserId();
+    print("Device : $userId");
+    try {
+      final url = Uri.parse('http://10.24.8.16:5263/api/TokenDevice/$userId');
+      final response = await http.put(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'user_token': fcmToken, // Firebase token
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print('Device Token updated successfully!');
+      } else {
+        print('Failed to update token: ${response.body}');
+      }
+    } catch (e) {
+      throw('Error updating token: $e');
+    }
+  }
+
+  Future<int?> getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('jwt_token');
+    if (token != null) {
+      try {
+        final decodedToken = JwtDecoder.decode(token);
+        return decodedToken['userId'] != null ? int.tryParse(decodedToken['userId'].toString()) : null;
+      } catch (e) {
+        print('Error decoding token: $e');
+      }
+    }
+    return null;
+  }
+
 
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();

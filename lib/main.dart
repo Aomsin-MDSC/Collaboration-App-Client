@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/Login_View.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
@@ -8,10 +10,19 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  await setupFirebaseMessaging();
+
 
   FirebaseMessaging.instance.requestPermission(provisional: true);
   FirebaseMessaging.instance.getToken().then((value){
@@ -20,6 +31,75 @@ void main() async {
   
   final bool hasToken = await checkToken();
   runApp(MyApp(hasToken: hasToken));
+}
+
+Future<void> setupFirebaseMessaging() async {
+  await FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    badge: true,
+    sound: true,
+    provisional: true,
+  );
+
+  const AndroidInitializationSettings initializationSettingsAndroid =
+  AndroidInitializationSettings('@mipmap/ic_launcher');
+  const InitializationSettings initializationSettings =
+  InitializationSettings(android: initializationSettingsAndroid);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print("Received message in foreground: ${message.notification?.title}");
+    showLocalNotification(message);
+  });
+}
+
+Future<void> showLocalNotification(RemoteMessage message) async {
+  const AndroidNotificationDetails androidNotificationDetails =
+  AndroidNotificationDetails(
+    'default_channel_id',
+    'Default Channel',
+    channelDescription: 'This is the default notification channel',
+    importance: Importance.high,
+    priority: Priority.high,
+  );
+  const NotificationDetails notificationDetails =
+  NotificationDetails(android: androidNotificationDetails);
+
+  await flutterLocalNotificationsPlugin.show(
+    message.hashCode,
+    message.notification?.title,
+    message.notification?.body,
+    notificationDetails,
+  );
+}
+
+Future<int?> getUserId() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getInt('user_id');
+}
+
+Future<void> saveTokenToDatabase(String token) async {
+  final userId = await getUserId();
+  print("Device : $userId");
+  try {
+    final url = Uri.parse('http://10.24.8.16:5263/api/TokenDevice/$userId');
+
+    final response = await http.put(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'user_token': token,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Device Token updated successfully!');
+    } else {
+      print('Failed to update token: ${response.body}');
+    }
+  } catch (e) {
+    throw('Error updating token: $e');
+  }
 }
 
 Future<bool> checkToken() async {
