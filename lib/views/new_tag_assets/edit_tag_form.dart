@@ -1,5 +1,7 @@
 import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
+import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/utils/color.dart';
+import 'package:collaboration_app_client/views/new_project_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
@@ -35,7 +37,8 @@ class _EditTagFormState extends State<EditTagForm> {
           ),
           actions: <Widget>[
             TextButton(
-              onPressed: () {// update color controller
+              onPressed: () {
+                // update color controller
                 Get.back();
               },
               child: const Text("Select"),
@@ -49,6 +52,8 @@ class _EditTagFormState extends State<EditTagForm> {
   @override
   Widget build(BuildContext context) {
     final tagcontroller = Get.put(EditTagController());
+    final tagId = Get.arguments['tagId'];
+
     return Form(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 5),
@@ -109,8 +114,7 @@ class _EditTagFormState extends State<EditTagForm> {
             GetBuilder<EditTagController>(builder: (controller) {
               // preview [container] Taxt
               return Container(
-                padding:
-                EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 decoration: BoxDecoration(
                   color: controller.editcurrenttagColor,
                   borderRadius: BorderRadius.circular(30),
@@ -160,6 +164,7 @@ class _EditTagFormState extends State<EditTagForm> {
             }),
 
             // Save Button
+
             SizedBox(height: 70),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -168,8 +173,9 @@ class _EditTagFormState extends State<EditTagForm> {
                   width: 150,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed: () {
-                      print("makemakemake"); // action
+                    onPressed: () async {
+                      await tagcontroller.updateTag(tagId);
+                      Get.to(NewProjectView(), arguments: {'tagId': tagId});
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -188,7 +194,8 @@ class _EditTagFormState extends State<EditTagForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () {
-                      print("deldeldel"); // action
+                      tagcontroller.deleteTag(tagId);
+                      Get.to(NewProjectView()); // action
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -198,7 +205,7 @@ class _EditTagFormState extends State<EditTagForm> {
                     ),
                     child: Text(
                       "DELETE",
-                      style: TextStyle(fontSize: 18,color: Colors.white),
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
                 ),

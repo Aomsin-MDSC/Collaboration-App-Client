@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -29,15 +30,8 @@ class NewProjectController extends GetxController {
     return null;
   }
 
-  var taglist = <String>[
-    'work',
-    'job',
-    'present',
-    'Add Tag',
-  ].obs;
-
-  var selectedtag = <String>[].obs;
-  var TagsMap = <String, int>{}.obs;
+  var tags = [].obs;
+  TagModel? selectedTag = null;
 
   Future<void> fetchMembers() async {
     try {
@@ -64,11 +58,17 @@ class NewProjectController extends GetxController {
           await http.get(Uri.parse('http://10.24.8.16:5263/api/GetTags'));
 
       if (response.statusCode == 200) {
+        tags.clear();
         final List<dynamic> data = jsonDecode(response.body);
-        taglist.value = data.map((e) => e['tag_name'] as String).toList();
-        TagsMap.value = {
-          for (var e in data) e['tag_name'] as String: e['tag_id'] as int,
-        };
+        for(var i in data){
+          TagModel t = TagModel(
+            tagId: i['tag_id'],
+            tagName: i['tag_name'],
+            tagColor: i['tag_color'],
+          );
+          tags.add(t);
+        }
+        
       } else {
         throw Exception('Failed to load tags');
       }
@@ -95,16 +95,17 @@ class NewProjectController extends GetxController {
         print('No members selected!');
         return;
       }
-      if (selectedtag.isEmpty) {
+      if (selectedTag == null) {
         print('No tag selected!');
         return;
       }
       final memberIds =
           selectedmember.map((e) => {'UserId': membersMap[e]}).toList();
 
-      final tagId = TagsMap[selectedtag.first];
+      final tagId = selectedTag != null ? selectedTag!.tagId : -1;
       print("Selected TagId: $memberIds");
       print("Selected TagId: $tagId");
+      
       String body = jsonEncode({
         'ProjectName': projectname.text,
         'TagId': tagId,

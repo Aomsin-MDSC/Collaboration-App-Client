@@ -1,4 +1,5 @@
 import 'package:collaboration_app_client/controllers/new_project_controller.dart';
+import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/Login_View.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
@@ -81,7 +82,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
             const Text("Tag", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Obx(() {
-              return DropdownButtonFormField<String>(
+              return DropdownButtonFormField<TagModel>(
                 menuMaxHeight: 300,
                 iconSize: 35,
                 decoration: InputDecoration(
@@ -92,17 +93,15 @@ class _NewProjectFormState extends State<NewProjectForm> {
                   ),
                 ),
                 icon: Icon(Icons.arrow_drop_down, color: Colors.black54),
-                value: controller.selectedtag.isNotEmpty
-                    ? controller.selectedtag[0]
-                    : null,
+                value: controller.selectedTag,
                 hint: Text(
                   "Select Tag",
                   style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
                 ),
                 isExpanded: true,
                 items: [
-                  DropdownMenuItem<String>(
-                    value: controller.selectedtag.toString(),
+                  DropdownMenuItem<TagModel>(
+                    value: controller.selectedTag,
                     child: Container(
                       color: Colors.amberAccent,
                       child: Center(
@@ -132,27 +131,28 @@ class _NewProjectFormState extends State<NewProjectForm> {
                       ),
                     ),
                   ),
-                  ...controller.taglist.map((tag) {
-                    return DropdownMenuItem<String>(
+                  ...controller.tags.map((tag) {
+                    return DropdownMenuItem<TagModel>(
                       value: tag,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Chip(
                             label: Text(
-                              tag,
+                              tag.tagName,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            backgroundColor: Color(0xffb74093),
+                            backgroundColor: HexColor.fromHex(tag.tagColor),
                             labelStyle: TextStyle(color: Colors.white),
                           ),
                           IconButton(
                             icon: Icon(Icons.edit, color: Colors.black54),
                             onPressed: () {
                               // ฟังก์ชันเมื่อกดปุ่ม "Edit"
-                              Get.to(EditTagView());
+                              Get.to(EditTagView(),
+                                  arguments: {'tagId': tag.tagId});
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Edit $tag action")),
+                                SnackBar(content: Text("Edit ${tag.tagId} action")),
                               );
                             },
                           ),
@@ -165,14 +165,13 @@ class _NewProjectFormState extends State<NewProjectForm> {
                   setState(() {
                     if (value != "Add Tag") {
                       // อัปเดตค่า selectedtag
-                      controller.selectedtag.clear();
                       if (value != null) {
-                        controller.selectedtag.add(value);
+                        controller.selectedTag = value;
                       }
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                            content:
-                                Text("Selected: ${controller.selectedtag}")),
+                            content: Text(
+                                "Selected: ${controller.selectedTag!.tagName}")),
                       );
                     }
                   });
