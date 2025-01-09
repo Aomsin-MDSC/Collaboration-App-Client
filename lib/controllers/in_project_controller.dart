@@ -81,6 +81,3 @@ class TaskController extends GetxController {
     // Implementation of update reorder logic
   }
 }
-
-
-

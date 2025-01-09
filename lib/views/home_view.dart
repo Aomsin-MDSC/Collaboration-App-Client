@@ -17,16 +17,11 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
-
   @override
   void initState() {
     super.initState();
     Get.put(ProjectController());
-
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -105,10 +100,11 @@ class _HomeViewState extends State<HomeView> {
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Obx(() {
-            if (projectController.userId.value == -1) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
+          child: Obx(
+            () {
+              if (projectController.userId.value == -1) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
                 return Obx(() {
                   if (projectController.isLoading.value) {
                     return const Center(child: CircularProgressIndicator());

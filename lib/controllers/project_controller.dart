@@ -11,7 +11,6 @@ class ProjectController extends GetxController {
   var isLoading = true.obs;
   Rx<int> userId = 0.obs;
 
-
   @override
   void onInit() async {
     super.onInit();
@@ -28,6 +27,7 @@ class ProjectController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('jwt_token');
   }
+
   Future<int> loadUserId() async {
     await Future.delayed(const Duration(seconds: 1));
     final prefs = await SharedPreferences.getInstance();

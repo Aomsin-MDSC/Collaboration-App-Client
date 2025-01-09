@@ -9,6 +9,7 @@ class Task {
   final int tagId;
   final int projectId;
   final String userName;
+  final int taskOwner;
 
   Task({
     required this.taskId,
@@ -21,6 +22,7 @@ class Task {
     required this.projectId,
     required this.taskColor,
     required this.userName,
+    required this.taskOwner,
   });
 
   factory Task.fromJson(Map<String, dynamic> json) {
@@ -35,6 +37,7 @@ class Task {
       tagId: json['tag_id'] ?? '',
       projectId: json['project_id'] ?? '',
       userName: json['user_name'] ?? '',
+      taskOwner: json['task_Owner'] ?? '',
     );
   }
 }

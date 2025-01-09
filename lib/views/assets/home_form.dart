@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../edit_project_view.dart';
-import 'package:get/get.dart';
-
 class ProjectCard extends StatelessWidget {
   final Project project;
   final int currentUserId;
@@ -27,8 +24,10 @@ class ProjectCard extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        Get.to(() => const ProjectView(),
-            arguments: {'projectId': project.projectId});
+        Get.to(() => const ProjectView(), arguments: {
+          'projectId': project.projectId,
+          'tagId': project.tagId
+        });
       },
       child: Card(
         color: Colors.white,
@@ -60,7 +59,7 @@ class ProjectCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                subtitle: Text(project.userName), // api user
+                subtitle: Text('Owner: ${project.userName}'), // api user
                 trailing: project.userId == currentUserId
                     ? IconButton(
                         onPressed: () {

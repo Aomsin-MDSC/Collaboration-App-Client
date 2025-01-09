@@ -1,6 +1,7 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:collaboration_app_client/controllers/in_project_controller.dart';
+import 'package:collaboration_app_client/controllers/new_project_controller.dart';
 import 'package:collaboration_app_client/controllers/new_task_controller.dart';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:collaboration_app_client/views/edit_announce_view.dart';
@@ -43,7 +44,7 @@ class _ProjectFormState extends State<ProjectForm> {
   @override
   Widget build(BuildContext context) {
     final TaskController taskController = Get.find<TaskController>();
-
+    final getUser = Get.put(NewProjectController());
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -75,21 +76,24 @@ class _ProjectFormState extends State<ProjectForm> {
                         subtitle: Text(announce.announceText),
                         trailing: projectcontroller.userId == announce.userId
                             ? IconButton(
-                          onPressed: () {
-                            final announceId = announce.announceId;
-                             print("PAOM${announce.announceId}");
-                            if (announceId != null) {
-                              Get.to(
-                                EditAnnounceView(),
-                                arguments: {'announceId': announceId,'projectId': projectId},
-                              );
-                            } else {
-                              print('Announce ID is null');
-                            }
-                          },
-                          icon: const Icon(Icons.settings),
-                          iconSize: 30,
-                        )
+                                onPressed: () {
+                                  final announceId = announce.announceId;
+                                  print("PAOM${announce.announceId}");
+                                  if (announceId != null) {
+                                    Get.to(
+                                      EditAnnounceView(),
+                                      arguments: {
+                                        'announceId': announceId,
+                                        'projectId': projectId
+                                      },
+                                    );
+                                  } else {
+                                    print('Announce ID is null');
+                                  }
+                                },
+                                icon: const Icon(Icons.settings),
+                                iconSize: 30,
+                              )
                             : null,
                       ),
                     ],
@@ -142,7 +146,9 @@ class _ProjectFormState extends State<ProjectForm> {
                       key: ValueKey(taskList.taskId),
                       onPressed: () {
                         // Api Here
-                        Get.to(const TaskPageView());
+                        print(taskList.taskId);
+                        Get.to(TaskPageView(taskId: taskList.taskId),
+                            arguments: {'projectId': projectId});
                       },
                       child: Card(
                         color: Colors.white,
@@ -171,7 +177,13 @@ class _ProjectFormState extends State<ProjectForm> {
                               ),
                             ],
                           ),
-                          subtitle: Text(taskList.userName),
+                          subtitle: getUser.memberlist.isNotEmpty &&
+                                  taskList.taskOwner - 1 >= 0 &&
+                                  taskList.taskOwner - 1 <
+                                      getUser.memberlist.length
+                              ? Text(
+                                  "Owner: ${getUser.memberlist[taskList.taskOwner - 1]}")
+                              : const Text('Unknown Owner'),
                           trailing: AnimatedToggleSwitch<bool>.dual(
                             indicatorSize: const Size.fromWidth(40),
                             height: 45,
