@@ -46,52 +46,59 @@ class _TaskPageViewState extends State<TaskPageView> {
                 TaskPageForm(
                   taskId: widget.taskId,
                   projectId: projectId,
-                )
+                ),
+                Padding(padding: EdgeInsets.only(bottom: 80))
               ],
             ),
           ),
         ),
-        bottomNavigationBar: Container(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Container(
           color: Colors.white,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(20.0),
             child: Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: controller.commentText,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: "Add a comment...",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                    ),
-                  ),
+            child: TextField(
+              controller: controller.commentText,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                hintText: "Add a comment...",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+              ),
+            ),
                 ),
                 const SizedBox(width: 8),
                 InkWell(
-                  onTap: () {
-                    controller.CreateComment(widget.taskId);
-                    //controller.fetchComment(widget.taskId);
-                    print(widget.taskId);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                      // color: Colors.black,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.send,
-                      color: Colors.black,
-                    ),
-                  ),
+            onTap: () async {
+              if (controller.commentText.text.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Comment cannot be empty")));
+              } else {
+                await controller.CreateComment(widget.taskId);
+                controller.commentText.clear();
+                setState(() {});
+                print('Task ID: ${widget.taskId}');
+              }
+            },
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.black, 
+              ),
+              child: const Icon(
+                Icons.send,
+                color: Colors.white,
+              ),
+            ),
                 ),
               ],
             ),

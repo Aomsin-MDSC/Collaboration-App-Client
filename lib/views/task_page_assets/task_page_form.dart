@@ -248,42 +248,41 @@ class _TaskPageFormState extends State<TaskPageForm> {
           const SizedBox(
             height: 20,
           ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Title with Icon
-                const Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Comment",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+          Obx(() {
+            return Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title with Icon
+                  const Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "Comment",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                const Divider(
-                  color: Colors.grey,
-                  thickness: 2,
-                  // indent: 20,
-                  // endIndent: 20,
-                ),
-                const SizedBox(height: 10),
-
-                ...controller.comments.map((comment) {
-                  return CommentWidget(comment: comment);
-                }),
-              ],
-            ),
-          )
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  const Divider(
+                    color: Colors.grey,
+                    thickness: 2,
+                  ),
+                  const SizedBox(height: 10),
+                  ...controller.comments.map((comment) {
+                    return CommentWidget(comment: comment);
+                  }),
+                ],
+              ),
+            );
+          })
         ],
       ),
     );

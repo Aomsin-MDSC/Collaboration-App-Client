@@ -36,7 +36,7 @@ class NewProjectController extends GetxController {
   Future<void> fetchMembers() async {
     try {
       final response =
-          await http.get(Uri.parse('http://10.24.8.16:5263/api/GetMembers'));
+          await http.get(Uri.parse('http://10.24.8.16:5263/api/GetUsers'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
@@ -60,7 +60,7 @@ class NewProjectController extends GetxController {
       if (response.statusCode == 200) {
         tags.clear();
         final List<dynamic> data = jsonDecode(response.body);
-        for(var i in data){
+        for (var i in data) {
           TagModel t = TagModel(
             tagId: i['tag_id'],
             tagName: i['tag_name'],
@@ -104,7 +104,7 @@ class NewProjectController extends GetxController {
       final tagId = selectedTag != null ? selectedTag!.tagId : -1;
       print("Selected TagId: $memberIds");
       print("Selected TagId: $tagId");
-      
+
       String body = jsonEncode({
         'ProjectName': projectname.text,
         'TagId': tagId,
@@ -128,7 +128,7 @@ class NewProjectController extends GetxController {
         print('Response body: ${response.body}');
       }
     } catch (e) {
-      throw('Error creating project: $e');
+      throw ('Error creating project: $e');
     }
   }
 
