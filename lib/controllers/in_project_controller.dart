@@ -9,12 +9,14 @@ class TaskController extends GetxController {
   static TaskController get instance => Get.find();
   var task = <Task>[].obs;
   var isLoading = true.obs;
+  late int projectId;
+
 
   @override
   void onInit() async {
     super.onInit();
     final Map<String, dynamic> arguments = Get.arguments;
-    final int projectId = arguments['projectId'];
+    projectId = arguments['projectId'];
     fetchTask(projectId);
   }
 
@@ -57,6 +59,7 @@ class TaskController extends GetxController {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'task_status': taskStatus,
+          'project_id': projectId
         }),
       );
       print('Response status code: ${response.statusCode}');
