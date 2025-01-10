@@ -6,9 +6,11 @@ import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
 import 'package:collaboration_app_client/controllers/new_task_controller.dart';
 import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/controllers/task_page_controller.dart';
+import 'package:collaboration_app_client/models/comment_model.dart';
 import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/edit_task_view.dart';
+import 'package:collaboration_app_client/views/widgets/comment_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/edit_announce_controller.dart';
@@ -16,8 +18,11 @@ import '../../controllers/edit_announce_controller.dart';
 class TaskPageForm extends StatefulWidget {
   final int taskId;
   final int projectId;
-  const TaskPageForm(
-      {super.key, required this.taskId, required this.projectId});
+  const TaskPageForm({
+    super.key,
+    required this.taskId,
+    required this.projectId,
+  });
 
   @override
   State<TaskPageForm> createState() => _TaskPageFormState();
@@ -272,28 +277,10 @@ class _TaskPageFormState extends State<TaskPageForm> {
                   // endIndent: 20,
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  "@User",
-                  style: TextStyle(fontSize: 18),
-                ),
-                RichText(
-                  text: const TextSpan(
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                    children: [
-                      TextSpan(
-                        text: " : ",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      TextSpan(
-                        text: " Hurry Up!!! ",
-                      ),
-                    ],
-                  ),
-                ),
-                Text(
-                  "24/12/2024 11:00",
-                  style: TextStyle(fontSize: 14, color: Colors.grey),
-                ),
+
+                ...controller.comments.map((comment) {
+                  return CommentWidget(comment: comment);
+                }),
               ],
             ),
           )
@@ -304,5 +291,3 @@ class _TaskPageFormState extends State<TaskPageForm> {
 }
 
 // Add your existing imports here
-
-

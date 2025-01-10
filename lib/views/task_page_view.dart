@@ -1,7 +1,9 @@
+import 'package:collaboration_app_client/controllers/task_page_controller.dart';
 import 'package:collaboration_app_client/views/task_page_assets/task_page_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:http/http.dart';
 import 'new_announce_assets/edit_announce_form.dart';
 
 class TaskPageView extends StatefulWidget {
@@ -24,6 +26,9 @@ class _TaskPageViewState extends State<TaskPageView> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(TaskPageController());
+    controller.fetchComment(widget.taskId);
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -54,6 +59,7 @@ class _TaskPageViewState extends State<TaskPageView> {
               children: [
                 Expanded(
                   child: TextField(
+                    controller: controller.commentText,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -70,7 +76,11 @@ class _TaskPageViewState extends State<TaskPageView> {
                 ),
                 const SizedBox(width: 8),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    controller.CreateComment(widget.taskId);
+                    //controller.fetchComment(widget.taskId);
+                    print(widget.taskId);
+                  },
                   child: Container(
                     padding: const EdgeInsets.all(10),
                     decoration: const BoxDecoration(
