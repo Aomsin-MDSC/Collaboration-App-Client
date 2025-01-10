@@ -101,7 +101,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 isExpanded: true,
                 items: [
                   DropdownMenuItem<TagModel>(
-                    value: controller.selectedTag,
+                    value: TagModel(tagId: -1, tagName: "null", tagColor: ""),
                     child: Container(
                       color: Colors.amberAccent,
                       child: Center(

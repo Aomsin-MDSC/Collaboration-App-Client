@@ -31,7 +31,7 @@ class NewProjectController extends GetxController {
   }
 
   var tags = [].obs;
-  TagModel? selectedTag = null;
+  TagModel? selectedTag;
 
   Future<void> fetchMembers() async {
     try {
@@ -68,7 +68,6 @@ class NewProjectController extends GetxController {
           );
           tags.add(t);
         }
-        
       } else {
         throw Exception('Failed to load tags');
       }
