@@ -54,7 +54,7 @@ class ProjectCard extends StatelessWidget {
                     SizedBox(
                       width: 10,
                     ),
-                    Flexible(
+                    if (project.tagId != -1) Flexible(
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         decoration: BoxDecoration(

@@ -18,14 +18,15 @@ class Project {
   });
 
   factory Project.fromJson(Map<String, dynamic> json) {
+    print(json);
     return Project(
-      tagId: json['tag_id'] ?? 0,
+      tagId: json['tag_id'] != null ? json['tag_id'] : -1,
       projectId: json['project_id'] ?? 0,
       projectName: json['project_name'] ?? '',
       userName: json['user_name'] ?? '',
-      tagName: json['tag_name'] ?? '',
+      tagName: json['tag_name'] != null ? json['tag_name'] : "",
       userId: json['user_id'] ?? 0,
-      tagColor: json['tag_color'],
+      tagColor: json['tag_color'] ?? "",
     );
   }
 }

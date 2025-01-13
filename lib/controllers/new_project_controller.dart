@@ -94,10 +94,10 @@ class NewProjectController extends GetxController {
       //   print('No members selected!');
       //   return;
       // }
-      if (selectedTag == null) {
-        print('No tag selected!');
-        return;
-      }
+      // if (selectedTag == null) {
+      //   print('No tag selected!');
+      //   return;
+      // }
 
       final memberIds = selectedmember
           .map((e) => {'UserId': membersMap[e]})
@@ -105,7 +105,7 @@ class NewProjectController extends GetxController {
 
       memberIds.add({'UserId': userId});
 
-      final tagId = selectedTag != null ? selectedTag!.tagId : -1;
+      final tagId = selectedTag != null ? selectedTag!.tagId : null;
       print("Selected TagId: $memberIds");
       print("Selected TagId: $tagId");
 

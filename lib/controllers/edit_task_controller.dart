@@ -153,20 +153,6 @@ class EditTaskController extends GetxController {
         }),
       );
 
-      print("Response status: ${response.statusCode}");
-      print("Response body: ${response.body}");
-      print("Sending the following data: ${jsonEncode(jsonEncode({
-        "task_name": edittaskname.text,
-        "task_detail": edittaskdetails.text,
-        "task_end": editselectedDate!.toIso8601String(),
-        "task_color": edittaskcolor,
-        "task_status": false,
-        "user_id": userId,
-        "tag_id": 11,
-        "project_id": projectId,
-        "task_Owner": memberId
-      }))}");
-
       if (response.statusCode == 200) {
         print('Project updated successfully');
         Get.off(() => const ProjectView(), arguments: {'refresh': true});
@@ -178,6 +164,30 @@ class EditTaskController extends GetxController {
       throw ('Error updating project: $e');
     }
   }
+  Future<void> deleteTask(int taskId) async {
+    try {
+
+      final response = await http.delete(
+        Uri.parse('http://10.24.8.16:5263/api/DeleteTask/$taskId'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+
+      if (response.statusCode == 200) {
+        print('Project deleted successfully');
+        Get.snackbar("Success", "Project deleted successfully");
+      } else {
+        print('Failed to delete project');
+        Get.snackbar("Error", "Failed to delete project");
+      }
+    } catch (e) {
+      print('Error deleting project: $e');
+      Get.snackbar("Error", "Something went wrong: $e");
+    }
+  }
+
   @override
   void onInit() {
     final projectId = Get.arguments['projectId'] as int?;

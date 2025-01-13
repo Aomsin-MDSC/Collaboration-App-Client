@@ -237,7 +237,12 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       height: 60,
                       child: ElevatedButton(
                         onPressed: () {
-                          print("deldeldel"); // action
+                          controller.deleteTask(taskId);
+                          Get.to(ProjectView(),arguments: {
+                            'projectId': projectId,
+                            'tagId': tagId,
+                            'refresh': true,
+                          });
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
