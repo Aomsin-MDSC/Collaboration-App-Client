@@ -31,6 +31,7 @@ class _ProjectFormState extends State<ProjectForm> {
   final announcecontroller = Get.put(AnnounceController());
   final projectcontroller = Get.put(ProjectController());
   late int projectId;
+  final tagId = Get.arguments['tagId'];
 
   @override
   void initState() {
@@ -84,7 +85,8 @@ class _ProjectFormState extends State<ProjectForm> {
                                       EditAnnounceView(),
                                       arguments: {
                                         'announceId': announceId,
-                                        'projectId': projectId
+                                        'projectId': projectId,
+                                        'tagId': tagId,
                                       },
                                     );
                                   } else {
@@ -148,7 +150,7 @@ class _ProjectFormState extends State<ProjectForm> {
                         // Api Here
                         print(taskList.taskId);
                         Get.to(TaskPageView(taskId: taskList.taskId),
-                            arguments: {'projectId': projectId,'taskId':taskList.taskId,'tagId':11});
+                            arguments: {'projectId': projectId,'taskId':taskList.taskId,'tagId':tagId});
                       },
                       child: Card(
                         color: Colors.white,

@@ -18,6 +18,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
   Widget build(BuildContext context) {
     final int projectId = Get.arguments['projectId'];
     final arguments = Get.arguments  ?? {};
+    final int tagId = Get.arguments['tagId'];
     if (arguments == null || arguments is! Map<String, dynamic>) {
       print('Invalid or missing arguments');
       return Center(
@@ -158,7 +159,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                     onPressed: () {
                       print("PBANK${announceId}");
                       controller.updateAnnounce(announceId);
-                      Get.to(ProjectView(),arguments: {'projectId': projectId} );
+                      Get.to(ProjectView(),arguments: {'projectId': projectId,'tagId':tagId} );
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -178,7 +179,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                   child: ElevatedButton(
                     onPressed: () {
                       controller.deleteAnnounce(announceId);
-                      Get.to(ProjectView(),arguments: {'projectId': projectId} );
+                      Get.to(ProjectView(),arguments: {'projectId': projectId,'tagId':tagId} );
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

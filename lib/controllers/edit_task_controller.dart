@@ -121,7 +121,7 @@ class EditTaskController extends GetxController {
       print('Error fetching tags: $e');
     }
   }
-  Future<void> updateTask(int projectId, int taskId) async {
+  Future<void> updateTask(int projectId, int taskId, int tagId) async {
     try {
       final token = await getToken();
       final userId = await getUserIdFromToken();
@@ -147,7 +147,7 @@ class EditTaskController extends GetxController {
           "task_color": edittaskcolor,
           "task_status": false,
           "user_id": userId,
-          "tag_id": 11,
+          "tag_id": tagId,
           "project_id": projectId,
           "task_Owner": memberId
         }),

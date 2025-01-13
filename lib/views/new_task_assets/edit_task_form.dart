@@ -213,7 +213,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       height: 60,
                       child: ElevatedButton(
                         onPressed: () {
-                          controller.updateTask(projectId, taskId);
+                          controller.updateTask(projectId, taskId,tagId);
                           Get.to(ProjectView(),arguments: {
                           'projectId': projectId,
                           'tagId': tagId
