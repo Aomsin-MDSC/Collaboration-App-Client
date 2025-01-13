@@ -204,7 +204,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   child: ElevatedButton(
                     onPressed: () {
                       controller.updateProject(projectId, tagId);
-                      Get.to(HomeView());
+                      Get.off(HomeView());
                       // action
 
                     },

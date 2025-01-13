@@ -1,5 +1,7 @@
 import 'package:collaboration_app_client/controllers/edit_task_controller.dart';
 import 'package:collaboration_app_client/views/edit_tag_view.dart';
+import 'package:collaboration_app_client/views/home_view.dart';
+import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -7,6 +9,7 @@ import 'package:get/get.dart';
 
 import '../../utils/color.dart';
 import '../new_tag_view.dart';
+import '../task_page_view.dart';
 
 class EditTaskForm extends StatefulWidget {
   const EditTaskForm ({super.key});
@@ -17,6 +20,10 @@ class EditTaskForm extends StatefulWidget {
 
 class _EditTaskFormState extends State<EditTaskForm> {
   final controller = Get.put(EditTaskController());
+  final int projectId = Get.arguments['projectId'];
+  final int taskId = Get.arguments['taskId'];
+  final int tagId = Get.arguments['tagId'];
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -56,9 +63,12 @@ class _EditTaskFormState extends State<EditTaskForm> {
             Text("Member", style: TextStyle(fontSize: 18)),
             SizedBox(height: 10),
             Obx(() {
-              return DropdownSearch<String>.multiSelection(
+              return DropdownSearch<String>(
                 items: controller.editmemberlist.toList(),
-                selectedItems: controller.editselectedmember.toList(),
+                onChanged: (newValue) {
+                  controller.editselectedmember.clear();
+                  controller.editselectedmember.add(newValue!);
+                },
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
                       filled: true,
@@ -203,7 +213,11 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       height: 60,
                       child: ElevatedButton(
                         onPressed: () {
-                          print("makemakemake"); // action
+                          controller.updateTask(projectId, taskId);
+                          Get.to(ProjectView(),arguments: {
+                          'projectId': projectId,
+                          'tagId': tagId
+                          }); // action
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

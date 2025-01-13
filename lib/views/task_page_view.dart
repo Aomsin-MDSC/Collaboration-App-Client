@@ -15,13 +15,10 @@ class TaskPageView extends StatefulWidget {
 }
 
 class _TaskPageViewState extends State<TaskPageView> {
-  late int projectId;
 
   @override
   void initState() {
     super.initState();
-    final Map<String, dynamic> arguments = Get.arguments;
-    projectId = arguments['projectId'];
   }
 
   @override
@@ -45,7 +42,6 @@ class _TaskPageViewState extends State<TaskPageView> {
               children: [
                 TaskPageForm(
                   taskId: widget.taskId,
-                  projectId: projectId,
                 ),
                 Padding(padding: EdgeInsets.only(bottom: 80))
               ],
@@ -92,7 +88,7 @@ class _TaskPageViewState extends State<TaskPageView> {
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.black, 
+                color: Colors.black,
               ),
               child: const Icon(
                 Icons.send,

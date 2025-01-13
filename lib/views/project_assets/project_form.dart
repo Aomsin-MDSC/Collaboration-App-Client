@@ -148,7 +148,7 @@ class _ProjectFormState extends State<ProjectForm> {
                         // Api Here
                         print(taskList.taskId);
                         Get.to(TaskPageView(taskId: taskList.taskId),
-                            arguments: {'projectId': projectId});
+                            arguments: {'projectId': projectId,'taskId':taskList.taskId,'tagId':11});
                       },
                       child: Card(
                         color: Colors.white,

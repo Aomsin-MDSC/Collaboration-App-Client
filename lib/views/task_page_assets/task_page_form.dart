@@ -17,11 +17,9 @@ import '../../controllers/edit_announce_controller.dart';
 
 class TaskPageForm extends StatefulWidget {
   final int taskId;
-  final int projectId;
   const TaskPageForm({
     super.key,
     required this.taskId,
-    required this.projectId,
   });
 
   @override
@@ -30,10 +28,21 @@ class TaskPageForm extends StatefulWidget {
 
 class _TaskPageFormState extends State<TaskPageForm> {
   // final Map<String, dynamic> arguments = Get.arguments;
+  final int projectId = Get.arguments['projectId'];
+  final int taskId = Get.arguments['taskId'];
+  final int tagId = Get.arguments['tagId'];
 
   @override
   Widget build(BuildContext context) {
     final TaskController taskController = Get.find<TaskController>();
+
+    if (projectId == null || taskId == null) {
+      // Handle the error case, such as showing a fallback or navigating back
+      print("Missing projectId or taskId");
+      return Center(child: Text("Error: Missing projectId or taskId"));
+    }
+
+
 
     final controller = Get.put(TaskPageController());
     final taskDetails = Get.put(TaskController());
@@ -101,7 +110,12 @@ class _TaskPageFormState extends State<TaskPageForm> {
                       onPressed: () {
                         // api
                         // print(tagId);
-                        Get.to(EditTaskView());
+                        Get.to(EditTaskView(),
+                          arguments: {
+                            'projectId': projectId,
+                            'taskId': taskId,
+                            'tagId': tagId,
+                          },);
                       },
                     )
                   ],
@@ -196,7 +210,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
                           // API Here
                           await TaskController.instance
                               .updateTaskStatus(task_id, value);
-                          await taskController.fetchTask(widget.projectId);
+                          await taskController.fetchTask(projectId);
                           setState(() {
                             taskDetails.task.value
                                 .firstWhere((element) =>
