@@ -44,6 +44,14 @@ class _ProjectFormState extends State<ProjectForm> {
 
   @override
   Widget build(BuildContext context) {
+    final refresh = Get.arguments?['refresh'] ?? false;
+
+    if (refresh) {
+      Future.delayed(Duration.zero, () async {
+        controller.fetchTask(projectId);
+      });
+    }
+
     final TaskController taskController = Get.find<TaskController>();
     final getUser = Get.put(NewProjectController());
     return Column(
