@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
+import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,6 +31,10 @@ class EditProjectController extends GetxController {
   var editselectedtag = <String>[].obs;
   var selected_tag_map = <String>[].obs;
   var editTagsMap = <String, int>{}.obs;
+
+  var tags = [].obs;
+  TagModel? selectedTag;
+
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("Retrieved token: ${prefs.getString('jwt_token')}");
@@ -88,9 +93,23 @@ class EditProjectController extends GetxController {
           await http.get(Uri.parse('http://10.24.8.16:5263/api/GetTags'));
 
       if (response.statusCode == 200) {
+        tags.clear();
         final List<dynamic> data = jsonDecode(response.body);
+        for (var i in data) {
+          TagModel t = TagModel(
+            tagId: i['tag_id'],
+            tagName: i['tag_name'],
+            tagColor: i['tag_color'],
+          );
+          tags.add(t);
+
+          if (tag_id != null && tag_id == t.tagId) {
+            selectedTag = t;
+          }
+        }
 
         // Filter tags where tag_id is 1
+
         final filteredData = data.where((e) => e['tag_id'] == tag_id).toList();
 
         edittaglist.value = data.map((e) => e['tag_name'] as String).toList();
@@ -120,9 +139,8 @@ class EditProjectController extends GetxController {
       final token = await getToken();
       final userId = await getUserIdFromToken();
 
-      final memberIds = editselectedmember
-          .map((e) => editmembersMap[e])
-          .toList();
+      final memberIds =
+          editselectedmember.map((e) => editmembersMap[e]).toList();
 
       if (!memberIds.contains(userId)) {
         memberIds.add(userId);
@@ -135,9 +153,8 @@ class EditProjectController extends GetxController {
       //     ? editselectedmember.map((e) => editmembersMap[e]).toList()
       //     : edit_selected_members_map.map((e) => editmembersMap[e]).toList();
 
-      final tagId = editselectedtag.isNotEmpty
-          ? editTagsMap[editselectedtag.first]
-          : tag_id;
+      final tagId = selectedTag?.tagId != null ? selectedTag?.tagId : tag_id;
+      print("Tag ID::::::::::::::::::::::: $tagId");
 
       final response = await http.put(
         Uri.parse('http://10.24.8.16:5263/api/UpdateProject/$projectId'),

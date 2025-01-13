@@ -195,7 +195,7 @@ class _EditTagFormState extends State<EditTagForm> {
                   child: ElevatedButton(
                     onPressed: () {
                       tagcontroller.deleteTag(tagId);
-                      Get.to(NewProjectView()); // action
+                      Get.back(); // action
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

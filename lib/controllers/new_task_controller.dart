@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -45,8 +46,8 @@ class NewTaskController extends GetxController {
   ]);
 
   // get tag for show
-  var selectedtag = <String>[].obs;
-  var tagsMap = <String, int>{}.obs;
+  var tags = [].obs;
+  TagModel? selectedTag;
 
   @override
   void onInit() {
@@ -54,12 +55,12 @@ class NewTaskController extends GetxController {
     fetchMembers(); // โหลดรายชื่อสมาชิกจาก API
     fetchTags(); // โหลด tag จาก API
   }
+
   // colors
   void taskchangeColor(Color color) {
     taskcolor = "#${color.value.toRadixString(16).substring(2)}";
     update();
   }
-
 
   Color get taskcurrenttagColor =>
       Color(int.parse(taskcolor.replaceFirst('#', '0xff')));
@@ -91,18 +92,24 @@ class NewTaskController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        tags.clear();
         final List<dynamic> data = jsonDecode(response.body);
-        taglist.value = data.map((e) => e['tag_name'] as String).toList();
-        tagsMap.value = {
-          for (var e in data) e['tag_name'] as String: e['tag_id'] as int,
-        };
+        for (var i in data) {
+          TagModel t = TagModel(
+            tagId: i['tag_id'],
+            tagName: i['tag_name'],
+            tagColor: i['tag_color'],
+          );
+          tags.add(t);
+        }
       } else {
-        throw Exception('Failed to fetch tags.');
+        throw Exception('Failed to load tags');
       }
     } catch (e) {
       print('Error fetching tags: $e');
     }
   }
+
   Future<void> createTask(projectId) async {
     try {
       final url = Uri.parse('http://10.24.8.16:5263/api/CreateTask');
@@ -111,12 +118,12 @@ class NewTaskController extends GetxController {
         print('No members selected!');
         return;
       }
-      if (selectedtag.isEmpty) {
+      if (selectedTag == null) {
         print('No tag selected!');
         return;
       }
 
-      final tagId = tagsMap[selectedtag.first];
+      final tagId = selectedTag != null ? selectedTag!.tagId : -1;
       final memberId = membersMap[selectedmember.first];
       final userId = await controller.getUserIdFromToken();
 
@@ -129,13 +136,13 @@ class NewTaskController extends GetxController {
         body: jsonEncode({
           'task_name': taskName.text,
           'task_detail': taskdetails.text,
-          'task_end':selectedDate!.toIso8601String(),
+          'task_end': selectedDate!.toIso8601String(),
           'task_color': taskcolor,
-          'user_id':userId,
-          'project_id':projectId,
-          'tag_id':tagId,
-          'task_status':false,
-          'task_Owner':memberId,
+          'user_id': userId,
+          'project_id': projectId,
+          'tag_id': tagId,
+          'task_status': false,
+          'task_Owner': memberId,
         }),
       );
 
@@ -160,5 +167,3 @@ class Task {
     this.isToggled = false,
   });
 }
-
-

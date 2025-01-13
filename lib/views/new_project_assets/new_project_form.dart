@@ -4,6 +4,7 @@ import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/Login_View.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
 import 'package:collaboration_app_client/views/project_view.dart';
+import 'package:collaboration_app_client/views/widgets/dropdown_tag_widget.dart';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -134,33 +135,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                   ...controller.tags.map((tag) {
                     return DropdownMenuItem<TagModel>(
                       value: tag,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: Chip(
-                              label: Text(
-                                tag.tagName,
-                                style: const TextStyle(fontWeight: FontWeight.bold),
-                                overflow: TextOverflow.ellipsis, // ตัดข้อความด้วย "..."
-                              ),
-                              backgroundColor: HexColor.fromHex(tag.tagColor),
-                              labelStyle: const TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.edit, color: Colors.black54),
-                            onPressed: () {
-                              // ฟังก์ชันเมื่อกดปุ่ม "Edit"
-                              Get.to(EditTagView(),
-                                  arguments: {'tagId': tag.tagId});
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Edit ${tag.tagId} action")),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                      child: DropdownTagWidget(tag: tag),
                     );
                   }).toList(),
                 ],

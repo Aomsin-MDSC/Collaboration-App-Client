@@ -1,4 +1,6 @@
 import 'package:collaboration_app_client/controllers/new_task_controller.dart';
+import 'package:collaboration_app_client/models/tag_model.dart';
+import 'package:collaboration_app_client/views/widgets/dropdown_tag_widget.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -81,36 +83,82 @@ class _NewTaskFormState extends State<NewTaskForm> {
               );
             }),
 
-            // Add Tag
-            SizedBox(height: 60),
-            Text("Tag", style: TextStyle(fontSize: 18)),
-            SizedBox(height: 10),
+            // Dropdown Tag
+            const SizedBox(height: 60),
+            const Text("Tag", style: TextStyle(fontSize: 18)),
+            const SizedBox(height: 10),
             Obx(() {
-              return DropdownSearch<String>(
-                popupProps: PopupProps.menu(
-                    title: ElevatedButton(
-                        onPressed: () {
-                          controller.selectedtag.clear();
-                          Get.to(const NewTagView());
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: btcolor,
-                          shape: const RoundedRectangleBorder(),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 20),
-                        ),
-                        child: const Text("Add Tag"))),
-                items: controller.taglist.toList(),
-                onChanged: (newValue) {
-                  controller.selectedtag.clear();
-                  controller.selectedtag.add(newValue!);
-                },
-                dropdownDecoratorProps: const DropDownDecoratorProps(
-                    dropdownSearchDecoration: InputDecoration(
+              return DropdownButtonFormField<TagModel>(
+                menuMaxHeight: 300,
+                iconSize: 35,
+                decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                )),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey.shade400),
+                  ),
+                ),
+                icon: Icon(Icons.arrow_drop_down, color: Colors.black54),
+                value: controller.selectedTag,
+                hint: Text(
+                  "Select Tag",
+                  style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+                ),
+                isExpanded: true,
+                items: [
+                  DropdownMenuItem<TagModel>(
+                    value: TagModel(tagId: -1, tagName: "null", tagColor: ""),
+                    child: Container(
+                      color: Colors.amberAccent,
+                      child: Center(
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: TextButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.zero),
+                              ),
+                            ),
+                            onPressed: () {
+                              // ฟังก์ชันเมื่อกดปุ่ม "Add Tag"
+                              Get.to(NewTagView());
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //   SnackBar(content: Text("Add new tag action")
+                              //   ),
+                              // );
+                            },
+                            child: Text(
+                              "Add Tag",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  ...controller.tags.map((tag) {
+                    return DropdownMenuItem<TagModel>(
+                      value: tag,
+                      child: DropdownTagWidget(tag: tag),
+                    );
+                  }).toList(),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    if (value != "Add Tag") {
+                      // อัปเดตค่า selectedtag
+                      if (value != null) {
+                        controller.selectedTag = value;
+                      }
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text(
+                                "Selected: ${controller.selectedTag!.tagName}")),
+                      );
+                    }
+                  });
+                },
               );
             }),
 
