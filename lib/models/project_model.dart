@@ -5,6 +5,7 @@ class Project {
   final String tagName;
   final int tagId;
   final int userId;
+  final String tagColor;
 
   Project({
     required this.projectId,
@@ -13,6 +14,7 @@ class Project {
     required this.tagName,
     required this.tagId,
     required this.userId,
+    required this.tagColor,
   });
 
   factory Project.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class Project {
       userName: json['user_name'] ?? '',
       tagName: json['tag_name'] ?? '',
       userId: json['user_id'] ?? 0,
+      tagColor: json['tag_color'],
     );
   }
 }

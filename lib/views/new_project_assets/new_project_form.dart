@@ -259,7 +259,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 onPressed: () {
                   // Api Here
                   controller.createProject();
-                  Get.offAll(HomeView());
+                  Get.offAll(()=> HomeView(),arguments: {'refresh':true});
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

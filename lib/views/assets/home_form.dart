@@ -1,9 +1,12 @@
 import 'package:collaboration_app_client/models/project_model.dart';
+import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+
+import '../../controllers/tag_controller.dart';
 
 class ProjectCard extends StatelessWidget {
   final Project project;
@@ -14,6 +17,7 @@ class ProjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return TextButton(
       style: ButtonStyle(
         // padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero), // Set padding to zero
@@ -54,11 +58,11 @@ class ProjectCard extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         decoration: BoxDecoration(
-                          color: Colors.blueAccent, // api color
+                          color: Color(int.parse('0xFF' + project.tagColor.substring(1))), // api color
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          "sssssssssssssssssssssssss", // api tag
+                          project.tagName, // api tag
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: const TextStyle(

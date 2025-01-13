@@ -8,4 +8,11 @@ class TagModel {
     required this.tagName,
     required this.tagColor,
   });
+  factory TagModel.fromJson(Map<String, dynamic> json) {
+    return TagModel(
+      tagId: json['tag_id'] as int,
+      tagName: json['tag_name'] as String,
+      tagColor: json['tag_color'] as String,
+    );
+  }
 }

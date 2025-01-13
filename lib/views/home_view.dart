@@ -6,6 +6,7 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/project_controller.dart';
+import '../controllers/tag_controller.dart';
 import 'assets/home_form.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
