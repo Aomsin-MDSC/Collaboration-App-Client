@@ -116,7 +116,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                             ),
                             onPressed: () {
                               // ฟังก์ชันเมื่อกดปุ่ม "Add Tag"
-                              Get.to(NewTagView());
+                              Get.off(NewTagView());
                               // ScaffoldMessenger.of(context).showSnackBar(
                               //   SnackBar(content: Text("Add new tag action")
                               //   ),
@@ -137,13 +137,16 @@ class _NewProjectFormState extends State<NewProjectForm> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Chip(
-                            label: Text(
-                              tag.tagName,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                          Flexible(
+                            child: Chip(
+                              label: Text(
+                                tag.tagName,
+                                style: const TextStyle(fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.ellipsis, // ตัดข้อความด้วย "..."
+                              ),
+                              backgroundColor: HexColor.fromHex(tag.tagColor),
+                              labelStyle: const TextStyle(color: Colors.white),
                             ),
-                            backgroundColor: HexColor.fromHex(tag.tagColor),
-                            labelStyle: TextStyle(color: Colors.white),
                           ),
                           IconButton(
                             icon: Icon(Icons.edit, color: Colors.black54),

@@ -204,7 +204,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   child: ElevatedButton(
                     onPressed: () {
                       controller.updateProject(projectId, tagId);
-                      Get.off(HomeView());
+                      Get.offAll(HomeView(), arguments: {'refresh': true});
                       // action
 
                     },
@@ -226,7 +226,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   child: ElevatedButton(
                     onPressed: () {
                       controller.deleteProject(projectId);
-                      Get.to(HomeView());// action
+                      Get.to(HomeView(), arguments: {'refresh': true});
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

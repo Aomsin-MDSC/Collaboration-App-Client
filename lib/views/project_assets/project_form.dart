@@ -73,8 +73,18 @@ class _ProjectFormState extends State<ProjectForm> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ListTile(
-                        title: Text(announce.announceTitle),
-                        subtitle: Text(announce.announceText),
+                        title: Text(
+                          announce.announceTitle,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        subtitle: Text(
+                          announce.announceText,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: const TextStyle(fontSize: 14, color: Colors.grey),
+                        ),
                         trailing: projectcontroller.userId == announce.userId
                             ? IconButton(
                                 onPressed: () {
@@ -158,22 +168,32 @@ class _ProjectFormState extends State<ProjectForm> {
                         child: ListTile(
                           title: Row(
                             children: [
-                              Text(taskList.taskName!), // api
+                              Flexible(
+                                child: Text(
+                                  taskList.taskName!, // api
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              ),
                               SizedBox(
                                 width: 10,
                               ),
-                              Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5),
-                                decoration: BoxDecoration(
-                                  color: Colors.blueAccent, // api color
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: const Text(
-                                  "ssss", // api tag
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                              Flexible(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blueAccent, // api color
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Text(
+                                    "ssssssssssssssssssssssssssss", // api tag
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),

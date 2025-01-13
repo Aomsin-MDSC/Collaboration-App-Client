@@ -104,7 +104,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
                     ),
                     IconButton(
                       icon: const Icon(
-                        Icons.settings,
+                        Icons.edit,
                         size: 30,
                       ),
                       onPressed: () {

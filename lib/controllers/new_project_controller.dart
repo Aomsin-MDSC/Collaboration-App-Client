@@ -90,16 +90,20 @@ class NewProjectController extends GetxController {
       }
       print("Selected members: $selectedmember");
 
-      if (selectedmember.isEmpty) {
-        print('No members selected!');
-        return;
-      }
+      // if (selectedmember.isEmpty) {
+      //   print('No members selected!');
+      //   return;
+      // }
       if (selectedTag == null) {
         print('No tag selected!');
         return;
       }
-      final memberIds =
-          selectedmember.map((e) => {'UserId': membersMap[e]}).toList();
+
+      final memberIds = selectedmember
+          .map((e) => {'UserId': membersMap[e]})
+          .toList();
+
+      memberIds.add({'UserId': userId});
 
       final tagId = selectedTag != null ? selectedTag!.tagId : -1;
       print("Selected TagId: $memberIds");

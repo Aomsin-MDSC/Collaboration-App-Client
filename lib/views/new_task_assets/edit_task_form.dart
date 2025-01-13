@@ -215,8 +215,9 @@ class _EditTaskFormState extends State<EditTaskForm> {
                         onPressed: () {
                           controller.updateTask(projectId, taskId,tagId);
                           Get.to(ProjectView(),arguments: {
-                          'projectId': projectId,
-                          'tagId': tagId
+                            'projectId': projectId,
+                            'tagId': tagId,
+                            'refresh': true,
                           }); // action
                         },
                         style: ElevatedButton.styleFrom(
@@ -232,7 +233,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       ),
                     ),
                     SizedBox(
-                      width: 157,
+                      width: 150,
                       height: 60,
                       child: ElevatedButton(
                         onPressed: () {

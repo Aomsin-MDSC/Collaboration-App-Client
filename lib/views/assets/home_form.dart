@@ -39,21 +39,32 @@ class ProjectCard extends StatelessWidget {
               ListTile(
                 title: Row(
                   children: [
-                    Text(project.projectName),
+                    Flexible(
+                      child: Text(
+                        project.projectName,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
                     SizedBox(
                       width: 10,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.blueAccent, // api color
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Text(
-                        "ssss", //api tag
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent, // api color
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          "sssssssssssssssssssssssss", // api tag
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -69,6 +80,7 @@ class ProjectCard extends StatelessWidget {
                             arguments: {
                               'projectId': project.projectId,
                               'tagId': project.tagId,
+                              // 'refresh': true,
                             },
                           );
                         },

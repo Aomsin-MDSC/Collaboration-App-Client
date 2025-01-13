@@ -121,11 +121,20 @@ class EditProjectController extends GetxController {
       final userId = await getUserIdFromToken();
 
       final memberIds = editselectedmember
-              .map((e) => editmembersMap[e])
-              .toList()
-              .isNotEmpty
-          ? editselectedmember.map((e) => editmembersMap[e]).toList()
-          : edit_selected_members_map.map((e) => editmembersMap[e]).toList();
+          .map((e) => editmembersMap[e])
+          .toList();
+
+      if (!memberIds.contains(userId)) {
+        memberIds.add(userId);
+      }
+
+      // final memberIds = editselectedmember
+      //         .map((e) => editmembersMap[e])
+      //         .toList()
+      //         .isNotEmpty
+      //     ? editselectedmember.map((e) => editmembersMap[e]).toList()
+      //     : edit_selected_members_map.map((e) => editmembersMap[e]).toList();
+
       final tagId = editselectedtag.isNotEmpty
           ? editTagsMap[editselectedtag.first]
           : tag_id;

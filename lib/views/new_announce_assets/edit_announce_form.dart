@@ -179,7 +179,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                   child: ElevatedButton(
                     onPressed: () {
                       controller.deleteAnnounce(announceId);
-                      Get.to(ProjectView(),arguments: {'projectId': projectId,'tagId':tagId} );
+                      Get.offAll(ProjectView(),arguments: {'projectId': projectId,'tagId':tagId, 'refresh': true,} );
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

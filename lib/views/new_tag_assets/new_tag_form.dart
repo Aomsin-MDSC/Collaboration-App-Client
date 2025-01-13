@@ -167,8 +167,10 @@ class _NewTagFormState extends State<NewTagForm> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () async {
-                  await tagcontroller.createTag();
-                  Get.to(NewProjectView());
+                  // tagcontroller.createTag().then((_){Navigator.of(context).pop();});
+                  await tagcontroller.createTag(onCompleted: (){
+                    Get.back();
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

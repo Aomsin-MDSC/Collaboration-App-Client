@@ -27,7 +27,7 @@ class NewTagController extends GetxController {
   Color get currenttagColor =>
       Color(int.parse(tagcolor.replaceFirst('#', '0xff')));
 
-  Future<void> createTag() async {
+  Future<void> createTag({Function? onCompleted = null}) async {
     try {
       final url = Uri.parse('http://10.24.8.16:5263/api/CreateTag');
 
@@ -43,6 +43,7 @@ class NewTagController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        if(onCompleted != null) onCompleted();
         Get.snackbar("Success", "Tag created successfully!");
         await controller.fetchTags();
       } else {

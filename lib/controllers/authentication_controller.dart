@@ -59,7 +59,7 @@ class AuthenticationController extends GetxController {
 
         // Navigate to the HomeView
         Get.put(ProjectController()); // Ensure ProjectController is initialized
-        Get.off(const HomeView());
+        Get.offAll(() => HomeView(), arguments: {'refresh': true});
       } else if (response.statusCode == 401) {
         // Invalid username or password
         Get.snackbar(

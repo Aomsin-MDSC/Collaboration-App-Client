@@ -62,6 +62,9 @@ class _LoginFormState extends State<LoginForm> {
                     : const Icon(Icons.visibility_outlined),
               ),
             ),
+            onFieldSubmitted: (_) {
+              controller.login();
+            },
           ),
           const SizedBox(
             height: 30,
