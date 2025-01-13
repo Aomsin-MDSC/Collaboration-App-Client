@@ -158,9 +158,9 @@ class _ProjectFormState extends State<ProjectForm> {
               child: ReorderableListView.builder(
                 padding: EdgeInsets.only(bottom: 120),
                 shrinkWrap: true,
-                itemCount: taskController.task.length,
+                itemCount: filteredList.length,
                 itemBuilder: (context, index) {
-                  final taskList = taskController.task[index];
+                  final taskList = filteredList[index];
 
                   return TextButton(
                       key: ValueKey(taskList.taskId),
