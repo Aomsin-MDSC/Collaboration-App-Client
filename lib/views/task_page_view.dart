@@ -43,13 +43,25 @@ class _TaskPageViewState extends State<TaskPageView> {
                 TaskPageForm(
                   taskId: widget.taskId,
                 ),
-                Padding(padding: EdgeInsets.only(bottom: 80))
               ],
             ),
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Container(
+        bottomNavigationBar: FilledButton(
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all(Colors.white),
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0.0),
+              ),
+            ),
+          ),
+          onPressed: () {
+            setState(() {
+              controller.commentText.text != controller.commentText.text;
+            });
+            Get.bottomSheet(
+              Container(
           color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -57,6 +69,7 @@ class _TaskPageViewState extends State<TaskPageView> {
               children: [
                 Expanded(
             child: TextField(
+              autofocus: true,
               controller: controller.commentText,
               decoration: InputDecoration(
                 filled: true,
@@ -76,12 +89,17 @@ class _TaskPageViewState extends State<TaskPageView> {
                 InkWell(
             onTap: () async {
               if (controller.commentText.text.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Comment cannot be empty")));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Comment cannot be empty")),
+                );
               } else {
+                Get.back();
                 await controller.CreateComment(widget.taskId);
                 controller.commentText.clear();
                 setState(() {});
                 print('Task ID: ${widget.taskId}');
+                
+
               }
             },
             child: Container(
@@ -99,7 +117,73 @@ class _TaskPageViewState extends State<TaskPageView> {
               ],
             ),
           ),
-        ),
+              ),
+            ).whenComplete(() {
+              setState(() 
+              {             
+            controller.commentText.text != controller.commentText.text;      
+              }
+            );
+            }
+          );
+          },
+          child: Container(
+            color: Colors.white,
+            padding: const EdgeInsets.only(bottom: 20, top: 20),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                 borderRadius: BorderRadius.circular(20),
+                 color: Colors.black12,
+              ),
+              
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                controller.commentText.text.isEmpty
+              ? 'Add a comment...'
+              : controller.commentText.text,
+                style: TextStyle(
+            color: controller.commentText.text.isEmpty
+                ? Colors.grey
+                : Colors.black,
+            fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          InkWell(
+            onTap: () async {
+              if (controller.commentText.text.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Comment cannot be empty")),
+                );
+              } else {
+                await controller.CreateComment(widget.taskId);
+                controller.commentText.clear();
+                setState(() {});
+                print('Task ID: ${widget.taskId}');
+              }
+            },
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.black,
+              ),
+              child: const Icon(
+                Icons.send,
+                color: Colors.white,
+              ),
+            ),
+          ),
+              ],
+            ),
+          ),
+        )
       ),
     );
   }
