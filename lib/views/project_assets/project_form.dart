@@ -191,11 +191,11 @@ class _ProjectFormState extends State<ProjectForm> {
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
-                                    color: Colors.blueAccent, // api color
+                                    color: Color(int.parse('0xFF' + taskList.tagColor.substring(1))), // api color
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
-                                    "ssssssssssssssssssssssssssss", // api tag
+                                    taskList.tagName, // api tag
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     style: const TextStyle(
