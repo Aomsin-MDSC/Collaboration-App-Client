@@ -11,6 +11,7 @@ import '../controllers/in_project_controller.dart';
 import '../controllers/new_announce_controller.dart';
 import '../controllers/new_task_controller.dart';
 import '../controllers/project_controller.dart';
+import '../models/project_model.dart';
 import '../views/new_task_view.dart';
 
 class ProjectView extends StatefulWidget {
@@ -23,6 +24,7 @@ class ProjectView extends StatefulWidget {
 class _ProjectViewState extends State<ProjectView> {
   final int projectId = Get.arguments['projectId'];
   final int tagId = Get.arguments['tagId'];
+  final int userId = Get.arguments['userId'];
 
   // late final NewTaskController newTaskController;
   // final Map<int, bool> toggleStates = {}; // Track toggle states by index
@@ -53,6 +55,7 @@ class _ProjectViewState extends State<ProjectView> {
   @override
   Widget build(BuildContext context) {
     final ProjectController projectController = Get.find<ProjectController>();
+    int currentUserId = projectController.userId.value;
 
     // Check if the keyboard is visible using MediaQuery
     bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
@@ -65,7 +68,7 @@ class _ProjectViewState extends State<ProjectView> {
           floatingActionButtonLocation: ExpandableFab.location,
           floatingActionButton: Padding(
             padding: const EdgeInsets.only(bottom: 20, right: 20),
-            child: isKeyboardVisible
+            child:  userId != currentUserId
                 ? null // Hide FAB when the keyboard is visible
                 : ExpandableFab(
                     childrenAnimation: ExpandableFabAnimation.none,

@@ -30,7 +30,8 @@ class ProjectCard extends StatelessWidget {
       onPressed: () {
         Get.to(() => const ProjectView(), arguments: {
           'projectId': project.projectId,
-          'tagId': project.tagId
+          'tagId': project.tagId,
+          'userId' : project.userId,
         });
       },
       child: Card(
@@ -79,6 +80,8 @@ class ProjectCard extends StatelessWidget {
                     ? IconButton(
                         onPressed: () {
                           print('User ID matches, navigating to edit');
+                          print('Project User ID: ${project.userId}');
+                          print('Current User ID: $currentUserId');
                           Get.to(
                             EditProjectView(),
                             arguments: {

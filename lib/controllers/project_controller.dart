@@ -11,6 +11,7 @@ class ProjectController extends GetxController {
   var isLoading = true.obs;
   Rx<int> userId = 0.obs;
 
+
   @override
   void onInit() async {
     super.onInit();
@@ -59,6 +60,9 @@ class ProjectController extends GetxController {
   }
 
   Future<void> fetchApi(String token) async {
+    final userId = await getUserId();
+    print("$userId");
+    print("object");
     try {
       isLoading(true);
       print("Fetching API...");
@@ -95,5 +99,19 @@ class ProjectController extends GetxController {
   // ฟังก์ชันอัปเดตข้อมูล (ยังไม่ได้ใช้ในตัวอย่าง)
   Future<void> updateReorder() async {
     // Implementation of update reorder logic
+  }
+
+  Future<int?> getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('jwt_token');
+    if (token != null) {
+      try {
+        final decodedToken = JwtDecoder.decode(token);
+        return decodedToken['userId'] != null ? int.tryParse(decodedToken['userId'].toString()) : null;
+      } catch (e) {
+        print('Error decoding token: $e');
+      }
+    }
+    return null;
   }
 }

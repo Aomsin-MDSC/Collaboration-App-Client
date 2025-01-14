@@ -33,6 +33,7 @@ class _ProjectFormState extends State<ProjectForm> {
   final projectcontroller = Get.put(ProjectController());
   late int projectId;
   final tagId = Get.arguments['tagId'];
+  final userId = Get.arguments['userId'];
 
   @override
   void initState() {
@@ -297,9 +298,6 @@ class _ProjectFormState extends State<ProjectForm> {
                   if (newIndex > oldIndex) {
                     newIndex -= 1;
                   }
-                  //Api Here
-                  final items = newTaskController.taskList.removeAt(oldIndex);
-                  newTaskController.taskList.insert(newIndex, items);
                 },
               ),
             );

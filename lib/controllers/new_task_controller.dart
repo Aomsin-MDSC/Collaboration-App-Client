@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/task_model.dart';
 import 'new_project_controller.dart';
 
 class NewTaskController extends GetxController {
@@ -36,14 +38,6 @@ class NewTaskController extends GetxController {
     'present',
   ].obs;
 
-  final taskList = RxList<Task>([
-    Task(taskName: 'Task 1', isToggled: false),
-    Task(taskName: 'Task 2', isToggled: false),
-    Task(taskName: 'Task 3', isToggled: false),
-    Task(taskName: 'Task 4', isToggled: false),
-    Task(taskName: 'Task 5', isToggled: false),
-    Task(taskName: 'Task 6', isToggled: false),
-  ]);
 
   // get tag for show
   var tags = [].obs;
@@ -158,12 +152,4 @@ class NewTaskController extends GetxController {
   }
 }
 
-class Task {
-  final String taskName;
-  bool isToggled;
 
-  Task({
-    required this.taskName,
-    this.isToggled = false,
-  });
-}
