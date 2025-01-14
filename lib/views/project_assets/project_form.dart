@@ -298,6 +298,10 @@ class _ProjectFormState extends State<ProjectForm> {
                   if (newIndex > oldIndex) {
                     newIndex -= 1;
                   }
+                  //Api Here
+                  final items = filteredList.removeAt(oldIndex);
+                  filteredList.insert(newIndex, items);
+
                 },
               ),
             );

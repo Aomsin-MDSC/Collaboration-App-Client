@@ -38,7 +38,6 @@ class NewTaskController extends GetxController {
     'present',
   ].obs;
 
-
   // get tag for show
   var tags = [].obs;
   TagModel? selectedTag;
