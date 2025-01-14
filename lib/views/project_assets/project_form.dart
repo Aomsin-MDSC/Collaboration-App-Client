@@ -4,6 +4,7 @@ import 'package:collaboration_app_client/controllers/in_project_controller.dart'
 import 'package:collaboration_app_client/controllers/new_project_controller.dart';
 import 'package:collaboration_app_client/controllers/new_task_controller.dart';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
+import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/edit_announce_view.dart';
 import 'package:collaboration_app_client/views/edit_task_view.dart';
 import 'package:collaboration_app_client/views/task_page_view.dart';
@@ -54,6 +55,7 @@ class _ProjectFormState extends State<ProjectForm> {
 
     final TaskController taskController = Get.find<TaskController>();
     final getUser = Get.put(NewProjectController());
+    final project = Get.find<ProjectController>();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -160,7 +162,11 @@ class _ProjectFormState extends State<ProjectForm> {
                 shrinkWrap: true,
                 itemCount: filteredList.length,
                 itemBuilder: (context, index) {
-                  final taskList = filteredList[index];
+               final taskList = filteredList[index];
+               final tagColor = HexColor.fromHex(taskList.taskColor);
+               final brightness = tagColor.computeLuminance();
+               final textColor = brightness > 0.5 ? Colors.black : Colors.white;
+
 
                   return TextButton(
                       key: ValueKey(taskList.taskId),
@@ -168,10 +174,10 @@ class _ProjectFormState extends State<ProjectForm> {
                         // Api Here
                         print(taskList.taskId);
                         Get.to(TaskPageView(taskId: taskList.taskId),
-                            arguments: {'projectId': projectId,'taskId':taskList.taskId,'tagId':tagId});
+                            arguments: {'projectId': projectId,'taskId':taskList.taskId,'tagId':tagId,'tagColor':taskList.tagColor,'tagName':taskList.tagName});
                       },
                       child: Card(
-                        color: Colors.white,
+                        color: HexColor(taskList.taskColor),
                         margin: const EdgeInsets.all(0),
                         child: ListTile(
                           title: Row(
@@ -181,7 +187,7 @@ class _ProjectFormState extends State<ProjectForm> {
                                   taskList.taskName!, // api
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
-                                  style: const TextStyle(fontSize: 16),
+                                  style: TextStyle(fontSize: 16,color: textColor),
                                 ),
                               ),
                               SizedBox(
@@ -191,7 +197,7 @@ class _ProjectFormState extends State<ProjectForm> {
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
-                                    color: Color(int.parse('0xFF' + taskList.tagColor.substring(1))), // api color
+                                    color: HexColor(taskList.tagColor), // api color
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
@@ -212,10 +218,11 @@ class _ProjectFormState extends State<ProjectForm> {
                                   taskList.taskOwner - 1 <
                                       getUser.memberlist.length
                               ? Text(
-                                  "Owner: ${getUser.memberlist[taskList.taskOwner - 1]}")
+                                  "Owner: ${getUser.memberlist[taskList.taskOwner - 1]}",style: TextStyle(color: textColor),)
                               : const Text('Unknown Owner'),
                           trailing: AnimatedToggleSwitch<bool>.dual(
                             indicatorSize: const Size.fromWidth(40),
+                            active: taskList.taskOwner == project.userId.toInt()? true: false,
                             height: 45,
                             current: taskList.taskStatus,
                             first: false,

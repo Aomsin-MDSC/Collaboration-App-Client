@@ -4,9 +4,11 @@ import 'package:collaboration_app_client/controllers/in_project_controller.dart'
 import 'package:collaboration_app_client/controllers/new_project_controller.dart';
 import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
 import 'package:collaboration_app_client/controllers/new_task_controller.dart';
+import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/controllers/task_page_controller.dart';
 import 'package:collaboration_app_client/models/comment_model.dart';
+import 'package:collaboration_app_client/models/project_model.dart';
 import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/edit_task_view.dart';
@@ -31,16 +33,13 @@ class _TaskPageFormState extends State<TaskPageForm> {
   final int projectId = Get.arguments['projectId'];
   final int taskId = Get.arguments['taskId'];
   final int tagId = Get.arguments['tagId'];
+  final String tagcolor = Get.arguments['tagColor'];
+  final String tagName = Get.arguments['tagName'];
 
   @override
   Widget build(BuildContext context) {
     final TaskController taskController = Get.find<TaskController>();
 
-    if (projectId == null || taskId == null) {
-      // Handle the error case, such as showing a fallback or navigating back
-      print("Missing projectId or taskId");
-      return Center(child: Text("Error: Missing projectId or taskId"));
-    }
 
 
 
@@ -48,6 +47,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
     final taskDetails = Get.put(TaskController());
     final getuser = Get.put(NewProjectController());
     final getTag = Get.put(TagController());
+    final project = Get.put(ProjectController());
 
     String taskName = taskDetails.task.value
         .firstWhere((element) => element.taskId == widget.taskId)
@@ -74,9 +74,14 @@ class _TaskPageFormState extends State<TaskPageForm> {
         .firstWhere((element) => element.taskId == widget.taskId)
         .taskId;
 
-    String tagcolor = taskDetails.task.value
-        .firstWhere((element) => element.taskId == widget.taskId)
-        .taskColor;
+    final tagColor = HexColor.fromHex(tagcolor);
+    final brightness = tagColor.computeLuminance();
+    final textColor = brightness > 0.5 ? Colors.black : Colors.white;
+                    
+    // String tagcolor = project.project.value
+    //     .firstWhere((element) => element.userId == widget.taskId)
+    //     .tagColor;
+
 
     return Form(
       child: Column(
@@ -109,7 +114,9 @@ class _TaskPageFormState extends State<TaskPageForm> {
                       ),
                       onPressed: () {
                         // api
-                        // print(tagId);
+                        // print("taskOwner:::::${taskOwner}");
+                        // print("CurrentuserId:::::${project.userId}");
+                        // print("TEST:::::${taskOwner == project.userId ? false : true}");
                         Get.to(EditTaskView(),
                           arguments: {
                             'projectId': projectId,
@@ -170,36 +177,23 @@ class _TaskPageFormState extends State<TaskPageForm> {
                 const SizedBox(height: 40),
                 Row(
                   children: [
-                    FutureBuilder(
-                      future: getTag.fetchTagMap(tag_id),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          final tagColor = HexColor.fromHex(tagcolor);
-                          final brightness = tagColor.computeLuminance();
-                          final textColor =
-                              brightness > 0.5 ? Colors.black : Colors.white;
-                          return Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: tagColor, // api color
-                              borderRadius: BorderRadius.circular(8),
+
+                 Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                  color: tagColor, // api color
+                  borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Text(
-                              snapshot.data ?? 'No Tag',
-                              style: TextStyle(color: textColor),
+                   child: Text(
+                          tagName ?? "NO Tag",
+                          style: TextStyle(color: textColor),
                             ), // api tag
-                          );
-                        }
-                      },
-                    ),
+                     ),
+                  
                     const Spacer(),
                     AnimatedToggleSwitch<bool>.dual(
-                        height: 40, // Fixed height for toggle
+                        active: taskOwner == project.userId.toInt() ? true : false,
+                        height: 40, 
                         current: taskDetails.task.value
                             .firstWhere(
                                 (element) => element.taskId == widget.taskId)
@@ -303,4 +297,4 @@ class _TaskPageFormState extends State<TaskPageForm> {
   }
 }
 
-// Add your existing imports here
+
