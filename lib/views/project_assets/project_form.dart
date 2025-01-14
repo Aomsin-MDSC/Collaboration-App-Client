@@ -175,7 +175,7 @@ class _ProjectFormState extends State<ProjectForm> {
                         // Api Here
                         print(taskList.taskId);
                         Get.to(TaskPageView(taskId: taskList.taskId),
-                            arguments: {'projectId': projectId,'taskId':taskList.taskId,'tagId':tagId,'tagColor':taskList.tagColor,'tagName':taskList.tagName});
+                            arguments: {'projectId': projectId,'taskId':taskList.taskId,'tagId':tagId,'tagColor':taskList.tagColor,'tagName':taskList.tagName,'userId':userId});
                       },
                       child: Card(
                         color: HexColor(taskList.taskColor),
@@ -294,13 +294,19 @@ class _ProjectFormState extends State<ProjectForm> {
                     ),
                   );
                 },
-                onReorder: (int oldIndex, int newIndex) {
+                onReorder: (int oldIndex, int newIndex) async {
                   if (newIndex > oldIndex) {
                     newIndex -= 1;
                   }
                   //Api Here
                   final items = filteredList.removeAt(oldIndex);
                   filteredList.insert(newIndex, items);
+
+                  for (int i = 0; i < filteredList.length; i++) {
+                    filteredList[i].taskOrder = i + 1;
+                  }
+
+                  await controller.updateTaskOrder(filteredList);
 
                 },
               ),

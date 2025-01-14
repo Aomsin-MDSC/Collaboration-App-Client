@@ -23,6 +23,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
   final int projectId = Get.arguments['projectId'];
   final int taskId = Get.arguments['taskId'];
   final int tagId = Get.arguments['tagId'];
+  final int userId = Get.arguments['userId'];
 
   @override
   Widget build(BuildContext context) {
@@ -218,6 +219,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                             'projectId': projectId,
                             'tagId': tagId,
                             'refresh': true,
+                            'userId':userId,
                           }); // action
                         },
                         style: ElevatedButton.styleFrom(

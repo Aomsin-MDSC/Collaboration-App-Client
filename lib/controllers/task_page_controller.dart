@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/task_model.dart';
+
 class TaskPageController extends GetxController {
   static TaskPageController get instance => Get.find();
 

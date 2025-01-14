@@ -12,7 +12,7 @@ class Task {
   final int taskOwner;
   final String tagName;
   final String tagColor;
-  final int taskOrder;
+   int taskOrder;
 
 
   Task({

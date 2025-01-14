@@ -80,7 +80,26 @@ class TaskController extends GetxController {
     }
   }
 
-  Future<void> updateReorder() async {
-    // Implementation of update reorder logic
+  Future<void> updateTaskOrder(List<Task> tasks) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://10.24.8.16:5263/api/tasks/updateOrder'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(tasks.map((task) => {
+          'task_id': task.taskId,
+          'task_order': task.taskOrder,
+        }).toList()),
+      );
+
+      if (response.statusCode == 200) {
+        print("Order updated successfully");
+      } else {
+        throw("Failed to update order: ${response.body}");
+      }
+    } catch (e) {
+      throw("Error updating order: $e");
+    }
   }
 }

@@ -35,6 +35,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
   final int tagId = Get.arguments['tagId'];
   final String tagcolor = Get.arguments['tagColor'];
   final String tagName = Get.arguments['tagName'];
+  final int userId = Get.arguments['userId'];
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +123,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
                             'projectId': projectId,
                             'taskId': taskId,
                             'tagId': tagId,
+                            'userId': userId,
                           },);
                       },
                     )
