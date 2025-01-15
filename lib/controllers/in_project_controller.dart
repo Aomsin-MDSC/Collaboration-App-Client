@@ -39,7 +39,7 @@ class TaskController extends GetxController {
         task.value = jsonData.map((data) => Task.fromJson(data)).toList();
         print("Projects loaded: ${task.length}");
         task.forEach((task) {
-          print('Task ID: ${task.taskId}, User ID: ${task.userId}');
+          print('Task ID: ${task.taskId}, User ID: ${task.userId}, Task Order: ${task.taskOrder}');
         });
       } else {
         print('Failed to load projects');

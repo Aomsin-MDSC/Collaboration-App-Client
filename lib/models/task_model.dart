@@ -47,7 +47,7 @@ class Task {
       taskOwner: json['task_Owner'] ?? '',
       tagName: json['tag_name'],
       tagColor: json['tag_color'],
-      taskOrder: json['task_order']!= null ? json['task_order'] : 0,
+      taskOrder: json['task_order']!= null ? json['task_order'] : 1,
     );
   }
 }
