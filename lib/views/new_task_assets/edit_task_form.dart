@@ -327,6 +327,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                             'projectId': projectId,
                             'tagId': tagId,
                             'refresh': true,
+                            'userId': userId,
                           });
                         },
                         style: ElevatedButton.styleFrom(
