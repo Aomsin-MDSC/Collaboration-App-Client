@@ -1,7 +1,9 @@
 import 'package:collaboration_app_client/controllers/edit_task_controller.dart';
+import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:collaboration_app_client/views/edit_tag_view.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
 import 'package:collaboration_app_client/views/project_view.dart';
+import 'package:collaboration_app_client/views/widgets/dropdown_tag_widget.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -12,7 +14,7 @@ import '../new_tag_view.dart';
 import '../task_page_view.dart';
 
 class EditTaskForm extends StatefulWidget {
-  const EditTaskForm ({super.key});
+  const EditTaskForm({super.key});
 
   @override
   State<EditTaskForm> createState() => _EditTaskFormState();
@@ -22,112 +24,193 @@ class _EditTaskFormState extends State<EditTaskForm> {
   final controller = Get.put(EditTaskController());
   final int projectId = Get.arguments['projectId'];
   final int taskId = Get.arguments['taskId'];
+  final String taskName = Get.arguments['taskName'];
+  final String taskDetail = Get.arguments['taskDetail'];
+  final int taskOwner = Get.arguments['taskOwner'];
   final int tagId = Get.arguments['tagId'];
   final int userId = Get.arguments['userId'];
+  final DateTime taskEnd = Get.arguments['taskEnd']; 
+  final String taskColor = Get.arguments['taskColor'];
+  final String tagcolor = Get.arguments['tagColor'];
+
+  @override
+  void initState() {
+    super.initState();
+    controller.editselectedDate = taskEnd;
+    controller.edittaskcolor = taskColor;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Form(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(vertical: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // taskname ---------------
-            Text("Task Name", style: TextStyle(fontSize: 18)),
-            SizedBox(height: 10),
+            const Text("Task Name", style: TextStyle(fontSize: 18)),
+            const SizedBox(height: 10),
             TextField(
                 controller: controller.edittaskname,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
+                  hintText: taskName,
                   filled: true,
                   fillColor: Colors.white,
                   // prefixIcon: Icon(Icons.add),
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                 )),
 
             // detail ---------------
-            SizedBox(height: 60,),
-            Text("Details", style: TextStyle(fontSize: 18),),
-            SizedBox(height: 10,),
+            const SizedBox(
+              height: 60,
+            ),
+            const Text(
+              "Details",
+              style: TextStyle(fontSize: 18),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             TextField(
               controller: controller.edittaskdetails,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
+                hintText: taskDetail,
                 filled: true,
                 fillColor: Colors.white,
                 // prefixIcon: Icon(Icons.abc),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
             ),
 
             // member ---------------
-            SizedBox(height: 60),
-            Text("Member", style: TextStyle(fontSize: 18)),
-            SizedBox(height: 10),
+            const SizedBox(height: 60),
+            const Text("Member", style: TextStyle(fontSize: 18)),
+            const SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>(
-                items: controller.editmemberlist.toList(),
+                items: controller.edit_selected_members_map.toList(),
+                selectedItem: (taskOwner > 0 &&
+                        taskOwner <= controller.edit_selected_members_map.length)
+                    ? controller.edit_selected_members_map[taskOwner - 1]
+                    : null,
                 onChanged: (newValue) {
                   controller.editselectedmember.clear();
                   controller.editselectedmember.add(newValue!);
                 },
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(),
-                    )),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                )),
               );
             }),
 
             // Add Tag
-            SizedBox(height: 60),
-            Text("Tag", style: TextStyle(fontSize: 18)),
-            SizedBox(height: 10),
+            const SizedBox(height: 60),
+            const Text("Tag", style: TextStyle(fontSize: 18)),
+            const SizedBox(height: 10),
             Obx(() {
-              return DropdownSearch<String>(
-                popupProps: PopupProps.menu(
-                    title: ElevatedButton(
-                        onPressed: () {
-                          controller.editselectedtag.clear();
-                          Get.to(const NewTagView());
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: btcolor,
-                          shape: const RoundedRectangleBorder(
+              return DropdownButtonFormField<TagModel>(
+                menuMaxHeight: 300,
+                iconSize: 35,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey.shade400),
+                  ),
+                ),
+                icon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
+                value: controller.selectedTag,
+                isExpanded: true,
+                items: [
+                  DropdownMenuItem<TagModel>(
+                    value: TagModel(tagId: -1, tagName: "null", tagColor: ""),
+                    child: Container(
+                      color: Colors.amberAccent,
+                      child: Center(
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: TextButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(
+                                const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.zero),
+                              ),
+                            ),
+                            onPressed: () {
+                              print(controller.tags.map((f) => f.tagName));
+                              // ฟังก์ชันเมื่อกดปุ่ม "Add Tag"
+                              // Get.to(NewTagView());
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //   SnackBar(content: Text("Add new tag action")
+                              //   ),
+                              // );
+                            },
+                            child: const Text(
+                              "Add Tag",
+                              style: TextStyle(color: Colors.black),
+                            ),
                           ),
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                         ),
-                        child: const Text("Add Tag"))),
-                items: controller.edittaglist.toList(),
-                dropdownDecoratorProps: const DropDownDecoratorProps(
-                    dropdownSearchDecoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(),
-                    )),
+                      ),
+                    ),
+                  ),
+                  ...controller.tags.map((tag) {
+                    return DropdownMenuItem<TagModel>(
+                      value: tag,
+                      child: DropdownTagWidget(tag: tag),
+                    );
+                  }).toList(),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    if (value != "Add Tag") {
+                      // อัปเดตค่า selectedtag
+                      if (value != null) {
+                        controller.selectedTag = value;
+                      }
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text(
+                                "Selected: ${controller.selectedTag!.tagName}")),
+                      );
+                    }
+                  });
+                },
               );
             }),
 
             // Text, Icon [Dead line, Color, Add tag]
-            SizedBox(height: 60,),
+            const SizedBox(
+              height: 60,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   children: [
-                    Text("Dead Line".toUpperCase(), style: TextStyle(fontSize: 18),),
-                    SizedBox(height: 10),
+                    Text(
+                      "Dead Line".toUpperCase(),
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(height: 10),
                     GestureDetector(
                       onTap: () async {
                         DateTime? selected = await showDatePicker(
                           context: context,
-                          initialDate: controller.editselectedDate ?? DateTime.now(), // used selected day
+                          initialDate: controller.editselectedDate ??
+                              DateTime.now(), // used selected day
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2101),
                         );
-                        if (selected != null && selected != controller.editselectedDate) {
+                        if (selected != null &&
+                            selected != controller.editselectedDate) {
                           setState(() {
-                            controller.editselectedDate = selected; // save day [new selected]
+                            controller.editselectedDate =
+                                selected; // save day [new selected]
                           });
                         }
                       },
@@ -148,18 +231,22 @@ class _EditTaskFormState extends State<EditTaskForm> {
                 ),
                 Column(
                   children: [
-                    Text("Color".toUpperCase(), style: TextStyle(fontSize: 18),),
-                    SizedBox(height: 10),
+                    Text(
+                      "Color".toUpperCase(),
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(height: 10),
                     GestureDetector(
                       onTap: () {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('Pick a Color'),
+                              title: const Text('Pick a Color'),
                               content: SingleChildScrollView(
-                                child: ColorPicker( // spectrum color
-                                  pickerColor: controller.taskcurrenttagColor,
+                                child: ColorPicker(
+                                  // spectrum color
+                                  pickerColor: Color(int.parse(controller.edittaskcolor.replaceFirst('#', '0xff'))),
                                   onColorChanged: (Color color) {
                                     setState(() {
                                       controller.edittaskchangeColor(color);
@@ -192,7 +279,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       child: CircleAvatar(
                         backgroundColor: controller.taskcurrenttagColor,
                         radius: 35,
-                        child: Icon(
+                        child: const Icon(
                           Icons.color_lens_rounded,
                           color: Colors.white,
                           size: 40,
@@ -205,7 +292,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
             ),
 
             // Save Button
-            SizedBox(height: 60),
+            const SizedBox(height: 60),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -213,14 +300,10 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       width: 150,
                       height: 60,
                       child: ElevatedButton(
-                        onPressed: () {
-                          controller.updateTask(projectId, taskId,tagId);
-                          Get.to(ProjectView(),arguments: {
-                            'projectId': projectId,
-                            'tagId': tagId,
-                            'refresh': true,
-                            'userId':userId,
-                          }); // action
+                        onPressed: () async {
+                      //print(controller.editselectedmember);
+                      await  controller.updateTask(projectId, taskId, tagId);
+                      Get.back(); // action
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

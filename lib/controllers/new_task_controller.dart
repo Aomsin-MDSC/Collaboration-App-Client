@@ -57,10 +57,11 @@ class NewTaskController extends GetxController {
 
   Color get taskcurrenttagColor =>
       Color(int.parse(taskcolor.replaceFirst('#', '0xff')));
+
   Future<void> fetchMembers() async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.24.8.16:5263/api/GetMembers'),
+        Uri.parse('http://10.24.8.16:5263/api/GetUsers'),
       );
 
       if (response.statusCode == 200) {

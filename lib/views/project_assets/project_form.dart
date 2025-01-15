@@ -94,7 +94,8 @@ class _ProjectFormState extends State<ProjectForm> {
                           announce.announceText,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
-                          style: const TextStyle(fontSize: 14, color: Colors.grey),
+                          style:
+                              const TextStyle(fontSize: 14, color: Colors.grey),
                         ),
                         trailing: projectcontroller.userId == announce.userId
                             ? IconButton(
@@ -164,11 +165,11 @@ class _ProjectFormState extends State<ProjectForm> {
                 shrinkWrap: true,
                 itemCount: filteredList.length,
                 itemBuilder: (context, index) {
-               final taskList = filteredList[index];
-               final tagColor = HexColor.fromHex(taskList.taskColor);
-               final brightness = tagColor.computeLuminance();
-               final textColor = brightness > 0.5 ? Colors.black : Colors.white;
-
+                  final taskList = filteredList[index];
+                  final tagColor = HexColor.fromHex(taskList.taskColor);
+                  final brightness = tagColor.computeLuminance();
+                  final textColor =
+                      brightness > 0.5 ? Colors.black : Colors.white;
 
                   return TextButton(
                       key: ValueKey(taskList.taskId),
@@ -176,7 +177,15 @@ class _ProjectFormState extends State<ProjectForm> {
                         // Api Here
                         print(taskList.taskId);
                         Get.to(TaskPageView(taskId: taskList.taskId),
-                            arguments: {'projectId': projectId,'taskId':taskList.taskId,'tagId':tagId,'tagColor':taskList.tagColor,'tagName':taskList.tagName,'userId':userId});
+                            arguments: {
+                              'projectId': projectId,
+                              'taskId': taskList.taskId,
+                              'tagId': tagId,
+                              'tagColor': taskList.tagColor,
+                              'tagName': taskList.tagName,
+                              'taskColor': taskList.taskColor,
+                              'userId':userId
+                            });
                       },
                       child: Card(
                         color: HexColor(taskList.taskColor),
@@ -189,7 +198,8 @@ class _ProjectFormState extends State<ProjectForm> {
                                   taskList.taskName!, // api
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
-                                  style: TextStyle(fontSize: 16,color: textColor),
+                                  style:
+                                      TextStyle(fontSize: 16, color: textColor),
                                 ),
                               ),
                               SizedBox(
@@ -197,9 +207,11 @@ class _ProjectFormState extends State<ProjectForm> {
                               ),
                               Flexible(
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
-                                    color: HexColor(taskList.tagColor), // api color
+                                    color: HexColor(
+                                        taskList.tagColor), // api color
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
@@ -220,11 +232,15 @@ class _ProjectFormState extends State<ProjectForm> {
                                   taskList.taskOwner - 1 <
                                       getUser.memberlist.length
                               ? Text(
-                                  "Owner: ${getUser.memberlist[taskList.taskOwner - 1]}",style: TextStyle(color: textColor),)
+                                  "Owner: ${getUser.memberlist[taskList.taskOwner - 1]}",
+                                  style: TextStyle(color: textColor),
+                                )
                               : const Text('Unknown Owner'),
                           trailing: AnimatedToggleSwitch<bool>.dual(
                             indicatorSize: const Size.fromWidth(40),
-                            active: taskList.taskOwner == project.userId.toInt()? true: false,
+                            active: taskList.taskOwner == project.userId.toInt()
+                                ? true
+                                : false,
                             height: 45,
                             current: taskList.taskStatus,
                             first: false,
@@ -308,7 +324,6 @@ class _ProjectFormState extends State<ProjectForm> {
                   }
 
                   await controller.updateTaskOrder(filteredList);
-
                 },
               ),
             );

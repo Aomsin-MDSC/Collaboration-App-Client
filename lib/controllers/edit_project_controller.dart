@@ -53,7 +53,7 @@ class EditProjectController extends GetxController {
   Future<void> fetchMembers() async {
     try {
       final response =
-          await http.get(Uri.parse('http://10.24.8.16:5263/api/GetMembers'));
+          await http.get(Uri.parse('http://10.24.8.16:5263/api/GetUsers'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
