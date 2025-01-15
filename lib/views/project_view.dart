@@ -4,7 +4,7 @@ import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/new_announce_view.dart';
 import 'package:collaboration_app_client/views/project_assets/project_form.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+// import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get/get.dart';
 import '../controllers/announce_controller.dart';
 import '../controllers/in_project_controller.dart';
@@ -13,6 +13,9 @@ import '../controllers/new_task_controller.dart';
 import '../controllers/project_controller.dart';
 import '../models/project_model.dart';
 import '../views/new_task_view.dart';
+import 'widgets/expandable_fab_widget.dart';
+
+
 
 class ProjectView extends StatefulWidget {
   const ProjectView({super.key});
@@ -65,95 +68,29 @@ class _ProjectViewState extends State<ProjectView> {
           appBar: AppBar(
             title: const Text("Project Page"),
           ),
-          floatingActionButtonLocation: ExpandableFab.location,
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: Padding(
             padding: const EdgeInsets.only(bottom: 20, right: 20),
             child:  userId != currentUserId
                 ? null // Hide FAB when the keyboard is visible
                 : ExpandableFab(
-                    childrenAnimation: ExpandableFabAnimation.none,
-                    distance: 70,
-                    openButtonBuilder: RotateFloatingActionButtonBuilder(
-                        fabSize: ExpandableFabSize.regular,
-                        backgroundColor: btcolor,
-                        child: const Icon(Icons.add)),
-                    closeButtonBuilder: RotateFloatingActionButtonBuilder(
-                        fabSize: ExpandableFabSize.regular,
-                        backgroundColor: btcolor,
-                        child: const Icon(Icons.close)),
-                    type: ExpandableFabType.up,
-                    pos: ExpandableFabPos.right,
+                    distance: 65,
                     children: [
                       Column(
                         // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Row(
+                                 Row(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 13),
-                                child: const Text(
-                                  "Edit Project",
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              const SizedBox(width: 20),
-                              FloatingActionButton(
+                              
+                              FloatingActionButton.extended(
                                 heroTag: null,
-                                backgroundColor: btcolor,
-                                child: const Icon(Icons.edit),
-                                onPressed: () {
-                                  // final product = projectController.project[index];
-                                  Get.to(EditProjectView(), arguments: {
-                                    'projectId': projectId,
-                                    'tagId': tagId,
-                                  });
-                                  // arguments: {'projectId': project.projectId});
-                                },
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 50),
-                                child: Text(
-                                  textAlign: TextAlign.center,
-                                  "New Task",
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              FloatingActionButton(
-                                heroTag: null,
-                                backgroundColor: btcolor,
-                                child: const Icon(Icons.task),
-                                onPressed: () {
-                                  Get.to(const NewTaskView(), arguments: {
-                                    'projectId': projectId,
-                                    'tagId': tagId,
-                                    'userId': userId,
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              const Text(
+                                label: const Text(
                                 "New Announce",
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.bold),
                               ),
-                              const SizedBox(width: 10),
-                              FloatingActionButton(
-                                heroTag: null,
                                 backgroundColor: btcolor,
-                                child: const Icon(Icons
+                                icon: const Icon(Icons
                                     .announcement), // Toggle between search and close icon
                                 onPressed: () {
                                   print(
@@ -164,15 +101,73 @@ class _ProjectViewState extends State<ProjectView> {
                               ),
                             ],
                           ),
+                         const SizedBox(height: 10),
+
+                          Row(
+                            children: [
+                    
+                              const SizedBox(width: 20),
+                              FloatingActionButton.extended(
+                                label:  Text(
+                                  "Edit Project",
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold)),
+                                heroTag: null,
+                                backgroundColor: btcolor,
+                                icon: const Icon(Icons.edit),
+                                onPressed: () {
+                                  // final product = projectController.project[index];
+                                  Get.to(EditProjectView(), arguments: {
+                                    'projectId': projectId,
+                                    'tagId': tagId,
+                                  });
+                                  // arguments: {'projectId': project.projectId});
+                                },
+                              ),
+                              
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 35),
+                                child: FloatingActionButton.extended(
+                                  label: Text(
+                                    textAlign: TextAlign.center,
+                                    "New Task",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  heroTag: null,
+                                  backgroundColor: btcolor,
+                                  icon: const Icon(Icons.task),
+                                  onPressed: () {
+                                    Get.to(const NewTaskView(), arguments: {
+                                      'projectId': projectId,
+                                      'tagId': tagId,
+                                      'userId': userId,
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                   
                         ],
                       ),
                     ],
                   ),
-          ),
+            ),
+            
           body: const Padding(
             padding: EdgeInsets.all(8.0),
             child: ProjectForm(),
           )),
     );
   }
+  
 }
+

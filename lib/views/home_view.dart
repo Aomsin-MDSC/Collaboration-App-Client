@@ -2,7 +2,6 @@ import 'package:collaboration_app_client/controllers/authentication_controller.d
 import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/new_project_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/project_controller.dart';
@@ -59,45 +58,15 @@ class _HomeViewState extends State<HomeView> {
             ),
           ],
         ),
-        floatingActionButtonLocation: ExpandableFab.location,
-        floatingActionButton: ExpandableFab(
-          overlayStyle: ExpandableFabOverlayStyle(
-            color: Colors.black.withOpacity(0.5),
-            blur: 5,
-          ),
-          childrenAnimation: ExpandableFabAnimation.none,
-          distance: 70,
-          type: ExpandableFabType.up,
-          openButtonBuilder: RotateFloatingActionButtonBuilder(
-            fabSize: ExpandableFabSize.regular,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 20,right: 20),
+          child: FloatingActionButton.extended(
             backgroundColor: btcolor,
-            child: const Icon(Icons.add),
-          ),
-          closeButtonBuilder: RotateFloatingActionButtonBuilder(
-            fabSize: ExpandableFabSize.regular,
-            backgroundColor: btcolor,
-            child: const Icon(Icons.close),
-          ),
-          pos: ExpandableFabPos.right,
-          children: [
-            Row(
-              children: [
-                const Text(
-                  "New Project",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                FloatingActionButton(
-                  heroTag: null,
-                  backgroundColor: btcolor,
-                  onPressed: () => Get.to(() => const NewProjectView()),
-                  child: const Icon(Icons.edit),
-                ),
-              ],
+            onPressed: (){Get.to(NewProjectView());},
+            label: Text("New Project",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+            icon: Icon(Icons.edit),
             ),
-          ],
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
