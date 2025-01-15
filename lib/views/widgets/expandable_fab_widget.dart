@@ -38,14 +38,12 @@ class _ExpandingActionButton extends StatelessWidget {
     return AnimatedBuilder(
       animation: progress,
       builder: (context, child) {
-        final offset = Offset.fromDirection(
-          directionInDegrees * (math.pi / 180.0),
-          progress.value * maxDistance,
-        );
+
         return Positioned(
-          top: 500.0 + offset.dx,
+          bottom: MediaQuery.of(context).size.height - MediaQuery.of(context).size.height + 70,
           child: Transform.flip(
-            child: child!,
+         
+            child: child,
           ),
         );
       },

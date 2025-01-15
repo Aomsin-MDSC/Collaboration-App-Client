@@ -74,7 +74,7 @@ class _ProjectViewState extends State<ProjectView> {
             child:  userId != currentUserId
                 ? null // Hide FAB when the keyboard is visible
                 : ExpandableFab(
-                    distance: 65,
+                    distance: 70,
                     children: [
                       Column(
                         // mainAxisAlignment: MainAxisAlignment.center,
