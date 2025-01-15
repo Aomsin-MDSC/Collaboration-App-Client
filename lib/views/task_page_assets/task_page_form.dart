@@ -83,6 +83,9 @@ class _TaskPageFormState extends State<TaskPageForm> {
     //     .firstWhere((element) => element.userId == widget.taskId)
     //     .tagColor;
 
+    final ProjectController projectController = Get.find<ProjectController>();
+    int currentUserId = projectController.userId.value;
+
     return 
       Form(
         child: Column(
@@ -108,16 +111,13 @@ class _TaskPageFormState extends State<TaskPageForm> {
                           ),
                         ),
                       ),
-                      IconButton(
+                      userId == currentUserId
+                          ? IconButton(
                         icon: const Icon(
                           Icons.edit,
                           size: 30,
                         ),
                         onPressed: () {
-                          // api
-                          // print("taskOwner:::::${taskOwner}");
-                          // print("CurrentuserId:::::${project.userId}");
-                          // print("TEST:::::${taskOwner == project.userId ? false : true}");
                           print('Color is -------------${taskColor}');
                           print('Tag is -------------${tagId}');
                           Get.to(
@@ -136,7 +136,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
                             },
                           );
                         },
-                      )
+                      ) : Container(), //empty box
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -189,16 +189,20 @@ class _TaskPageFormState extends State<TaskPageForm> {
                   const SizedBox(height: 40),
                   Row(
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: tagHexColor, // api color
-                          borderRadius: BorderRadius.circular(8),
+                      Flexible(
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: tagHexColor, // api color
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            tagName ?? "NO Tag",
+                            style: TextStyle(color: textColor),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ), // api tag
                         ),
-                        child: Text(
-                          tagName ?? "NO Tag",
-                          style: TextStyle(color: textColor),
-                        ), // api tag
                       ),
                       const Spacer(),
                       AnimatedToggleSwitch<bool>.dual(

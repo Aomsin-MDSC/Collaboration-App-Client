@@ -198,7 +198,9 @@ class _ProjectFormState extends State<ProjectForm> {
                         color: HexColor(taskList.taskColor),
                         margin: const EdgeInsets.all(0),
                         child: ListTile(
-                          title: Row(
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               Flexible(
                                 child: Text(
@@ -209,16 +211,21 @@ class _ProjectFormState extends State<ProjectForm> {
                                       TextStyle(fontSize: 16, color: textColor),
                                 ),
                               ),
+                              getUser.memberlist.isNotEmpty &&
+                                  taskList.taskOwner - 1 >= 0 &&
+                                  taskList.taskOwner - 1 <
+                                      getUser.memberlist.length
+                                  ? Text(
+                                "Owner: ${getUser.memberlist[taskList.taskOwner - 1]}",style: TextStyle(color: textColor),)
+                                  : const Text('Unknown Owner'),
                               SizedBox(
-                                width: 10,
+                                height: 10,
                               ),
                               Flexible(
                                 child: Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  padding: const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
-                                    color: HexColor(
-                                        taskList.tagColor), // api color
+                                    color: HexColor(taskList.tagColor), // api color
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
@@ -232,17 +239,12 @@ class _ProjectFormState extends State<ProjectForm> {
                                   ),
                                 ),
                               ),
+                              SizedBox(
+                                height: 10,
+                              ),
                             ],
                           ),
-                          subtitle: getUser.memberlist.isNotEmpty &&
-                                  taskList.taskOwner - 1 >= 0 &&
-                                  taskList.taskOwner - 1 <
-                                      getUser.memberlist.length
-                              ? Text(
-                                  "Owner: ${getUser.memberlist[taskList.taskOwner - 1]}",
-                                  style: TextStyle(color: textColor),
-                                )
-                              : const Text('Unknown Owner'),
+                          // subtitle: if u want
                           trailing: AnimatedToggleSwitch<bool>.dual(
                             indicatorSize: const Size.fromWidth(40),
                             active: taskList.taskOwner == project.userId.toInt()
@@ -319,7 +321,8 @@ class _ProjectFormState extends State<ProjectForm> {
                   );
                 },
                 onReorder: (int oldIndex, int newIndex) async {
-                  if (userId == currentUserId) {
+                  if (userId == currentUserId)
+                  {
                     if (newIndex > oldIndex) {
                       newIndex -= 1;
                     }
@@ -335,6 +338,7 @@ class _ProjectFormState extends State<ProjectForm> {
                     await taskController.fetchTask(projectId);
                   }
                 },
+
               ),
             );
           }),
