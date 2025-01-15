@@ -1,6 +1,6 @@
 import 'package:collaboration_app_client/utils/color.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
+
 
 @immutable
 class ExpandableFab extends StatefulWidget {
@@ -26,24 +26,27 @@ class _ExpandingActionButton extends StatelessWidget {
     required this.maxDistance,
     required this.progress,
     required this.child,
+    required this.isOpen,
   });
 
   final double directionInDegrees;
   final double maxDistance;
   final Animation<double> progress;
   final Widget child;
+  final bool isOpen;
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: progress,
       builder: (context, child) {
-
         return Positioned(
           bottom: MediaQuery.of(context).size.height - MediaQuery.of(context).size.height + 70,
           child: Transform.flip(
-         
-            child: child,
+            child: IgnorePointer(
+              ignoring: !isOpen,
+              child: child,
+            ),
           ),
         );
       },
@@ -54,6 +57,7 @@ class _ExpandingActionButton extends StatelessWidget {
     );
   }
 }
+
 class _ExpandableFabState extends State<ExpandableFab>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
@@ -112,27 +116,27 @@ class _ExpandableFabState extends State<ExpandableFab>
     return IgnorePointer(
       ignoring: !_open,
       child: AnimatedContainer(
-      transformAlignment: Alignment.center,
-      transform: Matrix4.diagonal3Values(
-        _open ? 1.0 : 0.7,
-        _open ? 1.0 : 0.7,
-        1.0,
-      ),
-      duration: const Duration(milliseconds: 250),
-      curve: const Interval(0.0, 0.5, curve: Curves.easeOut),
-      child: AnimatedOpacity(
-        opacity: _open ? 1.0 : 0.0,
-        curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
-        duration: const Duration(milliseconds: 250),
-        child: FloatingActionButton.extended(
-        elevation: 4,
-        heroTag: null,
-        backgroundColor: btcolor,
-        label: const Text("Close", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        onPressed: _toggle,
-        icon: const Icon(Icons.close),
+        transformAlignment: Alignment.center,
+        transform: Matrix4.diagonal3Values(
+          _open ? 1.0 : 0.7,
+          _open ? 1.0 : 0.7,
+          1.0,
         ),
-      ),
+        duration: const Duration(milliseconds: 250),
+        curve: const Interval(0.0, 0.5, curve: Curves.easeOut),
+        child: AnimatedOpacity(
+          opacity: _open ? 1.0 : 0.0,
+          curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
+          duration: const Duration(milliseconds: 250),
+          child: FloatingActionButton.extended(
+            elevation: 4,
+            heroTag: null,
+            backgroundColor: btcolor,
+            label: const Text("Close", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            onPressed: _toggle,
+            icon: const Icon(Icons.close),
+          ),
+        ),
       ),
     );
   }
@@ -150,6 +154,7 @@ class _ExpandableFabState extends State<ExpandableFab>
           maxDistance: widget.distance,
           progress: _expandAnimation,
           child: widget.children[i],
+          isOpen: _open,
         ),
       );
     }
