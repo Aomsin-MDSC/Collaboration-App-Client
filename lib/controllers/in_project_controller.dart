@@ -102,12 +102,12 @@ class TaskController extends GetxController {
       print('Response: ${response.body}');
 
       if (response.statusCode == 200) {
-        print('อัปเดตลำดับ Task สำเร็จ');
+        print('update completed successfully');
       } else {
-        print('อัปเดตลำดับ Task ล้มเหลว: ${response.body}');
+        print('update failed: ${response.body}');
       }
     } catch (e) {
-      print('เกิดข้อผิดพลาด: $e');
+      print('An error occurred.: $e');
     }
   }
 

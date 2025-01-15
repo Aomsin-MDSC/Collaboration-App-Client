@@ -57,6 +57,10 @@ class _ProjectFormState extends State<ProjectForm> {
     final TaskController taskController = Get.find<TaskController>();
     final getUser = Get.put(NewProjectController());
     final project = Get.find<ProjectController>();
+
+    final ProjectController projectController = Get.find<ProjectController>();
+    int currentUserId = projectController.userId.value;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -306,19 +310,22 @@ class _ProjectFormState extends State<ProjectForm> {
                   );
                 },
                 onReorder: (int oldIndex, int newIndex) async {
-                  if (newIndex > oldIndex) {
-                    newIndex -= 1;
+                  if (userId == currentUserId)
+                  {
+                    if (newIndex > oldIndex) {
+                      newIndex -= 1;
+                    }
+
+                    final movedTask = filteredList.removeAt(oldIndex);
+                    filteredList.insert(newIndex, movedTask);
+
+                    for (int i = 0; i < filteredList.length; i++) {
+                      filteredList[i].taskOrder = i + 1;
+                    }
+                    await controller.updateTaskOrder(filteredList);
+
+                    await taskController.fetchTask(projectId);
                   }
-
-                  final movedTask = filteredList.removeAt(oldIndex);
-                  filteredList.insert(newIndex, movedTask);
-
-                  for (int i = 0; i < filteredList.length; i++) {
-                    filteredList[i].taskOrder = i + 1;
-                  }
-                  await controller.updateTaskOrder(filteredList);
-
-                  await taskController.fetchTask(projectId);
                 },
 
               ),
