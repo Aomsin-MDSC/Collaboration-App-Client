@@ -257,7 +257,7 @@ class _ProjectFormState extends State<ProjectForm> {
                             onChanged: (value) async {
                               // API Here
                               await TaskController.instance
-                                  .updateTaskStatus(taskList.taskId, value);
+                                  .updateTaskStatus(taskList.taskId, value,taskList.taskName);
                               await taskController.fetchTask(projectId);
                             },
                             textBuilder: (value) => value

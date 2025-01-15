@@ -52,14 +52,15 @@ class TaskController extends GetxController {
     }
   }
 
-  Future<void> updateTaskStatus(int taskId, bool taskStatus) async {
+  Future<void> updateTaskStatus(int taskId, bool taskStatus,String taskName) async {
     try {
       final response = await http.put(
         Uri.parse('http://10.24.8.16:5263/api/UpdateStatus/$taskId'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'task_status': taskStatus,
-          'project_id': projectId
+          'project_id': projectId,
+          'task_name': taskName,
         }),
       );
       print('Response status code: ${response.statusCode}');

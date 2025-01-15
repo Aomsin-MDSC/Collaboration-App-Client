@@ -213,7 +213,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
                           onChanged: (value) async {
                             // API Here
                             await TaskController.instance
-                                .updateTaskStatus(task_id, value);
+                                .updateTaskStatus(task_id, value,taskName);
                             await taskController.fetchTask(projectId);
                             setState(() {
                               taskDetails.task.value
