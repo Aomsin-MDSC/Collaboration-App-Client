@@ -37,13 +37,17 @@ class EditTagController extends GetxController {
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
-          'tag_name': edittagname.text,
+          'tag_name': edittagname.text.isNotEmpty
+              ? edittagname.text
+              : controller.tags
+                  .firstWhere((element) => element.tagId == tagId)
+                  .tagName,
           'tag_color': tagcolor,
         }),
       );
 
       if (response.statusCode == 200) {
-        Get.snackbar("Success", "Tag update successfully!");
+        //Get.snackbar("Success", "Tag update successfully!");
         await controller.fetchTags();
       } else {
         Get.snackbar("Error", "Failed to update tag: ${response.body}");

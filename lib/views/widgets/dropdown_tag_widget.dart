@@ -37,7 +37,11 @@ class _DropdownTagWidgetState extends State<DropdownTagWidget> {
           icon: Icon(Icons.edit, color: Colors.black54),
           onPressed: () {
             // ฟังก์ชันเมื่อกดปุ่ม "Edit"
-            Get.to(EditTagView(), arguments: {'tagId': widget.tag.tagId});
+            Get.to(EditTagView(), arguments: {
+              'tagId': widget.tag.tagId,
+              'tagName': widget.tag.tagName,
+              'tagColor': widget.tag.tagColor
+            });
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("Edit ${widget.tag.tagId} action")),
             );

@@ -10,30 +10,57 @@ class EditAnnounceForm extends StatefulWidget {
   @override
   State<EditAnnounceForm> createState() => _EditAnnounceFormState();
 }
+
 class _EditAnnounceFormState extends State<EditAnnounceForm> {
   final controller = Get.put(EditAnnounceController());
 
+/*   @override
+  void initState() {
+    super.initState();
+    final arguments = Get.arguments as Map<String, dynamic>?;
+    if (arguments != null) {
+      final String announceTitle = arguments['announceTitle'];
+      final String announceText = arguments['announceText'];
+      final String announceDate = arguments['announceDate'];
+      final int announceId = arguments['announceId'];
+
+      if (announceId == null) {
+        print('Announce ID is null');
+      } else {
+        controller.editannouncename.text = announceTitle;
+        controller.editannouncedetail.text = announceText;
+        controller.editselectedDate = DateTime.parse(announceDate);
+      }
+    }
+  } */
 
   @override
   Widget build(BuildContext context) {
     final int projectId = Get.arguments['projectId'];
-    final arguments = Get.arguments  ?? {};
+    final arguments = Get.arguments ?? {};
     final int tagId = Get.arguments['tagId'];
     final int userId = Get.arguments['userId'];
     if (arguments == null || arguments is! Map<String, dynamic>) {
       print('Invalid or missing arguments');
-      return Center(
+      return const Center(
         child: Text('Error: Missing or invalid arguments'),
       );
     }
 
-    final int announceId = arguments['announceId'] ?? 0;
+    final int announceId = arguments['announceId'];
+    final String announceTitle = arguments['announceTitle'];
+    final String announceText = arguments['announceText'];
+    final String announceDate = arguments['announceDate'];
     if (announceId == null) {
       print('Announce ID is null');
-      return Center(
+      return const Center(
         child: Text('Error: Announce ID is missing'),
       );
     }
+
+    controller.editannouncename.text = announceTitle;
+    controller.editannouncedetail.text = announceText;
+    controller.editselectedDate = DateTime.parse(announceDate);
 
     return Form(
       child: Container(
@@ -51,11 +78,12 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
             ),
             TextField(
               controller: controller.editannouncename,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
+                hintText: announceTitle,
                 filled: true,
                 fillColor: Colors.white,
                 //prefixIcon: Icon(Icons.person),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
             ),
 
@@ -72,12 +100,13 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
             ),
             TextField(
               controller: controller.editannouncedetail,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
+                hintText: announceText,
                 filled: true,
                 fillColor: Colors.white,
                 // prefixIcon: Icon(Icons.abc),
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.symmetric(
+                border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.symmetric(
                   vertical: 15,
                   horizontal: 20,
                 ),
@@ -160,7 +189,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                     onPressed: () {
                       print("PBANK${announceId}");
                       controller.updateAnnounce(announceId);
-                      Get.to(ProjectView(),arguments: {'projectId': projectId,'tagId':tagId,'userId':userId} );
+                        Get.back(result: true);
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -180,7 +209,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                   child: ElevatedButton(
                     onPressed: () {
                       controller.deleteAnnounce(announceId);
-                      Get.offAll(ProjectView(),arguments: {'projectId': projectId,'tagId':tagId,'userId':userId} );
+                      Get.back(result: true);
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -190,7 +219,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                     ),
                     child: const Text(
                       "DELETE",
-                      style: TextStyle(fontSize: 18,color: Colors.white),
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
                 ),

@@ -36,6 +36,8 @@ class _EditTaskFormState extends State<EditTaskForm> {
   @override
   void initState() {
     super.initState();
+    controller.edittaskname.text = taskName;
+    controller.edittaskdetails.text = taskDetail;
     controller.editselectedDate = taskEnd;
     controller.edittaskcolor = taskColor;
   }

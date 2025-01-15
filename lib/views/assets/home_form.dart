@@ -82,6 +82,7 @@ class ProjectCard extends StatelessWidget {
                           print('User ID matches, navigating to edit');
                           print('Project User ID: ${project.userId}');
                           print('Current User ID: $currentUserId');
+                          print('Current tag: ${project.tagId}');
                           Get.to(
                             EditProjectView(),
                             arguments: {

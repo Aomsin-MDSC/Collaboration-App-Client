@@ -53,28 +53,34 @@ class _EditTagFormState extends State<EditTagForm> {
   Widget build(BuildContext context) {
     final tagcontroller = Get.put(EditTagController());
     final tagId = Get.arguments['tagId'];
+    final tagName = Get.arguments['tagName'];
+    final tagColor = Get.arguments['tagColor'];
+
+    tagcontroller.edittagname.text = tagName;
+    tagcontroller.tagcolor = tagColor;
 
     return Form(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(vertical: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // tag name ---------------
-            Text(
+            const Text(
               "Tag Name",
               style: TextStyle(fontSize: 18),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextField(
               controller: tagcontroller.edittagname,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
+                hintText: tagName,
                 filled: true,
                 fillColor: Colors.white,
                 //prefixIcon: Icon(Icons.person),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
               ),
               onChanged: (value) {
                 tagcontroller.editupdateTagName(
@@ -83,7 +89,7 @@ class _EditTagFormState extends State<EditTagForm> {
             ),
 
             // circle color ---------------
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
             GetBuilder<EditTagController>(builder: (controller) {
@@ -94,7 +100,7 @@ class _EditTagFormState extends State<EditTagForm> {
             }),
 
             //select color ---------------
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
             ElevatedButton(
@@ -103,18 +109,18 @@ class _EditTagFormState extends State<EditTagForm> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                minimumSize: Size(200, 50),
+                minimumSize: const Size(200, 50),
                 backgroundColor: btcolor,
               ),
               child: const Text("Select Color"),
             ),
 
             // Tag review
-            SizedBox(height: 60),
+            const SizedBox(height: 60),
             GetBuilder<EditTagController>(builder: (controller) {
               // preview [container] Taxt
               return Container(
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 decoration: BoxDecoration(
                   color: controller.editcurrenttagColor,
                   borderRadius: BorderRadius.circular(30),
@@ -123,7 +129,7 @@ class _EditTagFormState extends State<EditTagForm> {
                   controller.edittagname.text.isNotEmpty
                       ? controller.edittagname.text
                       : "Tag Preview",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -165,7 +171,7 @@ class _EditTagFormState extends State<EditTagForm> {
 
             // Save Button
 
-            SizedBox(height: 70),
+            const SizedBox(height: 70),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -175,7 +181,7 @@ class _EditTagFormState extends State<EditTagForm> {
                   child: ElevatedButton(
                     onPressed: () async {
                       await tagcontroller.updateTag(tagId);
-                      Get.to(NewProjectView(), arguments: {'tagId': tagId});
+                      Get.back();
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -183,7 +189,7 @@ class _EditTagFormState extends State<EditTagForm> {
                       ),
                       backgroundColor: btcolor,
                     ),
-                    child: Text(
+                    child: const Text(
                       "SAVE",
                       style: TextStyle(fontSize: 18),
                     ),
@@ -203,7 +209,7 @@ class _EditTagFormState extends State<EditTagForm> {
                       ),
                       backgroundColor: btcolordelete,
                     ),
-                    child: Text(
+                    child: const Text(
                       "DELETE",
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
