@@ -107,7 +107,7 @@ class _ProjectViewState extends State<ProjectView> {
                                   // final product = projectController.project[index];
                                   Get.to(EditProjectView(), arguments: {
                                     'projectId': projectId,
-                                    'tagId': tagId
+                                    'tagId': tagId,
                                   });
                                   // arguments: {'projectId': project.projectId});
                                 },
@@ -134,7 +134,8 @@ class _ProjectViewState extends State<ProjectView> {
                                 onPressed: () {
                                   Get.to(const NewTaskView(), arguments: {
                                     'projectId': projectId,
-                                    'tagId': tagId
+                                    'tagId': tagId,
+                                    'userId': userId,
                                   });
                                 },
                               ),
@@ -158,7 +159,7 @@ class _ProjectViewState extends State<ProjectView> {
                                   print(
                                       'Button Pressed, Project ID: $projectId');
                                   Get.to(NewAnnounceView(),
-                                      arguments: {'projectId': projectId,'tagId': tagId});
+                                      arguments: {'projectId': projectId,'tagId': tagId,'userId':userId});
                                 },
                               ),
                             ],

@@ -108,6 +108,7 @@ class _ProjectFormState extends State<ProjectForm> {
                                         'announceId': announceId,
                                         'projectId': projectId,
                                         'tagId': tagId,
+                                        'userId': userId,
                                       },
                                     );
                                   } else {

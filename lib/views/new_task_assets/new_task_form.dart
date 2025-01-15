@@ -21,6 +21,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
   final controller = Get.put(NewTaskController());
   final int projectId = Get.arguments['projectId'];
   final int tagId = Get.arguments['tagId'];
+  final int userId = Get.arguments['userId'];
 
   @override
   Widget build(BuildContext context) {
@@ -280,7 +281,8 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   controller.createTask(projectId);
                   Get.off(ProjectView(), arguments: {
                     'projectId': projectId,
-                    'tagId': tagId
+                    'tagId': tagId,
+                    'userId': userId
                   }); // action
                 },
                 style: ElevatedButton.styleFrom(

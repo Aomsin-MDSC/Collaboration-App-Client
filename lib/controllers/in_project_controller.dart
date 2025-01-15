@@ -91,7 +91,12 @@ class TaskController extends GetxController {
           'task_id': task.taskId,
           'task_order': task.taskOrder,
         }).toList()),
+
       );
+      print(jsonEncode(tasks.map((task) => {
+        'task_id': task.taskId,
+        'task_order': task.taskOrder,
+      }).toList()),);
 
       if (response.statusCode == 200) {
         print("Order updated successfully");

@@ -16,6 +16,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
 
   final projectId = Get.arguments['projectId'];
   final tagId = Get.arguments['tagId'];
+  final userId = Get.arguments['userId'];
   final controller = Get.put(NewAnnounceController());
 
   @override
@@ -150,7 +151,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                   controller.createAnnounce(projectId);
                   // print("setsetset");
                   // print(controller.selectedDate);// action
-                  Get.to(ProjectView(),arguments: {'projectId': projectId,'tagId':tagId});
+                  Get.to(ProjectView(),arguments: {'projectId': projectId,'tagId':tagId,'userId':userId});
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
