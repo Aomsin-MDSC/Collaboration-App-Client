@@ -39,8 +39,11 @@ class _EditProjectFormState extends State<EditProjectForm> {
     final int projectId = Get.arguments['projectId'];
     final int tagId = Get.arguments['tagId'];
 
-    final String projectName = Get.arguments['projectName'];
-    controller.editprojectname.text = projectName;
+    //final String projectName = Get.arguments['projectName'];
+
+    controller.editprojectname.text = projectids.project.value
+        .firstWhere((element) => element.projectId == projectId)
+        .projectName;
 
     return Form(
       child: Container(
@@ -124,7 +127,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                               ),
                             ),
                             onPressed: () {
-                                print(controller.tags.map((f) => f.tagName));
+                              print(controller.tags.map((f) => f.tagName));
                               // ฟังก์ชันเมื่อกดปุ่ม "Add Tag"
                               // Get.to(NewTagView());
                               // ScaffoldMessenger.of(context).showSnackBar(
@@ -242,9 +245,9 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   child: ElevatedButton(
                     onPressed: () {
                       controller.updateProject(projectId, tagId);
-                      Get.offAll(const HomeView(), arguments: {'refresh': true});
+                      Get.offAll(const HomeView(),
+                          arguments: {'refresh': true});
                       // action
-
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

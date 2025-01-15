@@ -26,7 +26,6 @@ class ProjectView extends StatefulWidget {
 
 class _ProjectViewState extends State<ProjectView> {
   final int projectId = Get.arguments['projectId'];
-  final String projectName = Get.arguments['projectName'];
   final int tagId = Get.arguments['tagId'];
   final int userId = Get.arguments['userId'];
 
@@ -121,7 +120,6 @@ class _ProjectViewState extends State<ProjectView> {
                                   // final product = projectController.project[index];
                                   Get.to(const EditProjectView(), arguments: {
                                     'projectId': projectId,
-                                    'projectName': projectName,
                                     'tagId': tagId,
                                   });
                                   // arguments: {'projectId': project.projectId});
