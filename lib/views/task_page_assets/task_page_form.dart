@@ -62,9 +62,11 @@ class _TaskPageFormState extends State<TaskPageForm> {
         .firstWhere((element) => element.taskId == widget.taskId)
         .taskOwner;
 
-    String userName = taskDetails.task.value
+    /* String userName = taskDetails.task.value
         .firstWhere((element) => element.taskOwner == taskOwner)
-        .userName;
+        .userName; */
+    
+    String userName = getuser.memberlist[taskOwner - 1];
 
     int tag_id = taskDetails.task.value
         .firstWhere((element) => element.taskId == widget.taskId)
@@ -125,7 +127,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
                               'taskId': taskId,
                               'taskName': taskName,
                               'taskDetail': taskDetail,
-                              'taskOwner': taskOwner,
+                              'taskOwner': userName,
                               'tagId': tag_id,
                               'taskEnd': DateTime.parse(taskEnd),
                               'taskColor': taskColor,
@@ -163,7 +165,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
-                          text: getuser.memberlist[taskOwner - 1],
+                          text: userName,
                           style: const TextStyle(fontWeight: FontWeight.normal),
                         ),
                       ],

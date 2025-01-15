@@ -26,7 +26,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
   final int taskId = Get.arguments['taskId'];
   final String taskName = Get.arguments['taskName'];
   final String taskDetail = Get.arguments['taskDetail'];
-  final int taskOwner = Get.arguments['taskOwner'];
+  final String taskOwner = Get.arguments['taskOwner'];
   final int tagId = Get.arguments['tagId'];
   final int userId = Get.arguments['userId'];
   final DateTime taskEnd = Get.arguments['taskEnd']; 
@@ -92,10 +92,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
             Obx(() {
               return DropdownSearch<String>(
                 items: controller.edit_selected_members_map.toList(),
-                selectedItem: (taskOwner > 0 &&
-                        taskOwner <= controller.edit_selected_members_map.length)
-                    ? controller.edit_selected_members_map[taskOwner - 1]
-                    : null,
+                selectedItem: taskOwner,
                 onChanged: (newValue) {
                   controller.editselectedmember.clear();
                   controller.editselectedmember.add(newValue!);

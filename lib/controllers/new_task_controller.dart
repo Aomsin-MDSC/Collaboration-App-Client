@@ -44,8 +44,13 @@ class NewTaskController extends GetxController {
 
   @override
   void onInit() {
+    final projectId = Get.arguments['projectId'] as int?;
     super.onInit();
-    fetchMembers(); // โหลดรายชื่อสมาชิกจาก API
+    if (projectId != null) {
+      fetchMembers(projectId);
+    } else {
+      print("Error: projectId is null");
+    } // โหลดรายชื่อสมาชิกจาก API
     fetchTags(); // โหลด tag จาก API
   }
 
@@ -58,23 +63,23 @@ class NewTaskController extends GetxController {
   Color get taskcurrenttagColor =>
       Color(int.parse(taskcolor.replaceFirst('#', '0xff')));
 
-  Future<void> fetchMembers() async {
+  Future<void> fetchMembers(int projectId) async {
     try {
-      final response = await http.get(
-        Uri.parse('http://10.24.8.16:5263/api/GetUsers'),
-      );
+      final response = await http
+          .get(Uri.parse('http://10.24.8.16:5263/api/GetMember/$projectId'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
-        memberlist.value = data.map((e) => e['user_name'] as String).toList();
+        memberlist.value =
+            data.map((e) => e['user_name'] as String).toList();
         membersMap.value = {
           for (var e in data) e['user_name'] as String: e['user_id'] as int,
         };
-      } else {
-        throw Exception('Failed to fetch members.');
+
+        throw Exception('Failed to load members');
       }
     } catch (e) {
-      print('Error fetching members: $e');
+      Exception('Error fetching Selected members: $e');
     }
   }
 
