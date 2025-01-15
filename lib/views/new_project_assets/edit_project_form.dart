@@ -39,6 +39,9 @@ class _EditProjectFormState extends State<EditProjectForm> {
     final int projectId = Get.arguments['projectId'];
     final int tagId = Get.arguments['tagId'];
 
+    final String projectName = Get.arguments['projectName'];
+    controller.editprojectname.text = projectName;
+
     return Form(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -51,19 +54,16 @@ class _EditProjectFormState extends State<EditProjectForm> {
             const SizedBox(height: 10),
             TextField(
               controller: controller.editprojectname,
-              decoration: InputDecoration(
-                hintText: projectids.project.value
-                    .firstWhere((element) => element.projectId == projectId)
-                    .projectName,
+              decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
-                border: const OutlineInputBorder(),
+                border: OutlineInputBorder(),
               ),
             ),
 
             // Member Dropdown
             const SizedBox(height: 60),
-            const Text("Member", style: const TextStyle(fontSize: 18)),
+            const Text("Member", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>.multiSelection(
@@ -105,7 +105,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                     borderSide: BorderSide(color: Colors.grey.shade400),
                   ),
                 ),
-                icon: Icon(Icons.arrow_drop_down, color: Colors.black54),
+                icon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
                 value: controller.selectedTag,
                 isExpanded: true,
                 items: [
@@ -119,7 +119,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                           child: TextButton(
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
+                                const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.zero),
                               ),
                             ),
@@ -132,7 +132,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                               //   ),
                               // );
                             },
-                            child: Text(
+                            child: const Text(
                               "Add Tag",
                               style: TextStyle(color: Colors.black),
                             ),
@@ -242,7 +242,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   child: ElevatedButton(
                     onPressed: () {
                       controller.updateProject(projectId, tagId);
-                      Get.offAll(HomeView(), arguments: {'refresh': true});
+                      Get.offAll(const HomeView(), arguments: {'refresh': true});
                       // action
 
                     },
@@ -264,7 +264,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   child: ElevatedButton(
                     onPressed: () {
                       controller.deleteProject(projectId);
-                      Get.to(HomeView(), arguments: {'refresh': true});
+                      Get.to(const HomeView(), arguments: {'refresh': true});
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

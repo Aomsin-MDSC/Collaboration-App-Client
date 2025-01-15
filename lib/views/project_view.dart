@@ -26,6 +26,7 @@ class ProjectView extends StatefulWidget {
 
 class _ProjectViewState extends State<ProjectView> {
   final int projectId = Get.arguments['projectId'];
+  final String projectName = Get.arguments['projectName'];
   final int tagId = Get.arguments['tagId'];
   final int userId = Get.arguments['userId'];
 
@@ -95,7 +96,7 @@ class _ProjectViewState extends State<ProjectView> {
                                 onPressed: () {
                                   print(
                                       'Button Pressed, Project ID: $projectId');
-                                  Get.to(NewAnnounceView(),
+                                  Get.to(const NewAnnounceView(),
                                       arguments: {'projectId': projectId,'tagId': tagId,'userId':userId});
                                 },
                               ),
@@ -108,7 +109,7 @@ class _ProjectViewState extends State<ProjectView> {
                     
                               const SizedBox(width: 20),
                               FloatingActionButton.extended(
-                                label:  Text(
+                                label:  const Text(
                                   "Edit Project",
                                   style: TextStyle(
                                       fontSize: 17,
@@ -118,8 +119,9 @@ class _ProjectViewState extends State<ProjectView> {
                                 icon: const Icon(Icons.edit),
                                 onPressed: () {
                                   // final product = projectController.project[index];
-                                  Get.to(EditProjectView(), arguments: {
+                                  Get.to(const EditProjectView(), arguments: {
                                     'projectId': projectId,
+                                    'projectName': projectName,
                                     'tagId': tagId,
                                   });
                                   // arguments: {'projectId': project.projectId});
@@ -134,7 +136,7 @@ class _ProjectViewState extends State<ProjectView> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 35),
                                 child: FloatingActionButton.extended(
-                                  label: Text(
+                                  label: const Text(
                                     textAlign: TextAlign.center,
                                     "New Task",
                                     style: TextStyle(

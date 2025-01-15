@@ -78,12 +78,11 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
             ),
             TextField(
               controller: controller.editannouncename,
-              decoration: InputDecoration(
-                hintText: announceTitle,
+              decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
                 //prefixIcon: Icon(Icons.person),
-                border: const OutlineInputBorder(),
+                border: OutlineInputBorder(),
               ),
             ),
 
@@ -100,13 +99,12 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
             ),
             TextField(
               controller: controller.editannouncedetail,
-              decoration: InputDecoration(
-                hintText: announceText,
+              decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
                 // prefixIcon: Icon(Icons.abc),
-                border: const OutlineInputBorder(),
-                contentPadding: const EdgeInsets.symmetric(
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.symmetric(
                   vertical: 15,
                   horizontal: 20,
                 ),

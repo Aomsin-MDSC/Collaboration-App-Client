@@ -75,12 +75,11 @@ class _EditTagFormState extends State<EditTagForm> {
             ),
             TextField(
               controller: tagcontroller.edittagname,
-              decoration: InputDecoration(
-                hintText: tagName,
+              decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
                 //prefixIcon: Icon(Icons.person),
-                border: const OutlineInputBorder(),
+                border: OutlineInputBorder(),
               ),
               onChanged: (value) {
                 tagcontroller.editupdateTagName(

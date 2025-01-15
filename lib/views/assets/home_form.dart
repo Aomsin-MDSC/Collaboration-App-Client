@@ -30,6 +30,7 @@ class ProjectCard extends StatelessWidget {
       onPressed: () {
         Get.to(() => const ProjectView(), arguments: {
           'projectId': project.projectId,
+          'projectName': project.projectName,
           'tagId': project.tagId,
           'userId' : project.userId,
         });
@@ -87,6 +88,7 @@ class ProjectCard extends StatelessWidget {
                             EditProjectView(),
                             arguments: {
                               'projectId': project.projectId,
+                              'projectName': project.projectName,
                               'tagId': project.tagId,
                               // 'refresh': true,
                             },

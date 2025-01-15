@@ -55,12 +55,11 @@ class _EditTaskFormState extends State<EditTaskForm> {
             const SizedBox(height: 10),
             TextField(
                 controller: controller.edittaskname,
-                decoration: InputDecoration(
-                  hintText: taskName,
+                decoration: const InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
                   // prefixIcon: Icon(Icons.add),
-                  border: const OutlineInputBorder(),
+                  border: OutlineInputBorder(),
                 )),
 
             // detail ---------------
@@ -76,12 +75,11 @@ class _EditTaskFormState extends State<EditTaskForm> {
             ),
             TextField(
               controller: controller.edittaskdetails,
-              decoration: InputDecoration(
-                hintText: taskDetail,
+              decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
                 // prefixIcon: Icon(Icons.abc),
-                border: const OutlineInputBorder(),
+                border: OutlineInputBorder(),
               ),
             ),
 
@@ -310,7 +308,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                           ),
                           backgroundColor: btcolor,
                         ),
-                        child: Text(
+                        child: const Text(
                           "SAVE",
                           style: TextStyle(fontSize: 18),
                         ),
@@ -322,7 +320,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       child: ElevatedButton(
                         onPressed: () {
                           controller.deleteTask(taskId);
-                          Get.to(ProjectView(),arguments: {
+                          Get.to(const ProjectView(),arguments: {
                             'projectId': projectId,
                             'tagId': tagId,
                             'refresh': true,
@@ -335,7 +333,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                           ),
                           backgroundColor: btcolordelete,
                         ),
-                        child: Text(
+                        child: const Text(
                           "DELETE",
                           style: TextStyle(fontSize: 18,color: Colors.white),
                         ),
