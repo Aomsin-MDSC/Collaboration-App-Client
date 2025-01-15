@@ -309,13 +309,18 @@ class _ProjectFormState extends State<ProjectForm> {
                   if (newIndex > oldIndex) {
                     newIndex -= 1;
                   }
-                  //Api Here
-                  final items = filteredList.removeAt(oldIndex);
-                  filteredList.insert(newIndex, items);
 
-                  await newTaskController.updateTaskOrder;
-                  // await taskController.fetchTask(projectId);
+                  final movedTask = filteredList.removeAt(oldIndex);
+                  filteredList.insert(newIndex, movedTask);
+
+                  for (int i = 0; i < filteredList.length; i++) {
+                    filteredList[i].taskOrder = i + 1;
+                  }
+                  await controller.updateTaskOrder(filteredList);
+
+                  await taskController.fetchTask(projectId);
                 },
+
               ),
             );
           }),

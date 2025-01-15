@@ -81,30 +81,35 @@ class TaskController extends GetxController {
   }
 
   Future<void> updateTaskOrder(List<Task> tasks) async {
+    const String url = 'http://10.24.8.16:5263/api/UpdateTaskOrder';
+
+    final payload = tasks.map((task) {
+      return {
+        'Task_id': task.taskId,
+        'TaskOrder': task.taskOrder,
+      };
+    }).toList();
+
     try {
       final response = await http.post(
-        Uri.parse('http://10.24.8.16:5263/api/tasks/updateOrder'),
-        headers: {
+        Uri.parse(url),
+        headers: <String, String>{
           'Content-Type': 'application/json',
         },
-        body: jsonEncode(tasks.map((task) => {
-          'task_id': task.taskId,
-          'task_order': task.taskOrder,
-        }).toList()),
-
+        body: jsonEncode(payload),
       );
-      print(jsonEncode(tasks.map((task) => {
-        'task_id': task.taskId,
-        'task_order': task.taskOrder,
-      }).toList()),);
+
+      print('Response: ${response.body}');
 
       if (response.statusCode == 200) {
-        print("Order updated successfully");
+        print('อัปเดตลำดับ Task สำเร็จ');
       } else {
-        throw("Failed to update order: ${response.body}");
+        print('อัปเดตลำดับ Task ล้มเหลว: ${response.body}');
       }
     } catch (e) {
-      throw("Error updating order: $e");
+      print('เกิดข้อผิดพลาด: $e');
     }
   }
+
+
 }

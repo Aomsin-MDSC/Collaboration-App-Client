@@ -150,33 +150,6 @@ class NewTaskController extends GetxController {
       rethrow;
     }
   }
-
-  Future<void> updateTaskOrder(int taskOrderUpdates) async {
-
-    const String url = 'http://10.24.8.16:5263/api/UpdateTaskOrder';
-
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'taskOrderUpdates': taskOrderUpdates,
-        }),
-      );
-      print(jsonEncode({
-        'taskOrderUpdates': taskOrderUpdates,
-      }),);
-      if (response.statusCode == 200) {
-        print('Task order updated successfully');
-      } else {
-        print('Failed to update task order: ${response.body}');
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
 }
 
 
