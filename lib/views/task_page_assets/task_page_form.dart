@@ -1,21 +1,14 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
-import 'package:collaboration_app_client/controllers/edit_project_controller.dart';
 import 'package:collaboration_app_client/controllers/in_project_controller.dart';
 import 'package:collaboration_app_client/controllers/new_project_controller.dart';
-import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
-import 'package:collaboration_app_client/controllers/new_task_controller.dart';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/controllers/task_page_controller.dart';
-import 'package:collaboration_app_client/models/comment_model.dart';
-import 'package:collaboration_app_client/models/project_model.dart';
 import 'package:collaboration_app_client/utils/color.dart';
-import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/edit_task_view.dart';
 import 'package:collaboration_app_client/views/widgets/comment_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controllers/edit_announce_controller.dart';
 
 class TaskPageForm extends StatefulWidget {
   final int taskId;
@@ -40,6 +33,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
 
   @override
   Widget build(BuildContext context) {
+
     final TaskController taskController = Get.find<TaskController>();
 
     final controller = Get.put(TaskPageController());
@@ -49,117 +43,131 @@ class _TaskPageFormState extends State<TaskPageForm> {
     final project = Get.put(ProjectController());
 
     String taskName = taskDetails.task.value
-        .firstWhere((element) => element.taskId == widget.taskId)
+        .firstWhere((value) => value.taskId == widget.taskId)
         .taskName;
     String taskDetail = taskDetails.task.value
-        .firstWhere((element) => element.taskId == widget.taskId)
+        .firstWhere((value) => value.taskId == widget.taskId)
         .taskDetail;
     String taskEnd = taskDetails.task.value
-        .firstWhere((element) => element.taskId == widget.taskId)
+        .firstWhere((value) => value.taskId == widget.taskId)
         .taskEnd;
 
     int taskOwner = taskDetails.task.value
-        .firstWhere((element) => element.taskId == widget.taskId)
+        .firstWhere((value) => value.taskId == widget.taskId)
         .taskOwner;
 
     /* String userName = taskDetails.task.value
-        .firstWhere((element) => element.taskOwner == taskOwner)
+        .firstWhere((value) => value.taskOwner == taskOwner)
         .userName; */
     
     String userName = getuser.memberlist[taskOwner - 1];
 
     int tag_id = taskDetails.task.value
-        .firstWhere((element) => element.taskId == widget.taskId)
+        .firstWhere((value) => value.taskId == widget.taskId)
         .tagId;
     int task_id = taskDetails.task.value
-        .firstWhere((element) => element.taskId == widget.taskId)
+        .firstWhere((value) => value.taskId == widget.taskId)
         .taskId;
 
-    final tagHexColor = HexColor.fromHex(tagColor);
-    final brightness = tagHexColor.computeLuminance();
-    final textColor = brightness > 0.5 ? Colors.black : Colors.white;
+
 
     // String tagcolor = project.project.value
-    //     .firstWhere((element) => element.userId == widget.taskId)
+    //     .firstWhere((value) => value.userId == widget.taskId)
     //     .tagColor;
 
     final ProjectController projectController = Get.find<ProjectController>();
     int currentUserId = projectController.userId.value;
+  //  var refresh = true;
+  // if (refresh) {
+  //     Future.delayed(Duration.zero, () async {
+  //        await taskController.fetchTask(projectId);
+
+  //     });
+  //   }
 
     return 
-      Form(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-              ),
+      Obx(() => Form(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Title with Icon
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Center(
-                          child: Text(
-                            taskName,
-                            style: const TextStyle(
-                                fontSize: 26, fontWeight: FontWeight.bold),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Title with Icon
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Center(
+                                child: Text(
+                                  taskName,
+                                  style: const TextStyle(
+                                      fontSize: 26, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                            userId == currentUserId
+                                ? IconButton(
+                              icon: const Icon(
+                                Icons.edit,
+                                size: 30,
+                              ),
+                              onPressed: () {
+                                print('Color is -------------');
+                                print('Tag is -------------');
+                         Get.to(
+                                  const EditTaskView(),
+                                  arguments: {
+                                    'projectId': projectId,
+                                    'taskId': taskId,
+                                    'taskName': taskName,
+                                    'taskDetail': taskDetail,
+                                    'taskOwner': userName,
+                                    'tagId': tag_id,
+                                    'taskEnd': DateTime.parse(taskEnd),
+                                    'taskColor': taskColor,
+                                    'tagColor': tagColor,
+                                    'userId': userId,
+                                  },
+                                )?.then((result) {
+                                  if (result == true) {
+                               
+                                    Future.delayed(Duration.zero, () async {
+                                      await taskController.fetchTask(projectId);
+                                    });
+                                  setState(() {});
+                                  }
+                                });
+                                            
+                              },
+                            ) : Container(), //empty box
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        // Details Section
+                        RichText(
+                          text: TextSpan(
+                            style: const TextStyle(fontSize: 18, color: Colors.black),
+                            children: [
+                              TextSpan(
+                                text: "Details: ",
+                                style: const TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(
+                                text: taskDetail.isNotEmpty ? taskDetail : "NO Data",
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      userId == currentUserId
-                          ? IconButton(
-                        icon: const Icon(
-                          Icons.edit,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          print('Color is -------------${taskColor}');
-                          print('Tag is -------------${tagId}');
-                          Get.to(
-                            EditTaskView(),
-                            arguments: {
-                              'projectId': projectId,
-                              'taskId': taskId,
-                              'taskName': taskName,
-                              'taskDetail': taskDetail,
-                              'taskOwner': userName,
-                              'tagId': tag_id,
-                              'taskEnd': DateTime.parse(taskEnd),
-                              'taskColor': taskColor,
-                              'tagColor': tagColor,
-                              'userId': userId,
-                            },
-                          );
-                        },
-                      ) : Container(), //empty box
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  // Details Section
-                  RichText(
-                    text: TextSpan(
-                      style: const TextStyle(fontSize: 18, color: Colors.black),
-                      children: [
-                        TextSpan(
-                          text: "Details: ",
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        TextSpan(
-                          text: taskDetail.isNotEmpty ? taskDetail : "NO Data",
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  RichText(
-                    text: TextSpan(
-                      style: const TextStyle(fontSize: 18, color: Colors.black),
-                      children: [
+                        const SizedBox(height: 40),
+                        RichText(
+                          text: TextSpan(
+                            style: const TextStyle(fontSize: 18, color: Colors.black),
+                            children: [
                         const TextSpan(
                           text: "Assigned to : ",
                           style: TextStyle(fontWeight: FontWeight.bold),
@@ -193,12 +201,14 @@ class _TaskPageFormState extends State<TaskPageForm> {
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: tagHexColor, // api color
+                            color: HexColor(taskController.task.firstWhere((value) => value.taskId == widget.taskId).tagColor), // api color
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            tagName ?? "NO Tag",
-                            style: TextStyle(color: textColor),
+                            taskController.task.firstWhere((f) => f.taskId == widget.taskId).tagName,
+                            style: TextStyle(
+                              color: HexColor(taskController.task.firstWhere((value) => value.taskId == widget.taskId).tagColor).computeLuminance() > 0.5 ? Colors.black : Colors.white,
+                            ),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ), // api tag
@@ -212,7 +222,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
                           height: 40,
                           current: taskDetails.task.value
                               .firstWhere(
-                                  (element) => element.taskId == widget.taskId)
+                                  (value) => value.taskId == widget.taskId)
                               .taskStatus,
                           first: false,
                           second: true,
@@ -223,8 +233,8 @@ class _TaskPageFormState extends State<TaskPageForm> {
                             await taskController.fetchTask(projectId);
                             setState(() {
                               taskDetails.task.value
-                                  .firstWhere((element) =>
-                                      element.taskId == widget.taskId)
+                                  .firstWhere((value) =>
+                                      value.taskId == widget.taskId)
                                   .taskStatus = value;
                             });
                           },
@@ -309,7 +319,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
             })
           ],
         ),
-      );
+      ));
 
   }
 }
