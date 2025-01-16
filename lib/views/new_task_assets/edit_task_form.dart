@@ -29,7 +29,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
   final String taskOwner = Get.arguments['taskOwner'];
   final int tagId = Get.arguments['tagId'];
   final int userId = Get.arguments['userId'];
-  final DateTime taskEnd = Get.arguments['taskEnd']; 
+  final DateTime taskEnd = Get.arguments['taskEnd'];
   final String taskColor = Get.arguments['taskColor'];
   final String tagcolor = Get.arguments['tagColor'];
 
@@ -53,14 +53,30 @@ class _EditTaskFormState extends State<EditTaskForm> {
             // taskname ---------------
             const Text("Task Name", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
-            TextField(
-                controller: controller.edittaskname,
-                decoration: const InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  // prefixIcon: Icon(Icons.add),
-                  border: OutlineInputBorder(),
-                )),
+            TextFormField(
+              controller: controller.edittaskname,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                // prefixIcon: Icon(Icons.add),
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    controller.edittaskname.clear();
+                  },
+                ),
+              ),
+              maxLength: 50,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                } else if (value.length > 50) {
+                  return 'Cannot exceed 50 characters';
+                }
+                return null;
+              },
+            ),
 
             // detail ---------------
             const SizedBox(
@@ -73,14 +89,29 @@ class _EditTaskFormState extends State<EditTaskForm> {
             const SizedBox(
               height: 10,
             ),
-            TextField(
+            TextFormField(
               controller: controller.edittaskdetails,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
                 // prefixIcon: Icon(Icons.abc),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    controller.edittaskdetails.clear();
+                  },
+                ),
               ),
+              maxLength: 200,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                } else if (value.length > 200) {
+                  return 'Cannot exceed 200 characters';
+                }
+                return null;
+              },
             ),
 
             // member ---------------
@@ -141,8 +172,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                               // ฟังก์ชันเมื่อกดปุ่ม "Add Tag"
                               Get.to(NewTagView());
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Add new tag action")
-                                ),
+                                SnackBar(content: Text("Add new tag action")),
                               );
                             },
                             child: const Text(
@@ -242,7 +272,9 @@ class _EditTaskFormState extends State<EditTaskForm> {
                               content: SingleChildScrollView(
                                 child: ColorPicker(
                                   // spectrum color
-                                  pickerColor: Color(int.parse(controller.edittaskcolor.replaceFirst('#', '0xff'))),
+                                  pickerColor: Color(int.parse(controller
+                                      .edittaskcolor
+                                      .replaceFirst('#', '0xff'))),
                                   onColorChanged: (Color color) {
                                     setState(() {
                                       controller.edittaskchangeColor(color);
@@ -292,52 +324,52 @@ class _EditTaskFormState extends State<EditTaskForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                    SizedBox(
-                      width: 150,
-                      height: 60,
-                      child: ElevatedButton(
-                        onPressed: () async {
+                SizedBox(
+                  width: 150,
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: () async {
                       //print(controller.editselectedmember);
-                      await  controller.updateTask(projectId, taskId, tagId);
+                      await controller.updateTask(projectId, taskId, tagId);
                       Get.back(); // action
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          backgroundColor: btcolor,
-                        ),
-                        child: const Text(
-                          "SAVE",
-                          style: TextStyle(fontSize: 18),
-                        ),
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
                       ),
+                      backgroundColor: btcolor,
                     ),
-                    SizedBox(
-                      width: 150,
-                      height: 60,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          controller.deleteTask(taskId);
-                          Get.to(const ProjectView(),arguments: {
-                            'projectId': projectId,
-                            'tagId': tagId,
-                            'refresh': true,
-                            'userId': userId,
-                          });
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          backgroundColor: btcolordelete,
-                        ),
-                        child: const Text(
-                          "DELETE",
-                          style: TextStyle(fontSize: 18,color: Colors.white),
-                        ),
+                    child: const Text(
+                      "SAVE",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 150,
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      controller.deleteTask(taskId);
+                      Get.to(const ProjectView(), arguments: {
+                        'projectId': projectId,
+                        'tagId': tagId,
+                        'refresh': true,
+                        'userId': userId,
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
                       ),
+                      backgroundColor: btcolordelete,
                     ),
+                    child: const Text(
+                      "DELETE",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  ),
+                ),
               ],
             )
 

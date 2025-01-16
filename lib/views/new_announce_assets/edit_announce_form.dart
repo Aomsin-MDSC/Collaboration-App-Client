@@ -76,14 +76,29 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
             const SizedBox(
               height: 10,
             ),
-            TextField(
+            TextFormField(
               controller: controller.editannouncename,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
                 //prefixIcon: Icon(Icons.person),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    controller.editannouncename.clear();
+                  },
+                ),
               ),
+              maxLength: 100,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                } else if (value.length > 100) {
+                  return 'Cannot exceed 100 characters';
+                }
+                return null;
+              },
             ),
 
             // details
@@ -97,20 +112,35 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
             const SizedBox(
               height: 10,
             ),
-            TextField(
+            TextFormField(
               controller: controller.editannouncedetail,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
                 // prefixIcon: Icon(Icons.abc),
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.symmetric(
+                border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.symmetric(
                   vertical: 15,
                   horizontal: 20,
+                ),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    controller.editannouncedetail.clear();
+                  },
                 ),
               ),
               maxLines: null,
               textAlignVertical: TextAlignVertical.top,
+              maxLength: 100,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                } else if (value.length > 100) {
+                  return 'Cannot exceed 100 characters';
+                }
+                return null;
+              },
             ),
 
             // text icon [etc.]
@@ -187,7 +217,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                     onPressed: () {
                       print("PBANK${announceId}");
                       controller.updateAnnounce(announceId);
-                        Get.back(result: true);
+                      Get.back(result: true);
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

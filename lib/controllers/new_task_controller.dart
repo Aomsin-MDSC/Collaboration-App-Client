@@ -146,9 +146,9 @@ class NewTaskController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print("Tag created successfully!");
+        print("Task created successfully!");
       } else {
-        print("Failed to create tag: ${response.body}");
+        print("Failed to create task: ${response.body}");
       }
     } catch (e) {
       print('Error in createTask: $e');
