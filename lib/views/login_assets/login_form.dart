@@ -37,6 +37,15 @@ class _LoginFormState extends State<LoginForm> {
                 // labelText: "Username",
                 hintText: "Username",
                 border: OutlineInputBorder()),
+            maxLength: 50,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'This field is required';
+              } else if (value.length > 50) {
+                return 'Cannot exceed 50 characters';
+              }
+              return null;
+            },
           ),
           const SizedBox(
             height: 20,
@@ -62,6 +71,15 @@ class _LoginFormState extends State<LoginForm> {
                     : const Icon(Icons.visibility_outlined),
               ),
             ),
+            maxLength: 50,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'This field is required';
+              } else if (value.length > 50) {
+                return 'Cannot exceed 50 characters';
+              }
+              return null;
+            },
             onFieldSubmitted: (_) {
               controller.login();
             },

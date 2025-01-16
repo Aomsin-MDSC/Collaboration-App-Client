@@ -30,6 +30,15 @@ class _LoginFormState extends State<RegisterForm> {
                 // labelText: "Username",
                 hintText: "Username",
                 border: OutlineInputBorder()),
+            maxLength: 50,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'This field is required';
+              } else if (value.length > 50) {
+                return 'Cannot exceed 50 characters';
+              }
+              return null;
+            },
           ),
           const SizedBox(
             height: 20,
@@ -44,6 +53,15 @@ class _LoginFormState extends State<RegisterForm> {
               hintText: "Password",
               border: OutlineInputBorder(),
             ),
+            maxLength: 50,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'This field is required';
+              } else if (value.length > 50) {
+                return 'Cannot exceed 50 characters';
+              }
+              return null;
+            },
           ),
           const SizedBox(
             height: 30,

@@ -55,6 +55,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 fillColor: Colors.white,
                 border: OutlineInputBorder(),
               ),
+
             ),
 
             // Member Dropdown
