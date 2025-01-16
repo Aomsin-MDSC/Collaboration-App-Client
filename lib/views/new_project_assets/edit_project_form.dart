@@ -127,13 +127,13 @@ class _EditProjectFormState extends State<EditProjectForm> {
                               ),
                             ),
                             onPressed: () {
-                              print(controller.tags.map((f) => f.tagName));
+
                               // ฟังก์ชันเมื่อกดปุ่ม "Add Tag"
-                              // Get.to(NewTagView());
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //   SnackBar(content: Text("Add new tag action")
-                              //   ),
-                              // );
+                              Get.to(NewTagView());
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Add new tag action")
+                                ),
+                              );
                             },
                             child: const Text(
                               "Add Tag",
