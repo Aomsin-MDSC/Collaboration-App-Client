@@ -64,7 +64,7 @@ class _NewTagFormState extends State<NewTagForm> {
             SizedBox(
               height: 10,
             ),
-            TextField(
+            TextFormField(
               controller: tagcontroller.tagname,
               decoration: const InputDecoration(
                 filled: true,
@@ -72,6 +72,15 @@ class _NewTagFormState extends State<NewTagForm> {
                 //prefixIcon: Icon(Icons.person),
                 border: OutlineInputBorder(),
               ),
+              maxLength: 50,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                } else if (value.length > 50) {
+                  return 'Cannot exceed 50 characters';
+                }
+                return null;
+              },
               onChanged: (value) {
                 tagcontroller.updateTagName(
                     tagcontroller.tagname.text); // Update tag name
@@ -80,7 +89,7 @@ class _NewTagFormState extends State<NewTagForm> {
 
             // circle color ---------------
             SizedBox(
-              height: 60,
+              height: 50,
             ),
             GetBuilder<NewTagController>(builder: (controller) {
               return CircleAvatar(

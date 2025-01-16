@@ -48,18 +48,27 @@ class _NewProjectFormState extends State<NewProjectForm> {
             // const SizedBox(height: 60),
             const Text("Project Name", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
-            TextField(
+            TextFormField(
               controller: controller.projectname,
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
                 border: OutlineInputBorder(),
               ),
+              maxLength: 50,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                } else if (value.length > 50) {
+                  return 'Cannot exceed 50 characters';
+                }
+                return null;
+              },
 
             ),
 
             // Member Dropdown
-            const SizedBox(height: 60),
+            const SizedBox(height: 50),
             const Text("Member", style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Obx(() {

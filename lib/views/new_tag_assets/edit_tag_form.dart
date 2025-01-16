@@ -73,7 +73,7 @@ class _EditTagFormState extends State<EditTagForm> {
             const SizedBox(
               height: 10,
             ),
-            TextField(
+            TextFormField(
               controller: tagcontroller.edittagname,
               decoration: const InputDecoration(
                 filled: true,
@@ -81,6 +81,15 @@ class _EditTagFormState extends State<EditTagForm> {
                 //prefixIcon: Icon(Icons.person),
                 border: OutlineInputBorder(),
               ),
+              maxLength: 50,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                } else if (value.length > 50) {
+                  return 'Cannot exceed 50 characters';
+                }
+                return null;
+              },
               onChanged: (value) {
                 tagcontroller.editupdateTagName(
                     tagcontroller.edittagname.text); // Update tag name
