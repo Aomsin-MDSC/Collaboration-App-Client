@@ -26,12 +26,20 @@ class NewAnnounceController extends GetxController {
           'project_id': projectId,
           'announce_date': selectedDate!.toIso8601String(),
         }),
+
       );
+
 
       if (response.statusCode == 200) {
         print("Announce created successfully!");
       } else {
         print("Failed to create announce: ${response.body}");
+        print(jsonEncode({
+          'announce_title': announcTitle.text,
+          'announce_text': announceText.text,
+          'project_id': projectId,
+          'announce_date': selectedDate!.toIso8601String(),
+        }));
       }
     } catch (e) {
       print("Something went wrong: $e");

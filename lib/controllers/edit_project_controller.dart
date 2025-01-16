@@ -220,11 +220,11 @@ class EditProjectController extends GetxController {
         print('Project deleted successfully');
         Get.snackbar("Success", "Project deleted successfully");
       } else {
-        print('Failed to delete project');
+        throw('Failed to delete project');
         Get.snackbar("Error", "Failed to delete project");
       }
     } catch (e) {
-      print('Error deleting project: $e');
+      throw('Error deleting project: $e');
       Get.snackbar("Error", "Something went wrong: $e");
     }
   }

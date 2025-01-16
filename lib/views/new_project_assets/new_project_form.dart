@@ -231,9 +231,9 @@ class _NewProjectFormState extends State<NewProjectForm> {
               width: double.infinity,
               height: 60,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // Api Here
-                  controller.createProject();
+                  await controller.createProject();
                   Get.offAll(()=> HomeView(),arguments: {'refresh':true});
                 },
                 style: ElevatedButton.styleFrom(

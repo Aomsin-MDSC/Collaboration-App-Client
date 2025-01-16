@@ -243,8 +243,8 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   width: 150,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed: () {
-                      controller.updateProject(projectId, tagId);
+                    onPressed: () async {
+                      await controller.updateProject(projectId, tagId);
                       Get.offAll(const HomeView(),
                           arguments: {'refresh': true});
                       // action
@@ -265,9 +265,9 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   width: 150,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed: () {
-                      controller.deleteProject(projectId);
-                      Get.to(const HomeView(), arguments: {'refresh': true});
+                    onPressed: () async {
+                      await controller.deleteProject(projectId);
+                      Get.offAll(const HomeView(), arguments: {'refresh': true});
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
