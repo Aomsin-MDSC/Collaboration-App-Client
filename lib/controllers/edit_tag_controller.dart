@@ -47,8 +47,8 @@ class EditTagController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        //Get.snackbar("Success", "Tag update successfully!");
         await controller.fetchTags();
+        //Get.snackbar("Success", "Tag update successfully!");
       } else {
         Get.snackbar("Error", "Failed to update tag: ${response.body}");
       }
@@ -70,8 +70,8 @@ class EditTagController extends GetxController {
       print("Response body: ${response.body}");
 
       if (response.statusCode == 200) {
-        print('Tag deleted successfully');
-        Get.snackbar("Success", "Tag deleted successfully");
+        await controller.fetchTags();
+        // Get.snackbar("Success", "Tag deleted successfully");
       } else {
         print('Failed to delete tag');
         Get.snackbar("Error", "Failed to delete tag");

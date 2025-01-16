@@ -73,19 +73,19 @@ class _LoginFormState extends State<RegisterForm> {
                   style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.black87),
-                  onPressed: () => (
-                        controller.registerUser(),
-                        Get.to(
-                            // TestFetch()
-                            const LoginView())
-                      ),
+                  onPressed: () async {
+                    await controller.registerUser();
+                    Get.back();
+                  },
                   child: Text('register'.toUpperCase()))),
           const SizedBox(
             height: 20,
           ),
           Center(
             child: TextButton(
-              onPressed: () => (Get.to(const LoginView())),
+              onPressed: () {
+                Get.back();
+              },
               child: Text.rich(
                 TextSpan(
                     text: "You Have An Account? ",

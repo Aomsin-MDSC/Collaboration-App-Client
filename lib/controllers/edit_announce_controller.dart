@@ -9,6 +9,8 @@ import 'package:http/http.dart' as http;
 class EditAnnounceController extends GetxController {
   static EditAnnounceController get instance => Get.find();
 
+  final AnnounceController acontroller = Get.find<AnnounceController>();
+
   final editannouncename = TextEditingController();
   final editannouncedetail = TextEditingController();
   DateTime? editselectedDate;
@@ -49,7 +51,7 @@ class EditAnnounceController extends GetxController {
     }
   }
 
-  Future<void> deleteAnnounce(announceId) async {
+  Future<void> deleteAnnounce(announceId, projectId) async {
     try {
       final url =
           Uri.parse('http://10.24.8.16:5263/api/DeleteAnnounce/$announceId');
@@ -62,6 +64,7 @@ class EditAnnounceController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        await acontroller.fetchAnnounce(projectId);
         print("Announce deleted successfully!");
       } else {
         print("Failed to deleted announce: ${response.body}");

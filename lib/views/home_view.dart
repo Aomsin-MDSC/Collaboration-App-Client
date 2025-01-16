@@ -29,7 +29,7 @@ class _HomeViewState extends State<HomeView> {
     final AuthenticationController authenticationController =
         Get.put(AuthenticationController());
 
-    final refresh = Get.arguments?['refresh'] ?? false;
+    var refresh = Get.arguments?['refresh'] ?? false;
 
     if (refresh) {
       Future.delayed(Duration.zero, () async {
@@ -63,7 +63,17 @@ class _HomeViewState extends State<HomeView> {
           padding: const EdgeInsets.only(bottom: 20,right: 20),
           child: FloatingActionButton.extended(
             backgroundColor: btcolor,
-            onPressed: (){Get.to(NewProjectView());},
+            // onPressed: (){Get.to(NewProjectView());},
+            onPressed: () {
+              // Get.to(NewProjectView())?.then((result){if(result['refresh'] == true)
+              //   {
+              //     setState(() {
+              //       refresh = true;
+              //     });
+              //   }
+              // });
+              Get.to(NewProjectView());
+            },
             label: Text("New Project",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
             icon: Icon(Icons.edit),
             ),

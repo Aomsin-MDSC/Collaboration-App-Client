@@ -104,8 +104,10 @@ class _LoginFormState extends State<LoginForm> {
           ),
           Center(
             child: TextButton(
-              onPressed: () => (Get.to(const RegisterView())),
-              child: Text.rich(
+              onPressed: () {
+                Get.to(RegisterView());
+              },
+              child: Text.rich(// Get.to(const RegisterView())?.then((va){print(va);})
                 TextSpan(
                     text: "Don't Have An Account ",
                     style: Theme.of(context).textTheme.bodyLarge,

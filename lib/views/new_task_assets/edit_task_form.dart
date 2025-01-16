@@ -331,7 +331,8 @@ class _EditTaskFormState extends State<EditTaskForm> {
                     onPressed: () async {
                       //print(controller.editselectedmember);
                       await  controller.updateTask(projectId, taskId, tagId);
-                      Get.back(result: true); // action
+                      Get.back();
+                      Get.back();
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -349,14 +350,16 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       width: 150,
                       height: 60,
                       child: ElevatedButton(
-                        onPressed: () {
-                          controller.deleteTask(taskId);
-                          Get.to(const ProjectView(),arguments: {
-                            'projectId': projectId,
-                            'tagId': tagId,
-                            'refresh': true,
-                            'userId': userId,
-                          });
+                        onPressed: () async {
+                          await controller.deleteTask(taskId, projectId);
+                          // Get.to(const ProjectView(),arguments: {
+                          //   'projectId': projectId,
+                          //   'tagId': tagId,
+                          //   'refresh': true,
+                          //   'userId': userId,
+                          // });
+                          Get.back();
+                          Get.back();
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

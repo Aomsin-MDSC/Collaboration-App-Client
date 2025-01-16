@@ -178,6 +178,7 @@ class _NewTagFormState extends State<NewTagForm> {
                 onPressed: () async {
                   // tagcontroller.createTag().then((_){Navigator.of(context).pop();});
                   await tagcontroller.createTag(onCompleted: (){
+                    // Get.back(result: {'refresh': true});
                     Get.back();
                   });
                 },

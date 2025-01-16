@@ -17,6 +17,8 @@ class EditTaskController extends GetxController {
   String edittaskcolor = "#808080";
   DateTime? editselectedDate; // get day selected
 
+  final TaskController tcontroller = Get.find<TaskController>();
+
   var editmemberlist = <String>[].obs;
   var editselectedmember = <String>[].obs;
   var editmembersMap = <String, int>{}.obs;
@@ -188,6 +190,7 @@ class EditTaskController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        tcontroller.fetchTask(projectId);
         print('Project updated successfully');
      
       } else {
@@ -199,7 +202,7 @@ class EditTaskController extends GetxController {
     }
   }
 
-  Future<void> deleteTask(int taskId) async {
+  Future<void> deleteTask(int taskId, projectId) async {
     try {
       final response = await http.delete(
         Uri.parse('http://10.24.8.16:5263/api/DeleteTask/$taskId'),
@@ -209,8 +212,9 @@ class EditTaskController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        await tcontroller.fetchTask(projectId);
         print('Project deleted successfully');
-        Get.snackbar("Success", "Project deleted successfully");
+        // Get.snackbar("Success", "Project deleted successfully");
       } else {
         print('Failed to delete project');
         Get.snackbar("Error", "Failed to delete project");

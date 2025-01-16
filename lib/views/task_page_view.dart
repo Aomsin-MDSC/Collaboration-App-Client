@@ -1,3 +1,4 @@
+import 'package:collaboration_app_client/controllers/in_project_controller.dart';
 import 'package:collaboration_app_client/controllers/task_page_controller.dart';
 import 'package:collaboration_app_client/views/task_page_assets/task_page_form.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,9 @@ class _TaskPageViewState extends State<TaskPageView> {
 
   @override
   Widget build(BuildContext context) {
+    final Taskcontroller = Get.put(TaskController());
     final controller = Get.put(TaskPageController());
+
     controller.fetchComment(widget.taskId);
 
     return SafeArea(
@@ -34,16 +37,21 @@ class _TaskPageViewState extends State<TaskPageView> {
             "TASK PAGE",
           ),
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TaskPageForm(
-                  taskId: widget.taskId,
-                ),
-              ],
+        body: RefreshIndicator(
+          onRefresh: ()async{
+            await Taskcontroller.fetchTask(1);
+          },
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.all(30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TaskPageForm(
+                    taskId: widget.taskId,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -127,11 +127,14 @@ class _NewProjectFormState extends State<NewProjectForm> {
                             ),
                             onPressed: () {
                               // ฟังก์ชันเมื่อกดปุ่ม "Add Tag"
-                              Get.off(NewTagView());
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //   SnackBar(content: Text("Add new tag action")
-                              //   ),
-                              // );
+                              // Get.to(NewTagView())?.then((result){if(result['refresh'] == true)
+                              //   {
+                              //     setState(() {
+                              //       refresh = true;
+                              //     });
+                              //   }
+                              // });
+                              Get.to(NewTagView());
                             },
                             child: Text(
                               "Add Tag",
@@ -244,7 +247,9 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 onPressed: () async {
                   // Api Here
                   await controller.createProject();
-                  Get.offAll(()=> HomeView(),arguments: {'refresh':true});
+                  // Get.offAll(()=> HomeView(),arguments: {'refresh':true});
+                  // Get.back(result: {'refresh': true});
+                  Get.back();
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

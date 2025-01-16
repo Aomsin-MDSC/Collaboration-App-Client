@@ -235,9 +235,10 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                   width: 150,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed: () {
-                      controller.deleteAnnounce(announceId);
-                      Get.back(result: true);
+                    onPressed: () async {
+                      await controller.deleteAnnounce(announceId, projectId);
+                      // Get.back(result: true);
+                      Get.back();
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

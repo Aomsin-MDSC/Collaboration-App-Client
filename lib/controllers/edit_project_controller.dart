@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 class EditProjectController extends GetxController {
   static EditProjectController get instance => Get.find();
 
+  final ProjectController controler = Get.find<ProjectController>();
   final editprojectname = TextEditingController();
   var editmemberlist = <String>[].obs;
   var editselectedmember = <String>[].obs;
@@ -164,6 +165,11 @@ class EditProjectController extends GetxController {
       final tagId = selectedTag?.tagId != null ? selectedTag?.tagId : tag_id;
       print("Tag ID::::::::::::::::::::::: $tagId");
 
+      if (token == null) {
+        print("Token not found!");
+        return;
+      }
+
       final response = await http.put(
         Uri.parse('http://10.24.8.16:5263/api/UpdateProject/$projectId'),
         headers: {
@@ -186,8 +192,9 @@ class EditProjectController extends GetxController {
       print("Response body: ${response.body}");
 
       if (response.statusCode == 200) {
+        await controler.fetchApi(token);
         print('Project updated successfully');
-        Get.off(() => const HomeView(), arguments: {'refresh': true});
+        // Get.off(() => const HomeView(), arguments: {'refresh': true});
       } else {
         print('Failed to update project');
         print('Response body: ${response.body}');
@@ -217,6 +224,8 @@ class EditProjectController extends GetxController {
       print("Response body: ${response.body}");
 
       if (response.statusCode == 200) {
+        // fetchapi
+        await controler.fetchApi(token);
         print('Project deleted successfully');
         Get.snackbar("Success", "Project deleted successfully");
       } else {

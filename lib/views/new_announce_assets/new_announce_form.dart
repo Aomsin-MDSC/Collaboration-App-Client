@@ -172,7 +172,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
             ),
 
             // button set announce
-            const SizedBox(height: 60),
+            SizedBox(height: 60),
             SizedBox(
               width: double.infinity,
               height: 60,
@@ -208,7 +208,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                   ),
                   backgroundColor: btcolor,
                 ),
-                child: const Text(
+                child: Text(
                   "Set an Announcement",
                   style: TextStyle(fontSize: 18),
                 ),

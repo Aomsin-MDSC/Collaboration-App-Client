@@ -80,55 +80,83 @@ class _ProjectFormState extends State<ProjectForm> {
               final announce = announcecontroller.announces[index];
               return SizedBox(
                 width: MediaQuery.of(context).size.width,
-                child: Card(
-                  color: Colors.white,
-                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        title: Text(
-                          announce.announceTitle,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: const TextStyle(fontSize: 16),
+                child: TextButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: Colors.white,
+                          title: Text(announce.announceTitle),
+                          content: Text(announce.announceText),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: const Text('Close'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 2), // ขยายพื้นที่กด
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10), // มุมโค้งของปุ่ม
+                    ),
+                  ),
+                  child: Card(
+                    color: Colors.white,
+                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListTile(
+                          title: Text(
+                            announce.announceTitle,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          subtitle: Text(
+                            announce.announceText,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style:
+                                const TextStyle(fontSize: 14, color: Colors.grey),
+                          ),
+                          trailing: projectcontroller.userId == announce.userId
+                              ? IconButton(
+                                  onPressed: () {
+                                    final announceId = announce.announceId;
+                                    print("PAOM${announce.announceTitle}");
+                                    if (announceId != null) {
+                                      Get.to(
+                                        EditAnnounceView(),
+                                        arguments: {
+                                          'announceId': announceId,
+                                          'projectId': projectId,
+                                          'tagId': tagId,
+                                          'userId': userId,
+                                          'announceTitle': announce.announceTitle,
+                                          'announceText': announce.announceText,
+                                          'announceDate': announce.announceDate,
+                                        },
+                                      );
+                                    } else {
+                                      print('Announce ID is null');
+                                    }
+                                  },
+                                  icon: const Icon(Icons.settings),
+                                  iconSize: 30,
+                                )
+                              : null,
                         ),
-                        subtitle: Text(
-                          announce.announceText,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          style:
-                              const TextStyle(fontSize: 14, color: Colors.grey),
-                        ),
-                        trailing: projectcontroller.userId == announce.userId
-                            ? IconButton(
-                                onPressed: () {
-                                  final announceId = announce.announceId;
-                                  print("PAOM${announce.announceTitle}");
-                                  if (announceId != null) {
-                                    Get.to(
-                                      EditAnnounceView(),
-                                      arguments: {
-                                        'announceId': announceId,
-                                        'projectId': projectId,
-                                        'tagId': tagId,
-                                        'userId': userId,
-                                        'announceTitle': announce.announceTitle,
-                                        'announceText': announce.announceText,
-                                        'announceDate': announce.announceDate,
-                                      },
-                                    );
-                                  } else {
-                                    print('Announce ID is null');
-                                  }
-                                },
-                                icon: const Icon(Icons.settings),
-                                iconSize: 30,
-                              )
-                            : null,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );

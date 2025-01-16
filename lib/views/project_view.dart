@@ -28,6 +28,7 @@ class _ProjectViewState extends State<ProjectView> {
   final int projectId = Get.arguments['projectId'];
   final int tagId = Get.arguments['tagId'];
   final int userId = Get.arguments['userId'];
+  final String projectName = Get.arguments['projectName'];
 
   // late final NewTaskController newTaskController;
   // final Map<int, bool> toggleStates = {}; // Track toggle states by index
@@ -42,6 +43,16 @@ class _ProjectViewState extends State<ProjectView> {
 
     Get.put(TaskController());
     TaskController.instance.fetchTask(projectId);
+
+    // final projectController = Get.put(ProjectController());
+    // Future.delayed(Duration.zero, () async {
+    //   String? token = await projectController.getToken();
+    //   if (token != null && token.isNotEmpty) {
+    //     projectController.fetchApi(token);
+    //   } else {
+    //     print("Token not found");
+    //   }
+    // });
 
     // Get.put(NewAnnounceController());
     // NewAnnounceController.instance.createAnnounce(projectId);
@@ -66,7 +77,42 @@ class _ProjectViewState extends State<ProjectView> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            title: const Text("Project Page"),
+            title: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: Colors.white,
+                          title: Text(projectName),
+                          // content: Text("if want ?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: Text("CLOSE"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Text(projectName,
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.white,
+                        overflow: TextOverflow.ellipsis, //same
+                    ),
+                    // overflow: TextOverflow.ellipsis, //same
+                    maxLines: 1,
+                  ),
+                ),
+              ],
+            ),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: Padding(

@@ -189,6 +189,7 @@ class _EditTagFormState extends State<EditTagForm> {
                   child: ElevatedButton(
                     onPressed: () async {
                       await tagcontroller.updateTag(tagId);
+                      // Get.back(result: {'refresh': true});
                       Get.back();
                     },
                     style: ElevatedButton.styleFrom(
@@ -207,9 +208,10 @@ class _EditTagFormState extends State<EditTagForm> {
                   width: 150,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed: () {
-                      tagcontroller.deleteTag(tagId);
-                      Get.back(); // action
+                    onPressed: () async {
+                      await tagcontroller.deleteTag(tagId);
+                      // Get.back(result: {'refresh': true});
+                      Get.back();
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

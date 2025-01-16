@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 class NewProjectController extends GetxController {
   static NewProjectController get instance => Get.find();
-
+  final ProjectController projectController = Get.find<ProjectController>();
   final projectname = TextEditingController();
   var memberlist = <String>[].obs;
   var selectedmember = <String>[].obs;
@@ -127,6 +128,7 @@ class NewProjectController extends GetxController {
 
       if (response.statusCode == 200) {
         print('Project created successfully');
+        projectController.fetchApi(token);
       } else {
         print('Failed to create project');
         print('Response body: ${response.body}');
@@ -135,6 +137,7 @@ class NewProjectController extends GetxController {
       throw ('Error creating project: $e');
     }
   }
+
 
   @override
   void onInit() {

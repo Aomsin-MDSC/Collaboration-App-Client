@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -44,8 +45,8 @@ class NewTagController extends GetxController {
 
       if (response.statusCode == 200) {
         if(onCompleted != null) onCompleted();
-        Get.snackbar("Success", "Tag created successfully!");
         await controller.fetchTags();
+        Get.snackbar("Success", "Tag created successfully!");
       } else {
         Get.snackbar("Error", "Failed to create tag: ${response.body}");
       }

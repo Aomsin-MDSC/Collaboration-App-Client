@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collaboration_app_client/controllers/in_project_controller.dart';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,8 @@ import 'new_project_controller.dart';
 class NewTaskController extends GetxController {
   static NewTaskController get instance => Get.find();
   final controller = Get.put(NewProjectController());
+
+  final TaskController tcontroller = Get.find<TaskController>();
 
   final taskName = TextEditingController();
   final taskdetails = TextEditingController();
@@ -146,6 +149,7 @@ class NewTaskController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        tcontroller.fetchTask(projectId);
         print("Task created successfully!");
       } else {
         print("Failed to create task: ${response.body}");

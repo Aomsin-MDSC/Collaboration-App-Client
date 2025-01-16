@@ -1,14 +1,22 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:collaboration_app_client/controllers/edit_project_controller.dart';
 import 'package:collaboration_app_client/controllers/in_project_controller.dart';
 import 'package:collaboration_app_client/controllers/new_project_controller.dart';
+import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
+import 'package:collaboration_app_client/controllers/new_task_controller.dart';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/controllers/task_page_controller.dart';
+import 'package:collaboration_app_client/models/comment_model.dart';
+import 'package:collaboration_app_client/models/project_model.dart';
 import 'package:collaboration_app_client/utils/color.dart';
+import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/edit_task_view.dart';
 import 'package:collaboration_app_client/views/widgets/comment_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import '../../controllers/edit_announce_controller.dart';
 
 class TaskPageForm extends StatefulWidget {
   final int taskId;
@@ -77,15 +85,11 @@ class _TaskPageFormState extends State<TaskPageForm> {
 
     final ProjectController projectController = Get.find<ProjectController>();
     int currentUserId = projectController.userId.value;
-  //  var refresh = true;
-  // if (refresh) {
-  //     Future.delayed(Duration.zero, () async {
-  //        await taskController.fetchTask(projectId);
 
-  //     });
-  //   }
+    DateTime parsedDate = DateTime.parse(taskEnd);
+    String formattedDate = DateFormat('dd/MM/yyyy').format(parsedDate);
 
-    return 
+    return
       Obx(() => Form(
               child: Column(
                 children: [
@@ -135,14 +139,14 @@ class _TaskPageFormState extends State<TaskPageForm> {
                                   },
                                 )?.then((result) {
                                   if (result == true) {
-                               
+
                                     Future.delayed(Duration.zero, () async {
                                       await taskController.fetchTask(projectId);
                                     });
                                   setState(() {});
                                   }
                                 });
-                                            
+
                               },
                             ) : Container(), //empty box
                           ],
@@ -188,7 +192,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
-                          text: taskEnd,
+                          text: formattedDate,
                           style: TextStyle(fontWeight: FontWeight.normal),
                         ),
                       ],
