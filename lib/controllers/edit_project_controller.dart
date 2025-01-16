@@ -139,12 +139,20 @@ class EditProjectController extends GetxController {
       final token = await getToken();
       final userId = await getUserIdFromToken();
 
+      if (editselectedmember.isEmpty) {
+        editselectedmember.value = edit_selected_members_map;
+      }
+
+      print("editselectedmember::::::::::::::::::::::: $edit_selected_members_map");
+
       final memberIds =
           editselectedmember.map((e) => editmembersMap[e]).toList();
 
       if (!memberIds.contains(userId)) {
         memberIds.add(userId);
       }
+      
+      print("Member IDs::::::::::::::::::::::: $memberIds");
 
       // final memberIds = editselectedmember
       //         .map((e) => editmembersMap[e])
