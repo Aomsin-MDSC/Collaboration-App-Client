@@ -6,10 +6,10 @@ import 'package:get/get.dart';
 import '../project_view.dart';
 
 class NewAnnounceForm extends StatefulWidget {
-  const NewAnnounceForm ({super.key});
+  const NewAnnounceForm({super.key});
 
   @override
-  State<NewAnnounceForm> createState() => _NewAnnounceFormState(); 
+  State<NewAnnounceForm> createState() => _NewAnnounceFormState();
 }
 
 class _NewAnnounceFormState extends State<NewAnnounceForm> {
@@ -42,14 +42,29 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
             const SizedBox(
               height: 10,
             ),
-            TextField(
-              controller: controller.announcTitle,
-              decoration: const InputDecoration(
+            TextFormField(
+              controller: controller.announceTitle,
+              decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
                 //prefixIcon: Icon(Icons.person),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    controller.announceTitle.clear();
+                  },
+                ),
               ),
+              maxLength: 100,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                } else if (value.length > 100) {
+                  return 'Cannot exceed 100 characters';
+                }
+                return null;
+              },
             ),
 
             // details
@@ -63,20 +78,35 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
             const SizedBox(
               height: 10,
             ),
-            TextField(
+            TextFormField(
               controller: controller.announceText,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
                 // prefixIcon: Icon(Icons.abc),
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.symmetric(
+                border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.symmetric(
                   vertical: 15,
                   horizontal: 20,
+                ),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    controller.announceText.clear();
+                  },
                 ),
               ),
               maxLines: null,
               textAlignVertical: TextAlignVertical.top,
+              maxLength: 100,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                } else if (value.length > 100) {
+                  return 'Cannot exceed 100 characters';
+                }
+                return null;
+              },
             ),
 
             // text icon [etc.]
@@ -100,7 +130,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                         DateTime? selectedDate = await showDatePicker(
                           context: context,
                           initialDate:
-                          controller.selectedDate ?? DateTime.now(),
+                              controller.selectedDate ?? DateTime.now(),
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2101),
                         );
@@ -142,16 +172,35 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
             ),
 
             // button set announce
-            SizedBox(height: 60),
+            const SizedBox(height: 60),
             SizedBox(
               width: double.infinity,
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  controller.createAnnounce(projectId);
-                  // print("setsetset");
-                  // print(controller.selectedDate);// action
-                  Get.to(ProjectView(),arguments: {'projectId': projectId,'tagId':tagId,'userId':userId});
+                  if (controller.selectedDate != null &&
+                      controller.announceTitle.text.isNotEmpty &&
+                      controller.announceText.text.isNotEmpty) {
+                    controller.createAnnounce(projectId);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Announce created successfully!',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                    Get.back();
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Please fill all the fields and set datetime!',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -159,7 +208,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                   ),
                   backgroundColor: btcolor,
                 ),
-                child: Text(
+                child: const Text(
                   "Set an Announcement",
                   style: TextStyle(fontSize: 18),
                 ),

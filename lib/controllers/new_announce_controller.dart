@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class NewAnnounceController extends GetxController {
   static NewAnnounceController get instance => Get.find();
 
-  final announcTitle = TextEditingController();
+  final announceTitle = TextEditingController();
   final announceText = TextEditingController();
   DateTime? selectedDate;
 
@@ -21,7 +21,7 @@ class NewAnnounceController extends GetxController {
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
-          'announce_title': announcTitle.text,
+          'announce_title': announceTitle.text,
           'announce_text': announceText.text,
           'project_id': projectId,
           'announce_date': selectedDate!.toIso8601String(),
@@ -35,7 +35,7 @@ class NewAnnounceController extends GetxController {
       } else {
         print("Failed to create announce: ${response.body}");
         print(jsonEncode({
-          'announce_title': announcTitle.text,
+          'announce_title': announceTitle.text,
           'announce_text': announceText.text,
           'project_id': projectId,
           'announce_date': selectedDate!.toIso8601String(),

@@ -27,47 +27,78 @@ class _NewTaskFormState extends State<NewTaskForm> {
   Widget build(BuildContext context) {
     return Form(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(vertical: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // taskname ---------------
-            Text("Task Name", style: TextStyle(fontSize: 18)),
-            SizedBox(height: 10),
-            TextField(
-                controller: controller.taskName,
-                decoration: const InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  // prefixIcon: Icon(Icons.add),
-                  border: OutlineInputBorder(),
-                )),
+            const Text("Task Name", style: TextStyle(fontSize: 18)),
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: controller.taskName,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                // prefixIcon: Icon(Icons.add),
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    controller.taskName.clear();
+                  },
+                ),
+              ),
+              maxLength: 50,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                } else if (value.length > 50) {
+                  return 'Cannot exceed 50 characters';
+                }
+                return null;
+              },
+            ),
 
             // detail ---------------
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
-            Text(
+            const Text(
               "Details",
               style: TextStyle(fontSize: 18),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            TextField(
+            TextFormField(
               controller: controller.taskdetails,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
                 // prefixIcon: Icon(Icons.abc),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    controller.taskdetails.clear();
+                  },
+                ),
               ),
+              maxLength: 200,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'This field is required';
+                } else if (value.length > 200) {
+                  return 'Cannot exceed 200 characters';
+                }
+                return null;
+              },
             ),
 
             // member ---------------
-            SizedBox(height: 60),
-            Text("Member", style: TextStyle(fontSize: 18)),
-            SizedBox(height: 10),
+            const SizedBox(height: 60),
+            const Text("Member", style: TextStyle(fontSize: 18)),
+            const SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>(
                 items: controller.memberlist.toList(),
@@ -99,7 +130,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                     borderSide: BorderSide(color: Colors.grey.shade400),
                   ),
                 ),
-                icon: Icon(Icons.arrow_drop_down, color: Colors.black54),
+                icon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
                 value: controller.selectedTag,
                 hint: Text(
                   "Select Tag",
@@ -117,19 +148,19 @@ class _NewTaskFormState extends State<NewTaskForm> {
                           child: TextButton(
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
+                                const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.zero),
                               ),
                             ),
                             onPressed: () {
                               // ฟังก์ชันเมื่อกดปุ่ม "Add Tag"
-                              Get.to(NewTagView());
+                              Get.to(const NewTagView());
                               // ScaffoldMessenger.of(context).showSnackBar(
                               //   SnackBar(content: Text("Add new tag action")
                               //   ),
                               // );
                             },
-                            child: Text(
+                            child: const Text(
                               "Add Tag",
                               style: TextStyle(color: Colors.black),
                             ),
@@ -164,7 +195,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
             }),
 
             // Text, Icon [Dead line, Color, Add tag]
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
             Row(
@@ -174,9 +205,9 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   children: [
                     Text(
                       "Dead Line".toUpperCase(),
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     GestureDetector(
                       onTap: () async {
                         DateTime? selected = await showDatePicker(
@@ -213,16 +244,16 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   children: [
                     Text(
                       "Color".toUpperCase(),
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     GestureDetector(
                       onTap: () {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('Pick a Color'),
+                              title: const Text('Pick a Color'),
                               content: SingleChildScrollView(
                                 child: ColorPicker(
                                   // spectrum color
@@ -259,7 +290,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                       child: CircleAvatar(
                         backgroundColor: controller.taskcurrenttagColor,
                         radius: 35,
-                        child: Icon(
+                        child: const Icon(
                           Icons.color_lens_rounded,
                           color: Colors.white,
                           size: 40,
@@ -272,18 +303,39 @@ class _NewTaskFormState extends State<NewTaskForm> {
             ),
 
             // Save Button
-            SizedBox(height: 60),
+            const SizedBox(height: 60),
             SizedBox(
               width: double.infinity,
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  controller.createTask(projectId);
-                  Get.off(ProjectView(), arguments: {
-                    'projectId': projectId,
-                    'tagId': tagId,
-                    'userId': userId
-                  }); // action
+                  if (controller.selectedDate != null &&
+                      controller.taskName.text.isNotEmpty &&
+                      controller.taskdetails.text.isNotEmpty &&
+                      controller.selectedmember.isNotEmpty &&
+                      controller.selectedTag != null) {
+                    controller.createTask(projectId);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Task created successfully!',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                    Get.back();
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Please fill all the fields and set datetime!',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                  }
+                  //controller.createTask(projectId);
+                  //Get.back(); // action
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -291,7 +343,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   ),
                   backgroundColor: btcolor,
                 ),
-                child: Text(
+                child: const Text(
                   "Make a Task",
                   style: TextStyle(fontSize: 18),
                 ),
