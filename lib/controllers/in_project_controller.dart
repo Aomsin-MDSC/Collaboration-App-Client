@@ -42,16 +42,18 @@ class TaskController extends GetxController {
         task.forEach((task) {
           print('Task ID: ${task.taskId}, User ID: ${task.userId}, Task Order: ${task.taskOrder}');
         });
-        
+
         final getUser = Get.find<NewProjectController>();
-        final Map<int, String> updatedMembersMap = {};
+        if (getUser.membersMap.isEmpty) {
+          final Map<int, String> updatedMembersMap = {};
 
-        for (var task in task) {
-          updatedMembersMap[task.taskOwner] = task.userName ?? "Unknown";
+          for (var task in task) {
+            updatedMembersMap[task.taskOwner] = task.userName ?? "Unknown";
+          }
+
+          getUser.membersMap.value = updatedMembersMap;
+          print("Updated membersMap: ${getUser.membersMap}");
         }
-
-        getUser.membersMap.value = updatedMembersMap;
-        print("Updated membersMap: ${getUser.membersMap}");
       } else {
         print('Failed to load projects');
         print('Response: ${response.body}');
