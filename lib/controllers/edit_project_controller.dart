@@ -53,12 +53,13 @@ class EditProjectController extends GetxController {
 
   Future<void> fetchMembers(token) async {
     try {
-      final response =
-          await http.get(Uri.parse('http://10.24.8.16:5263/api/GetUsers'),
-            headers: {
-              'Authorization': 'Bearer $token',
-              'Content-Type': 'application/json',
-            },);
+      final response = await http.get(
+        Uri.parse('http://10.24.8.16:5263/api/GetUsers'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
@@ -82,8 +83,15 @@ class EditProjectController extends GetxController {
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
-        edit_selected_members_map.value =
-            data.map((e) => e['user_name'] as String).toList();
+        final userId = await getUserIdFromToken();
+
+        /* edit_selected_members_map.value =
+            data.map((e) => e['user_name'] as String).toList(); */
+
+        edit_selected_members_map.value = data
+            .where((e) => e['user_id'] != userId)
+            .map((e) => e['user_name'] as String)
+            .toList();
 
         throw Exception('Failed to load members');
       }
@@ -148,7 +156,8 @@ class EditProjectController extends GetxController {
         editselectedmember.value = edit_selected_members_map;
       }
 
-      print("editselectedmember::::::::::::::::::::::: $edit_selected_members_map");
+      print(
+          "editselectedmember::::::::::::::::::::::: $edit_selected_members_map");
 
       final memberIds =
           editselectedmember.map((e) => editmembersMap[e]).toList();
@@ -156,7 +165,7 @@ class EditProjectController extends GetxController {
       if (!memberIds.contains(userId)) {
         memberIds.add(userId);
       }
-      
+
       print("Member IDs::::::::::::::::::::::: $memberIds");
 
       // final memberIds = editselectedmember
@@ -233,17 +242,17 @@ class EditProjectController extends GetxController {
         print('Project deleted successfully');
         // Get.snackbar("Success", "Project deleted successfully");
       } else {
-        throw('Failed to delete project');
+        throw ('Failed to delete project');
         Get.snackbar("Error", "Failed to delete project");
       }
     } catch (e) {
-      throw('Error deleting project: $e');
+      throw ('Error deleting project: $e');
       Get.snackbar("Error", "Something went wrong: $e");
     }
   }
 
   @override
-  void onInit() async{
+  void onInit() async {
     fetchSelectedMembers(Get.arguments['projectId']);
     fetchTagMap(Get.arguments['tagId']);
     // loadProjectDetails(projectId);

@@ -57,10 +57,16 @@ class _EditProjectFormState extends State<EditProjectForm> {
             const SizedBox(height: 10),
             TextFormField(
               controller: controller.editprojectname,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    controller.editprojectname.clear();
+                  },
+                ),
               ),
               maxLength: 50,
               validator: (value) {
@@ -136,13 +142,12 @@ class _EditProjectFormState extends State<EditProjectForm> {
                               ),
                             ),
                             onPressed: () {
-
                               // ฟังก์ชันเมื่อกดปุ่ม "Add Tag"
                               Get.to(NewTagView());
-                              ScaffoldMessenger.of(context).showSnackBar(
+                              /* ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text("Add new tag action")
                                 ),
-                              );
+                              ); */
                             },
                             child: const Text(
                               "Add Tag",
@@ -253,11 +258,33 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () async {
-                      await controller.updateProject(projectId, tagId);
-                      // Get.offAll(const HomeView(),
-                      //     arguments: {'refresh': true});
+                      if (controller.editprojectname.text.isNotEmpty) {
+                        await controller.updateProject(projectId, tagId);
+                        Get.back();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Project updated successfully',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
+                        Get.back();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Please fill all the fields',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
+                      }
+                      /* await controller.updateProject(projectId, tagId);
+                      /* Get.offAll(const HomeView(),
+                          arguments: {'refresh': true}); */
                       // action
-                      Get.back();
+                      Get.back(); */
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
