@@ -28,7 +28,7 @@ class _ProjectViewState extends State<ProjectView> {
   final int projectId = Get.arguments['projectId'];
   final int tagId = Get.arguments['tagId'];
   final int userId = Get.arguments['userId'];
-  final String projectName = Get.arguments['projectName'];
+  //final String projectName = Get.arguments['projectName'];
 
   // late final NewTaskController newTaskController;
   // final Map<int, bool> toggleStates = {}; // Track toggle states by index
@@ -70,6 +70,10 @@ class _ProjectViewState extends State<ProjectView> {
   Widget build(BuildContext context) {
     final ProjectController projectController = Get.find<ProjectController>();
     int currentUserId = projectController.userId.value;
+    
+    String projectName = projectController.project.value
+        .firstWhere((value) => value.projectId == projectId)
+        .projectName;
 
     // Check if the keyboard is visible using MediaQuery
     bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;

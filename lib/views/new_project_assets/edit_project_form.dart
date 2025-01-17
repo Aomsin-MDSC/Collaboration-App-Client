@@ -260,7 +260,6 @@ class _EditProjectFormState extends State<EditProjectForm> {
                     onPressed: () async {
                       if (controller.editprojectname.text.isNotEmpty) {
                         await controller.updateProject(projectId, tagId);
-                        Get.back();
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
