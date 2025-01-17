@@ -332,7 +332,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       //print(controller.editselectedmember);
                       await  controller.updateTask(projectId, taskId, tagId);
                       Get.back();
-                      Get.back();
+                      // Get.back();
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

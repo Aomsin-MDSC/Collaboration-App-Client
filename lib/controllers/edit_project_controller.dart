@@ -231,7 +231,7 @@ class EditProjectController extends GetxController {
         // fetchapi
         await controler.fetchApi(token);
         print('Project deleted successfully');
-        Get.snackbar("Success", "Project deleted successfully");
+        // Get.snackbar("Success", "Project deleted successfully");
       } else {
         throw('Failed to delete project');
         Get.snackbar("Error", "Failed to delete project");
@@ -255,5 +255,4 @@ class EditProjectController extends GetxController {
       print("Token not found");
     }
   }
-  }
-
+}
