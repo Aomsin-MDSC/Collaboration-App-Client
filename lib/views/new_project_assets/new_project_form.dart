@@ -252,7 +252,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 onPressed: () async {
                   if (controller.projectname.text.isNotEmpty) {
                     await controller.createProject();
-                    Get.back();
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text(

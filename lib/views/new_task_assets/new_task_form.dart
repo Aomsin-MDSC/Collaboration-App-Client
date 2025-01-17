@@ -24,6 +24,17 @@ class _NewTaskFormState extends State<NewTaskForm> {
   final int userId = Get.arguments['userId'];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    controller.taskName.clear();
+    controller.taskdetails.clear();
+    controller.selectedTag = null;
+    controller.selectedDate = null;
+    controller.taskcolor = "#808080";
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Form(
       child: Container(
