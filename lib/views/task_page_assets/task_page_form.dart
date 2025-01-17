@@ -133,7 +133,9 @@ class _TaskPageFormState extends State<TaskPageForm> {
                                     'taskId': taskId,
                                     'taskName': taskName,
                                     'taskDetail': taskDetail,
-                                    'taskOwner': userName,
+                                    'taskOwner': getuser.membersMap.containsKey(taskOwner)
+                                    ? getuser.membersMap[taskOwner]
+                                    : taskDetails.task.firstWhere((t) => t.taskOwner == userId).userName,
                                     'tagId': tag_id,
                                     'taskEnd': DateTime.parse(taskEnd),
                                     'taskColor': taskColor,
