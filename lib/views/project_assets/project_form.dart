@@ -258,7 +258,7 @@ class _ProjectFormState extends State<ProjectForm> {
                               Text(
                                 getUser.membersMap.containsKey(taskList.taskOwner)
                                     ? "Owner: ${getUser.membersMap[taskList.taskOwner]}"
-                                    : "Owner: Unknown",
+                                    : "Owner: ${taskList.userName}",
                                 style: TextStyle(color: textColor),
                               ),
 

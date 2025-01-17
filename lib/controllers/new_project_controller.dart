@@ -108,10 +108,10 @@ class NewProjectController extends GetxController {
       // }
 
       final memberIds = selectedmember
-          .map((e) => {'UserId': membersMap[e]})
+          .map((e) => {'UserId': int.parse(membersMap.entries.firstWhere((entry) => entry.value == e).key.toString())})
           .toList();
 
-      memberIds.add({'UserId': userId.toString()});
+      memberIds.add({'UserId': userId});
 
       final tagId = selectedTag != null ? selectedTag!.tagId : null;
       print("Selected TagId: $memberIds");
