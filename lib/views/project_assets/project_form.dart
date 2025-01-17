@@ -116,7 +116,8 @@ class _ProjectFormState extends State<ProjectForm> {
                     );
                   },
                   style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 2), // ขยายพื้นที่กด
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 2, horizontal: 2), // ขยายพื้นที่กด
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10), // มุมโค้งของปุ่ม
                     ),
@@ -139,8 +140,8 @@ class _ProjectFormState extends State<ProjectForm> {
                             announce.announceText,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
-                            style:
-                                const TextStyle(fontSize: 14, color: Colors.grey),
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.grey),
                           ),
                           trailing: projectcontroller.userId == announce.userId
                               ? IconButton(
@@ -155,11 +156,23 @@ class _ProjectFormState extends State<ProjectForm> {
                                           'projectId': projectId,
                                           'tagId': tagId,
                                           'userId': userId,
-                                          'announceTitle': announce.announceTitle,
+                                          'announceTitle':
+                                              announce.announceTitle,
                                           'announceText': announce.announceText,
                                           'announceDate': announce.announceDate,
                                         },
-                                      );
+                                      )?.then((result) {
+                                        if (result == true) {
+                                          Future.delayed(Duration.zero,
+                                              () async {
+                                            await announcecontroller
+                                                .fetchAnnounce(projectId);
+                                            await controller
+                                                .fetchTask(projectId);
+                                          });
+                                          setState(() {});
+                                        }
+                                      });
                                     } else {
                                       print('Announce ID is null');
                                     }
@@ -267,9 +280,11 @@ class _ProjectFormState extends State<ProjectForm> {
                               ),
                               if (taskList.tagId != -1) Flexible(
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
-                                    color: HexColor(taskList.tagColor), // api color
+                                    color: HexColor(
+                                        taskList.tagColor), // api color
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
@@ -311,8 +326,8 @@ class _ProjectFormState extends State<ProjectForm> {
                             ),
                             onChanged: (value) async {
                               // API Here
-                              await TaskController.instance
-                                  .updateTaskStatus(taskList.taskId, value,taskList.taskName);
+                              await TaskController.instance.updateTaskStatus(
+                                  taskList.taskId, value, taskList.taskName);
                               await taskController.fetchTask(projectId);
                             },
                             textBuilder: (value) => value
@@ -365,8 +380,7 @@ class _ProjectFormState extends State<ProjectForm> {
                   );
                 },
                 onReorder: (int oldIndex, int newIndex) async {
-                  if (userId == currentUserId)
-                  {
+                  if (userId == currentUserId) {
                     if (newIndex > oldIndex) {
                       newIndex -= 1;
                     }
@@ -382,7 +396,6 @@ class _ProjectFormState extends State<ProjectForm> {
                     await taskController.fetchTask(projectId);
                   }
                 },
-
               ),
             );
           }),

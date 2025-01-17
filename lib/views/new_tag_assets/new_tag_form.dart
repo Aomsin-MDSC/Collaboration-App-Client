@@ -19,31 +19,32 @@ class _NewTagFormState extends State<NewTagForm> {
     final tagcontroller = Get.find<NewTagController>();
     //
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Pick a Color"),
-            content: SingleChildScrollView(
-              child: ColorPicker(
-                // spectrum color
-                pickerColor: tagcontroller.currenttagColor,
-                onColorChanged: (Color color) {
-                  tagcontroller.changeColor(color);
-                },
-                showLabel: true,
-                pickerAreaHeightPercent: 0.8,
-              ),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Pick a Color"),
+          content: SingleChildScrollView(
+            child: ColorPicker(
+              // spectrum color
+              pickerColor: tagcontroller.currenttagColor,
+              onColorChanged: (Color color) {
+                tagcontroller.changeColor(color);
+              },
+              showLabel: true,
+              pickerAreaHeightPercent: 0.8,
             ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {// update color controller
-                  Get.back();
-                },
-                child: const Text("Select"),
-              ),
-            ],
-          );
-        },
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // update color controller
+                Get.back();
+              },
+              child: const Text("Select"),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -52,27 +53,35 @@ class _NewTagFormState extends State<NewTagForm> {
     final tagcontroller = Get.put(NewTagController());
     return Form(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(vertical: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // tag name ---------------
-            Text(
+            const Text(
               "Tag Name",
               style: TextStyle(fontSize: 18),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextFormField(
               controller: tagcontroller.tagname,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
                 //prefixIcon: Icon(Icons.person),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    tagcontroller.tagname.clear();
+                  },
+                ),
               ),
+              
               maxLength: 50,
+              
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'This field is required';
@@ -88,7 +97,7 @@ class _NewTagFormState extends State<NewTagForm> {
             ),
 
             // circle color ---------------
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             GetBuilder<NewTagController>(builder: (controller) {
@@ -99,7 +108,7 @@ class _NewTagFormState extends State<NewTagForm> {
             }),
 
             //select color ---------------
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
             ElevatedButton(
@@ -108,19 +117,18 @@ class _NewTagFormState extends State<NewTagForm> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                minimumSize: Size(200, 50),
+                minimumSize: const Size(200, 50),
                 backgroundColor: btcolor,
               ),
               child: const Text("Select Color"),
             ),
 
             // Tag review
-            SizedBox(height: 60),
+            const SizedBox(height: 60),
             GetBuilder<NewTagController>(builder: (controller) {
               // preview [container] Taxt
               return Container(
-                padding:
-                    EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 decoration: BoxDecoration(
                   color: controller.currenttagColor,
                   borderRadius: BorderRadius.circular(30),
@@ -129,7 +137,7 @@ class _NewTagFormState extends State<NewTagForm> {
                   controller.tagname.text.isNotEmpty
                       ? controller.tagname.text
                       : "Tag Preview",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -170,17 +178,40 @@ class _NewTagFormState extends State<NewTagForm> {
             }),
 
             // Save Button
-            SizedBox(height: 70),
+            const SizedBox(height: 70),
             SizedBox(
               width: double.infinity,
               height: 60,
               child: ElevatedButton(
                 onPressed: () async {
+                  if (tagcontroller.tagname.text.isNotEmpty) {
+                    await tagcontroller.createTag(onCompleted: () {
+                      Get.back();
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Tag created successfully!',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                    Get.back();
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Please fill all the fields',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                  }
                   // tagcontroller.createTag().then((_){Navigator.of(context).pop();});
-                  await tagcontroller.createTag(onCompleted: (){
+                  /* await tagcontroller.createTag(onCompleted: (){
                     // Get.back(result: {'refresh': true});
                     Get.back();
-                  });
+                  }); */
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -188,7 +219,7 @@ class _NewTagFormState extends State<NewTagForm> {
                   ),
                   backgroundColor: btcolor,
                 ),
-                child: Text(
+                child: const Text(
                   "Save",
                   style: TextStyle(fontSize: 18),
                 ),

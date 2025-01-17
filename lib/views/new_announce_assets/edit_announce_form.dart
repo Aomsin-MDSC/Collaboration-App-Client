@@ -214,9 +214,17 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                   width: 150,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async{
                       print("PBANK${announceId}");
-                      controller.updateAnnounce(announceId);
+                      await controller.updateAnnounce(announceId);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Announce updated successfully!',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      );
                       Get.back(result: true);
                     },
                     style: ElevatedButton.styleFrom(
@@ -235,10 +243,17 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                   width: 150,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed: () async {
+                    onPressed: () async{
                       await controller.deleteAnnounce(announceId, projectId);
-                      // Get.back(result: true);
-                      Get.back();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Announce deleted successfully!',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      );
+                      Get.back(result: true);
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

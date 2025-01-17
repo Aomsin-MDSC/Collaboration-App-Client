@@ -50,10 +50,16 @@ class _NewProjectFormState extends State<NewProjectForm> {
             const SizedBox(height: 10),
             TextFormField(
               controller: controller.projectname,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    controller.projectname.clear();
+                  },
+                ),
               ),
               maxLength: 50,
               validator: (value) {
@@ -64,7 +70,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 }
                 return null;
               },
-
             ),
 
             // Member Dropdown
@@ -245,11 +250,33 @@ class _NewProjectFormState extends State<NewProjectForm> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () async {
-                  // Api Here
+                  if (controller.projectname.text.isNotEmpty) {
+                    await controller.createProject();
+                    Get.back();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Project created successfully!',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                    Get.back();
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Please fill all the fields',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                  }
+                  /* // Api Here
                   await controller.createProject();
                   // Get.offAll(()=> HomeView(),arguments: {'refresh':true});
                   // Get.back(result: {'refresh': true});
-                  Get.back();
+                  Get.back(); */
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

@@ -75,11 +75,16 @@ class _EditTagFormState extends State<EditTagForm> {
             ),
             TextFormField(
               controller: tagcontroller.edittagname,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
-                //prefixIcon: Icon(Icons.person),
-                border: OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    tagcontroller.edittagname.clear();
+                  },
+                ),
+                border: const OutlineInputBorder(),
               ),
               maxLength: 50,
               validator: (value) {
@@ -128,7 +133,8 @@ class _EditTagFormState extends State<EditTagForm> {
             GetBuilder<EditTagController>(builder: (controller) {
               // preview [container] Taxt
               return Container(
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 decoration: BoxDecoration(
                   color: controller.editcurrenttagColor,
                   borderRadius: BorderRadius.circular(30),
@@ -188,9 +194,31 @@ class _EditTagFormState extends State<EditTagForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () async {
-                      await tagcontroller.updateTag(tagId);
+                      if (tagcontroller.edittagname.text.isNotEmpty) {
+                        await tagcontroller.updateTag(tagId);
+                        Get.back();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Tag update successfully!',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
+                        Get.back();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Please fill all the fields',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
+                      }
+                      /* await tagcontroller.updateTag(tagId);
                       // Get.back(result: {'refresh': true});
-                      Get.back();
+                      Get.back(); */
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
