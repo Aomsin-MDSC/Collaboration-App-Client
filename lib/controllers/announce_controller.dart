@@ -28,6 +28,7 @@ class AnnounceController extends GetxController {
         List<dynamic> jsonData = json.decode(response.body);
         announces.value = jsonData.map((data) => Announce.fromJson(data)).toList();
       } else {
+        announces.clear();
         print("Failed to fetch announces: ${response.body}");
       }
     } catch (e) {

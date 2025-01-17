@@ -64,7 +64,6 @@ class EditAnnounceController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        await acontroller.fetchAnnounce(projectId);
         print("Announce deleted successfully!");
       } else {
         print("Failed to deleted announce: ${response.body}");

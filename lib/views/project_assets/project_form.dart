@@ -163,14 +163,17 @@ class _ProjectFormState extends State<ProjectForm> {
                                         },
                                       )?.then((result) {
                                         if (result == true) {
+                                          print('Project Form::::::::: Result form get.back() $result');
                                           Future.delayed(Duration.zero,
                                               () async {
                                             await announcecontroller
                                                 .fetchAnnounce(projectId);
                                             await controller
                                                 .fetchTask(projectId);
+                                            // print(announcecontroller.announces.firstWhere((t) => t.announceId == t.announceId).announceText);
                                           });
-                                          setState(() {});
+                                          setState(() {
+                                          });
                                         }
                                       });
                                     } else {
