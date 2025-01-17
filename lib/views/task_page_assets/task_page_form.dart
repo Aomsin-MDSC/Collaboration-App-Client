@@ -50,6 +50,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
     final getTag = Get.put(TagController());
     final project = Get.put(ProjectController());
 
+
     String taskName = taskDetails.task.value
         .firstWhere((value) => value.taskId == widget.taskId)
         .taskName;
@@ -68,7 +69,9 @@ class _TaskPageFormState extends State<TaskPageForm> {
         .firstWhere((value) => value.taskOwner == taskOwner)
         .userName; */
     
-    String userName = getuser.memberlist[taskOwner - 1];
+    String? userName =  getuser.membersMap.containsKey(taskOwner)
+                                    ? getuser.membersMap[taskOwner]
+                                    : "Owner: Unknown";
 
     int tag_id = taskDetails.task.value
         .firstWhere((value) => value.taskId == widget.taskId)

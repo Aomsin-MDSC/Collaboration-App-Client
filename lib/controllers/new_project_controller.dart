@@ -8,6 +8,8 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import 'in_project_controller.dart';
+
 class NewProjectController extends GetxController {
   static NewProjectController get instance => Get.find();
   final ProjectController projectController = Get.find<ProjectController>();
@@ -45,6 +47,7 @@ class NewProjectController extends GetxController {
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
+        
         memberlist.value = data.map((e) => e['user_name'] as String).toList();
         membersMap.value = {
           for (var e in data) e['user_id'] as int: e['user_name'] as String,
