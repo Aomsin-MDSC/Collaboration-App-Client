@@ -76,6 +76,14 @@ class _LoginFormState extends State<RegisterForm> {
                   onPressed: () async {
                     await controller.registerUser();
                     Get.back();
+                    Get.snackbar(
+                      'Register successfully',
+                      'you can login now!',
+                      snackPosition: SnackPosition.TOP,
+                      backgroundColor: Colors.green,
+                      colorText: Colors.white,
+                      duration: Duration(seconds: 3),
+                    );
                   },
                   child: Text('register'.toUpperCase()))),
           const SizedBox(

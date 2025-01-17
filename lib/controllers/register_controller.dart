@@ -22,7 +22,7 @@ class RegisterController extends GetxController {
       }),
     );
     if (response.statusCode == 200) {
-      return Get.to(const LoginView());
+      return print("success");
     } else {
       throw Exception('Registration failed');
     }

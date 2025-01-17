@@ -89,8 +89,8 @@ class _TaskPageFormState extends State<TaskPageForm> {
     final ProjectController projectController = Get.find<ProjectController>();
     int currentUserId = projectController.userId.value;
 
-    DateTime parsedDate = DateTime.parse(taskEnd);
-    String formattedDate = DateFormat('dd/MM/yyyy').format(parsedDate);
+    // DateTime parsedDate = DateTime.parse(taskController.task.firstWhere((f) => f.taskId == widget.taskId).taskEnd,);
+    // String formattedDate = DateFormat('dd/MM/yyyy').format(parsedDate);
 
     return
       Obx(() => Form(
@@ -111,7 +111,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
                             Expanded(
                               child: Center(
                                 child: Text(
-                                  taskName,
+                                  taskController.task.firstWhere((f) => f.taskId == widget.taskId).taskName,
                                   style: const TextStyle(
                                       fontSize: 26, fontWeight: FontWeight.bold),
                                 ),
@@ -167,7 +167,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
                                 style: const TextStyle(fontWeight: FontWeight.bold),
                               ),
                               TextSpan(
-                                text: taskDetail.isNotEmpty ? taskDetail : "NO Data",
+                                text: taskController.task.firstWhere((f) => f.taskId == widget.taskId).taskDetail,
                               ),
                             ],
                           ),
@@ -182,7 +182,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
-                          text: userName,
+                          text: taskController.task.firstWhere((f) => f.taskId == widget.taskId).userName, // value not change when fetch
                           style: const TextStyle(fontWeight: FontWeight.normal),
                         ),
                       ],
@@ -197,7 +197,9 @@ class _TaskPageFormState extends State<TaskPageForm> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
-                          text: formattedDate,
+                          text: DateFormat('dd/MM/yyyy').format(
+                            DateTime.parse(taskController.task.firstWhere((f) => f.taskId == widget.taskId).taskEnd),
+                          ),
                           style: TextStyle(fontWeight: FontWeight.normal),
                         ),
                       ],
