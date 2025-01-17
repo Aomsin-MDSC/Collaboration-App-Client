@@ -3,6 +3,7 @@ import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -134,13 +135,70 @@ class NewProjectController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Created Project Successfully.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.green,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
         print('Project created successfully');
         projectController.fetchApi(token);
       } else {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.cancel, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Create Project Failed.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.red,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
         print('Failed to create project');
         print('Response body: ${response.body}');
       }
     } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.cancel, color: Colors.white),
+              SizedBox(width: 8),
+              Text('Create Project Failed.'),
+            ],
+          ),
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+          action: SnackBarAction(label: "OK", onPressed: () {}), //action
+          backgroundColor: Colors.red,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          duration: Duration(seconds: 3),
+        ),
+      );
       throw ('Error creating project: $e');
     }
   }

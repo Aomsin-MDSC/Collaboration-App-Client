@@ -76,13 +76,24 @@ class _LoginFormState extends State<RegisterForm> {
                   onPressed: () async {
                     await controller.registerUser();
                     Get.back();
-                    Get.snackbar(
-                      'Register successfully',
-                      'you can login now!',
-                      snackPosition: SnackPosition.TOP,
-                      backgroundColor: Colors.green,
-                      colorText: Colors.white,
-                      duration: Duration(seconds: 3),
+                    ScaffoldMessenger.of(Get.context!).showSnackBar(
+                      SnackBar(
+                        content: const Row(
+                          children: [
+                            Icon(Icons.check_circle, color: Colors.white),
+                            SizedBox(width: 8),
+                            Text('Created Successfully.'),
+                          ],
+                        ),
+                        behavior: SnackBarBehavior.floating,
+                        margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 180, left: 15, right: 15),
+                        action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                        backgroundColor: Colors.green,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        duration: Duration(seconds: 3),
+                      ),
                     );
                   },
                   child: Text('register'.toUpperCase()))),

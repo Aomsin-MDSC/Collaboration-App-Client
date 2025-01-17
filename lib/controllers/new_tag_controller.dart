@@ -45,13 +45,67 @@ class NewTagController extends GetxController {
 
       if (response.statusCode == 200) {
         if(onCompleted != null) onCompleted();
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Tag Created Successfully.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.green,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
         await controller.fetchTags();
-        Get.snackbar("Success", "Tag created successfully!");
       } else {
-        Get.snackbar("Error", "Failed to create tag: ${response.body}");
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.cancel, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Create Tag Failed.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.red,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
       }
     } catch (e) {
-      Get.snackbar("Error", "Something went wrong: $e");
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.cancel, color: Colors.white),
+              SizedBox(width: 8),
+              Text('Create Tag Failed.'),
+            ],
+          ),
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+          action: SnackBarAction(label: "OK", onPressed: () {}), //action
+          backgroundColor: Colors.red,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          duration: Duration(seconds: 3),
+        ),
+      );
     }
   }
 }

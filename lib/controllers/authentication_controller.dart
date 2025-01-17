@@ -35,8 +35,6 @@ class AuthenticationController extends GetxController {
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         final token = data['token'];
-
-        // Save the token in SharedPreferences
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('jwt_token', token);
         print('Token saved: ${prefs.getString('jwt_token')}');
@@ -47,51 +45,94 @@ class AuthenticationController extends GetxController {
         }
 
         // Show a success message
-        Get.snackbar(
-          'Login successful',
-          'Welcome : ${username.text}',
-          duration: const Duration(seconds: 5),
-          margin: const EdgeInsets.all(8),
-          backgroundColor: Colors.black54,
-          colorText: Colors.white,
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Login Successfully.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.green,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
         );
         print('Login successful: $data');
-
         // Navigate to the HomeView
-        Get.put(ProjectController()); // Ensure ProjectController is initialized
+        // Get.put(ProjectController()); // Ensure ProjectController is initialized
         Get.offAll(() => HomeView(), arguments: {'refresh': true});
       } else if (response.statusCode == 401) {
         // Invalid username or password
-        Get.snackbar(
-          'Login Failed',
-          'Invalid username or password',
-          duration: const Duration(seconds: 5),
-          margin: const EdgeInsets.all(8),
-          backgroundColor: Colors.black54,
-          colorText: Colors.white,
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.cancel, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Login Failed.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 180, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.red,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
         );
       } else {
         // Other errors
-        Get.snackbar(
-          'Error',
-          'Login failed: ${response.body}',
-          duration: const Duration(seconds: 5),
-          margin: const EdgeInsets.all(8),
-          backgroundColor: Colors.black54,
-          colorText: Colors.white,
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.cancel, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Error.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 180, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.red,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
         );
       }
     } catch (e) {
       // Handle any exceptions
       Get.back(); // Close loading dialog
       print('Error during login: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred. Please try again later.',
-        duration: const Duration(seconds: 5),
-        margin: const EdgeInsets.all(8),
-        backgroundColor: Colors.black54,
-        colorText: Colors.white,
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.cancel, color: Colors.white),
+              SizedBox(width: 8),
+              Text('Login Successfully.'),
+            ],
+          ),
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 180, left: 15, right: 15),
+          action: SnackBarAction(label: "OK", onPressed: () {}), //action
+          backgroundColor: Colors.green,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          duration: Duration(seconds: 3),
+        ),
       );
     }
   }

@@ -47,13 +47,67 @@ class EditTagController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Saved Tag Successfully.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.green,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
         await controller.fetchTags();
-        //Get.snackbar("Success", "Tag update successfully!");
       } else {
-        Get.snackbar("Error", "Failed to update tag: ${response.body}");
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.cancel, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Save Tag Failed.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.red,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
       }
     } catch (e) {
-      Get.snackbar("Error", "Something went wrong: $e");
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.cancel, color: Colors.white),
+              SizedBox(width: 8),
+              Text('Save Tag Failed.'),
+            ],
+          ),
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+          action: SnackBarAction(label: "OK", onPressed: () {}), //action
+          backgroundColor: Colors.red,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          duration: Duration(seconds: 3),
+        ),
+      );
     }
   }
 
@@ -70,16 +124,70 @@ class EditTagController extends GetxController {
       print("Response body: ${response.body}");
 
       if (response.statusCode == 200) {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Deleted Successfully.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.green,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
         await controller.fetchTags();
         print('Tag deleted successfully');
-        Get.snackbar("Success", "Tag deleted successfully");
       } else {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Delete Tag Failed.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.red,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
         print('Failed to delete tag');
-        Get.snackbar("Error", "Failed to delete tag");
       }
     } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.check_circle, color: Colors.white),
+              SizedBox(width: 8),
+              Text('Delete Tag Failed.'),
+            ],
+          ),
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+          action: SnackBarAction(label: "OK", onPressed: () {}), //action
+          backgroundColor: Colors.red,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          duration: Duration(seconds: 3),
+        ),
+      );
       print('Error deleting tag: $e');
-      Get.snackbar("Error", "Something went wrong: $e");
     }
   }
 }

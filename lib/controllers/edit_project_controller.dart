@@ -4,6 +4,7 @@ import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -205,14 +206,70 @@ class EditProjectController extends GetxController {
       print("Response body: ${response.body}");
 
       if (response.statusCode == 200) {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Saved Successfully.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.green,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
         await controler.fetchApi(token);
         print('Project updated successfully');
-        // Get.off(() => const HomeView(), arguments: {'refresh': true});
       } else {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.cancel, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Save Failed.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.red,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
         print('Failed to update project');
         print('Response body: ${response.body}');
       }
     } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.cancel, color: Colors.white),
+              SizedBox(width: 8),
+              Text('Save Failed.'),
+            ],
+          ),
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+          action: SnackBarAction(label: "OK", onPressed: () {}), //action
+          backgroundColor: Colors.red,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          duration: Duration(seconds: 3),
+        ),
+      );
       throw ('Error updating project: $e');
     }
   }
@@ -237,17 +294,70 @@ class EditProjectController extends GetxController {
       print("Response body: ${response.body}");
 
       if (response.statusCode == 200) {
-        // fetchapi
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Deleted Successfully.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.green,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
         await controler.fetchApi(token);
         print('Project deleted successfully');
-        // Get.snackbar("Success", "Project deleted successfully");
       } else {
-        throw ('Failed to delete project');
-        Get.snackbar("Error", "Failed to delete project");
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.cancel, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Delete Project Failed.'),
+              ],
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            backgroundColor: Colors.red,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            duration: Duration(seconds: 3),
+          ),
+        );
+        throw('Failed to delete project');
       }
     } catch (e) {
-      throw ('Error deleting project: $e');
-      Get.snackbar("Error", "Something went wrong: $e");
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.check_circle, color: Colors.white),
+              SizedBox(width: 8),
+              Text('Delete Project Failed.'),
+            ],
+          ),
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+          action: SnackBarAction(label: "OK", onPressed: () {}), //action
+          backgroundColor: Colors.red,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      throw('Error deleting project: $e');
     }
   }
 
