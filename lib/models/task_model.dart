@@ -41,12 +41,12 @@ class Task {
       taskColor: json['task_color'] ?? '',
       taskStatus: json['task_status'] ?? '',
       userId: json['user_id'] ?? '',
-      tagId: json['tag_id'] ?? '',
+      tagId: json['tag_id'] != null ? json['tag_id'] : -1,
       projectId: json['project_id'] ?? '',
       userName: json['user_name'] ?? '',
       taskOwner: json['task_Owner'] ?? '',
-      tagName: json['tag_name'],
-      tagColor: json['tag_color'],
+      tagName: json['tag_name'] != null ? json['tag_name'] : "",
+      tagColor: json['tag_color'] != null ? json['tag_color'] : "",
       taskOrder: json['task_order'],
     );
   }

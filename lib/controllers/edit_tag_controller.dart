@@ -71,7 +71,8 @@ class EditTagController extends GetxController {
 
       if (response.statusCode == 200) {
         await controller.fetchTags();
-        // Get.snackbar("Success", "Tag deleted successfully");
+        print('Tag deleted successfully');
+        Get.snackbar("Success", "Tag deleted successfully");
       } else {
         print('Failed to delete tag');
         Get.snackbar("Error", "Failed to delete tag");

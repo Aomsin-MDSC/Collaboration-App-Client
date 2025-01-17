@@ -249,7 +249,7 @@ class _ProjectFormState extends State<ProjectForm> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Flexible(
+                              if (taskList.tagId != -1) Flexible(
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(

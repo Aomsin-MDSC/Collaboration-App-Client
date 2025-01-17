@@ -312,8 +312,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   if (controller.selectedDate != null &&
                       controller.taskName.text.isNotEmpty &&
                       controller.taskdetails.text.isNotEmpty &&
-                      controller.selectedmember.isNotEmpty &&
-                      controller.selectedTag != null) {
+                      controller.selectedmember.isNotEmpty ) {
                     controller.createTask(projectId);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

@@ -116,16 +116,7 @@ class NewTaskController extends GetxController {
     try {
       final url = Uri.parse('http://10.24.8.16:5263/api/CreateTask');
 
-      if (selectedmember.isEmpty) {
-        print('No members selected!');
-        return;
-      }
-      if (selectedTag == null) {
-        print('No tag selected!');
-        return;
-      }
-
-      final tagId = selectedTag != null ? selectedTag!.tagId : -1;
+      final tagId = selectedTag != null ? selectedTag!.tagId : null;
       final memberId = membersMap[selectedmember.first];
       final userId = await controller.getUserIdFromToken();
 

@@ -162,7 +162,7 @@ class EditProjectController extends GetxController {
       //     ? editselectedmember.map((e) => editmembersMap[e]).toList()
       //     : edit_selected_members_map.map((e) => editmembersMap[e]).toList();
 
-      final tagId = selectedTag?.tagId != null ? selectedTag?.tagId : tag_id;
+      final tagId = selectedTag?.tagId != null ? selectedTag?.tagId : null;
       print("Tag ID::::::::::::::::::::::: $tagId");
 
       if (token == null) {

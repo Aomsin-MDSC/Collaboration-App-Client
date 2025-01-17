@@ -22,7 +22,7 @@ class Project {
     return Project(
       tagId: json['tag_id'] != null ? json['tag_id'] : -1,
       projectId: json['project_id'] ?? 0,
-      projectName: json['project_name'] ?? '',
+      projectName: json['project_name'],
       userName: json['user_name'] ?? '',
       tagName: json['tag_name'] != null ? json['tag_name'] : "",
       userId: json['user_id'] ?? 0,
