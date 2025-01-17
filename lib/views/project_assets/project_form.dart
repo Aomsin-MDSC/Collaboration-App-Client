@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../controllers/announce_controller.dart';
 
@@ -42,6 +43,19 @@ class _ProjectFormState extends State<ProjectForm> {
     final Map<String, dynamic> arguments = Get.arguments;
     projectId = arguments['projectId'];
     announcecontroller.fetchAnnounce(projectId);
+
+    final getUser = Get.put(NewProjectController());
+    getUser.membersMap.value = {};
+    Future.delayed(Duration.zero, () async {
+      String? token = await getToken();
+      await getUser.fetchMembers(token!);
+    });
+  }
+
+
+  Future<String?> getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('jwt_token');
   }
 
   @override
@@ -239,13 +253,14 @@ class _ProjectFormState extends State<ProjectForm> {
                                       TextStyle(fontSize: 16, color: textColor),
                                 ),
                               ),
-                              getUser.memberlist.isNotEmpty &&
-                                  taskList.taskOwner - 1 >= 0 &&
-                                  taskList.taskOwner - 1 <
-                                      getUser.memberlist.length
-                                  ? Text(
-                                "Owner: ${getUser.memberlist[taskList.taskOwner - 1]}",style: TextStyle(color: textColor),)
-                                  : const Text('Unknown Owner'),
+
+                              Text(
+                                getUser.membersMap.containsKey(taskList.taskOwner)
+                                    ? "Owner: ${getUser.membersMap[taskList.taskOwner]}"
+                                    : "Owner: Unknown",
+                                style: TextStyle(color: textColor),
+                              ),
+
                               SizedBox(
                                 height: 10,
                               ),

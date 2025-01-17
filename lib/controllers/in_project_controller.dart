@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/project_model.dart';
 import '../models/task_model.dart';
+import 'new_project_controller.dart';
 
 class TaskController extends GetxController {
   static TaskController get instance => Get.find();
@@ -41,6 +42,16 @@ class TaskController extends GetxController {
         task.forEach((task) {
           print('Task ID: ${task.taskId}, User ID: ${task.userId}, Task Order: ${task.taskOrder}');
         });
+        
+        final getUser = Get.find<NewProjectController>();
+        final Map<int, String> updatedMembersMap = {};
+
+        for (var task in task) {
+          updatedMembersMap[task.taskOwner] = task.userName ?? "Unknown";
+        }
+
+        getUser.membersMap.value = updatedMembersMap;
+        print("Updated membersMap: ${getUser.membersMap}");
       } else {
         print('Failed to load projects');
         print('Response: ${response.body}');

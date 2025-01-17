@@ -14,7 +14,7 @@ class NewProjectController extends GetxController {
   final projectname = TextEditingController();
   var memberlist = <String>[].obs;
   var selectedmember = <String>[].obs;
-  var membersMap = <String, int>{}.obs;
+  RxMap<int, String> membersMap = RxMap<int, String>();
 
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -47,7 +47,7 @@ class NewProjectController extends GetxController {
         final List<dynamic> data = jsonDecode(response.body);
         memberlist.value = data.map((e) => e['user_name'] as String).toList();
         membersMap.value = {
-          for (var e in data) e['user_name'] as String: e['user_id'] as int,
+          for (var e in data) e['user_id'] as int: e['user_name'] as String,
         };
       } else {
         throw Exception('Failed to load members');
@@ -108,7 +108,7 @@ class NewProjectController extends GetxController {
           .map((e) => {'UserId': membersMap[e]})
           .toList();
 
-      memberIds.add({'UserId': userId});
+      memberIds.add({'UserId': userId.toString()});
 
       final tagId = selectedTag != null ? selectedTag!.tagId : null;
       print("Selected TagId: $memberIds");
