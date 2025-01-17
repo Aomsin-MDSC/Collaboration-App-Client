@@ -146,7 +146,7 @@ class EditTaskController extends GetxController {
     }
   }
 
-  Future<void> updateTask(int projectId, int taskId, int tag_id) async {
+  Future<void> updateTask(int projectId, int taskId, int tag_id, String task_Owner) async {
     try {
       final token = await getToken();
       final userId = await getUserIdFromToken();
@@ -154,7 +154,7 @@ class EditTaskController extends GetxController {
 
       final memberId = editselectedmember.isNotEmpty
           ? editmembersMap[editselectedmember.first]
-          : editmembersMap[edit_selected_members_map.first];
+          : editmembersMap[task_Owner];
       print("Testtttttttttttttttt${memberId}");
 
       /* final tagId = editselectedtag.isNotEmpty

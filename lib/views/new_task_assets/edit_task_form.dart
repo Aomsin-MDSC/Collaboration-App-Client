@@ -330,9 +330,10 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   child: ElevatedButton(
                     onPressed: () async {
                       //print(controller.editselectedmember);
-                      await  controller.updateTask(projectId, taskId, tagId);
+                      print("Edit task page : taskOwner = $taskOwner");
+                      await  controller.updateTask(projectId, taskId, tagId,taskOwner);
                       Get.back();
-                      // Get.back();
+                      Get.back();
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
