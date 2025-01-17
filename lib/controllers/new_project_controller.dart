@@ -34,10 +34,14 @@ class NewProjectController extends GetxController {
   var tags = [].obs;
   TagModel? selectedTag;
 
-  Future<void> fetchMembers() async {
+  Future<void> fetchMembers(String token) async {
     try {
       final response =
-          await http.get(Uri.parse('http://10.24.8.16:5263/api/GetUsers'));
+          await http.get(Uri.parse('http://10.24.8.16:5263/api/GetUsers'),
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Content-Type': 'application/json',
+            },);
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
@@ -140,9 +144,14 @@ class NewProjectController extends GetxController {
 
 
   @override
-  void onInit() {
-    fetchMembers();
+  void onInit() async{
     fetchTags();
     super.onInit();
+    String? token = await getToken();
+    if (token != null && token.isNotEmpty) {
+      fetchMembers(token);
+    } else {
+      print("Token not found");
+    }
   }
 }
