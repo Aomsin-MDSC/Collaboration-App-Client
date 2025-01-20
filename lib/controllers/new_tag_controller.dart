@@ -65,7 +65,6 @@ class NewTagController extends GetxController {
           ),
         );
         await controller.fetchTags();
-        Get.back();
       } else {
         ScaffoldMessenger.of(Get.context!).showSnackBar(
           SnackBar(

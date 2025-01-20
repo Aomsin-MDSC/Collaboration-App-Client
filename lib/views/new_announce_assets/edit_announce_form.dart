@@ -217,14 +217,6 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                     onPressed: () async{
                       print("PBANK${announceId}");
                       await controller.updateAnnounce(announceId);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Announce updated successfully!',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      );
                       Get.back(result: true);
                     },
                     style: ElevatedButton.styleFrom(
@@ -245,14 +237,6 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                   child: ElevatedButton(
                     onPressed: () async{
                       await controller.deleteAnnounce(announceId, projectId);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Announce deleted successfully!',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      );
                       Get.back(result: true);
                     },
                     style: ElevatedButton.styleFrom(

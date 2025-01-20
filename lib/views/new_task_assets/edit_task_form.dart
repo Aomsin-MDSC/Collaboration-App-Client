@@ -333,10 +333,8 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () async {
-                      //print(controller.editselectedmember);
                       print("Edit task page : taskOwner = $taskOwner");
                       await  controller.updateTask(projectId, taskId, tagId,taskOwner);
-                      Get.back();
                       Get.back();
                         },
                         style: ElevatedButton.styleFrom(
@@ -357,14 +355,8 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       child: ElevatedButton(
                         onPressed: () async {
                           await controller.deleteTask(taskId, projectId);
-                          // Get.to(const ProjectView(),arguments: {
-                          //   'projectId': projectId,
-                          //   'tagId': tagId,
-                          //   'refresh': true,
-                          //   'userId': userId,
-                          // });
                           Get.back();
-                          Get.back();
+                          Get.back(); //********* wait for edit
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

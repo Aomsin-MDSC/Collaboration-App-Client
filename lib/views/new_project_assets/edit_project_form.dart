@@ -265,32 +265,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                         //print(controller.editselectedtag);
                         await controller.updateProject(projectId, tagId);
                         Get.back();
-                      } else {
-                        ScaffoldMessenger.of(Get.context!).showSnackBar(
-                          SnackBar(
-                            content: const Row(
-                              children: [
-                                Icon(Icons.check_circle, color: Colors.white),
-                                SizedBox(width: 8),
-                                Text('Delete Project Failed.'),
-                              ],
-                            ),
-                            // behavior: SnackBarBehavior.floating,
-                            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
-                            action: SnackBarAction(label: "OK", onPressed: () {}), //action
-                            backgroundColor: Colors.red,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            duration: Duration(seconds: 3),
-                          ),
-                        );
                       }
-                      /* await controller.updateProject(projectId, tagId);
-                      /* Get.offAll(const HomeView(),
-                          arguments: {'refresh': true}); */
-                      // action
-                      Get.back(); */
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

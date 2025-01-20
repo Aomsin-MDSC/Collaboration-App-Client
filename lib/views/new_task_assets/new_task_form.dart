@@ -336,7 +336,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                           children: [
                             Icon(Icons.cancel, color: Colors.white),
                             SizedBox(width: 8),
-                            Text('Create Task Failed.'),
+                            Text('Created Task Failed.'),
                           ],
                         ),
                         // behavior: SnackBarBehavior.floating,
@@ -350,8 +350,6 @@ class _NewTaskFormState extends State<NewTaskForm> {
                       ),
                     );
                   }
-                  //controller.createTask(projectId);
-                  //Get.back(); // action
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

@@ -146,11 +146,11 @@ class NewTaskController extends GetxController {
               children: [
                 Icon(Icons.check_circle, color: Colors.white),
                 SizedBox(width: 8),
-                Text('Created Successfully.'),
+                Text('Created Task Successfully.'),
               ],
             ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 180, left: 15, right: 15),
+            // behavior: SnackBarBehavior.floating,
+            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 180, left: 15, right: 15),
             action: SnackBarAction(label: "OK", onPressed: () {}), //action
             backgroundColor: Colors.green,
             shape: RoundedRectangleBorder(
