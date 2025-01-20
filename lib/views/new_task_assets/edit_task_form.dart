@@ -336,6 +336,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       print("Edit task page : taskOwner = $taskOwner");
                       await  controller.updateTask(projectId, taskId, tagId,taskOwner);
                       Get.back();
+                      // Get.back();
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
