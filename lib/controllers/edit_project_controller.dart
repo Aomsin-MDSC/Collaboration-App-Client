@@ -212,11 +212,11 @@ class EditProjectController extends GetxController {
               children: [
                 Icon(Icons.check_circle, color: Colors.white),
                 SizedBox(width: 8),
-                Text('Saved Successfully.'),
+                Text('Saved Project Successfully.'),
               ],
             ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+            // behavior: SnackBarBehavior.floating,
+            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
             action: SnackBarAction(label: "OK", onPressed: () {}), //action
             backgroundColor: Colors.green,
             shape: RoundedRectangleBorder(
@@ -234,11 +234,11 @@ class EditProjectController extends GetxController {
               children: [
                 Icon(Icons.cancel, color: Colors.white),
                 SizedBox(width: 8),
-                Text('Save Failed.'),
+                Text('Save Project Failed.'),
               ],
             ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+            // behavior: SnackBarBehavior.floating,
+            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
             action: SnackBarAction(label: "OK", onPressed: () {}), //action
             backgroundColor: Colors.red,
             shape: RoundedRectangleBorder(
@@ -257,11 +257,11 @@ class EditProjectController extends GetxController {
             children: [
               Icon(Icons.cancel, color: Colors.white),
               SizedBox(width: 8),
-              Text('Save Failed.'),
+              Text('Save Project Failed.'),
             ],
           ),
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+          // behavior: SnackBarBehavior.floating,
+          // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
           action: SnackBarAction(label: "OK", onPressed: () {}), //action
           backgroundColor: Colors.red,
           shape: RoundedRectangleBorder(
@@ -300,11 +300,11 @@ class EditProjectController extends GetxController {
               children: [
                 Icon(Icons.check_circle, color: Colors.white),
                 SizedBox(width: 8),
-                Text('Deleted Successfully.'),
+                Text('Deleted Project Successfully.'),
               ],
             ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+            // behavior: SnackBarBehavior.floating,
+            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
             action: SnackBarAction(label: "OK", onPressed: () {}), //action
             backgroundColor: Colors.green,
             shape: RoundedRectangleBorder(
@@ -325,8 +325,8 @@ class EditProjectController extends GetxController {
                 Text('Delete Project Failed.'),
               ],
             ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+            // behavior: SnackBarBehavior.floating,
+            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
             action: SnackBarAction(label: "OK", onPressed: () {}), //action
             backgroundColor: Colors.red,
             shape: RoundedRectangleBorder(
@@ -347,8 +347,8 @@ class EditProjectController extends GetxController {
               Text('Delete Project Failed.'),
             ],
           ),
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+          // behavior: SnackBarBehavior.floating,
+          // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
           action: SnackBarAction(label: "OK", onPressed: () {}), //action
           backgroundColor: Colors.red,
           shape: RoundedRectangleBorder(

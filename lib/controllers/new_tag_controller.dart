@@ -51,11 +51,11 @@ class NewTagController extends GetxController {
               children: [
                 Icon(Icons.check_circle, color: Colors.white),
                 SizedBox(width: 8),
-                Text('Tag Created Successfully.'),
+                Text('Created Tag Successfully.'),
               ],
             ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+            // behavior: SnackBarBehavior.floating,
+            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
             action: SnackBarAction(label: "OK", onPressed: () {}), //action
             backgroundColor: Colors.green,
             shape: RoundedRectangleBorder(
@@ -65,6 +65,7 @@ class NewTagController extends GetxController {
           ),
         );
         await controller.fetchTags();
+        Get.back();
       } else {
         ScaffoldMessenger.of(Get.context!).showSnackBar(
           SnackBar(
@@ -75,8 +76,8 @@ class NewTagController extends GetxController {
                 Text('Create Tag Failed.'),
               ],
             ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+            // behavior: SnackBarBehavior.floating,
+            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
             action: SnackBarAction(label: "OK", onPressed: () {}), //action
             backgroundColor: Colors.red,
             shape: RoundedRectangleBorder(
@@ -96,8 +97,8 @@ class NewTagController extends GetxController {
               Text('Create Tag Failed.'),
             ],
           ),
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+          // behavior: SnackBarBehavior.floating,
+          // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
           action: SnackBarAction(label: "OK", onPressed: () {}), //action
           backgroundColor: Colors.red,
           shape: RoundedRectangleBorder(

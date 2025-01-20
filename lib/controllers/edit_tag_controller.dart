@@ -56,8 +56,8 @@ class EditTagController extends GetxController {
                 Text('Saved Tag Successfully.'),
               ],
             ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+            // behavior: SnackBarBehavior.floating,
+            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
             action: SnackBarAction(label: "OK", onPressed: () {}), //action
             backgroundColor: Colors.green,
             shape: RoundedRectangleBorder(
@@ -77,8 +77,8 @@ class EditTagController extends GetxController {
                 Text('Save Tag Failed.'),
               ],
             ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+            // behavior: SnackBarBehavior.floating,
+            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
             action: SnackBarAction(label: "OK", onPressed: () {}), //action
             backgroundColor: Colors.red,
             shape: RoundedRectangleBorder(
@@ -133,8 +133,8 @@ class EditTagController extends GetxController {
                 Text('Deleted Successfully.'),
               ],
             ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+            // behavior: SnackBarBehavior.floating,
+            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
             action: SnackBarAction(label: "OK", onPressed: () {}), //action
             backgroundColor: Colors.green,
             shape: RoundedRectangleBorder(
@@ -144,7 +144,7 @@ class EditTagController extends GetxController {
           ),
         );
         await controller.fetchTags();
-        print('Tag deleted successfully');
+        // print('Tag deleted successfully');
       } else {
         ScaffoldMessenger.of(Get.context!).showSnackBar(
           SnackBar(
@@ -155,8 +155,8 @@ class EditTagController extends GetxController {
                 Text('Delete Tag Failed.'),
               ],
             ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+            // behavior: SnackBarBehavior.floating,
+            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
             action: SnackBarAction(label: "OK", onPressed: () {}), //action
             backgroundColor: Colors.red,
             shape: RoundedRectangleBorder(
@@ -165,7 +165,7 @@ class EditTagController extends GetxController {
             duration: Duration(seconds: 3),
           ),
         );
-        print('Failed to delete tag');
+        // print('Failed to delete tag');
       }
     } catch (e) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
@@ -177,8 +177,8 @@ class EditTagController extends GetxController {
               Text('Delete Tag Failed.'),
             ],
           ),
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+          // behavior: SnackBarBehavior.floating,
+          // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
           action: SnackBarAction(label: "OK", onPressed: () {}), //action
           backgroundColor: Colors.red,
           shape: RoundedRectangleBorder(
@@ -187,7 +187,7 @@ class EditTagController extends GetxController {
           duration: Duration(seconds: 3),
         ),
       );
-      print('Error deleting tag: $e');
+      // print('Error deleting tag: $e');
     }
   }
 }

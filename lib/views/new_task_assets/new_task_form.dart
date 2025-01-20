@@ -164,12 +164,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                               ),
                             ),
                             onPressed: () {
-                              // ฟังก์ชันเมื่อกดปุ่ม "Add Tag"
-                              Get.to(const NewTagView());
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //   SnackBar(content: Text("Add new tag action")
-                              //   ),
-                              // );
+                              Get.to(NewTagView());
                             },
                             child: const Text(
                               "Add Tag",
@@ -194,11 +189,6 @@ class _NewTaskFormState extends State<NewTaskForm> {
                       if (value != null) {
                         controller.selectedTag = value;
                       }
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text(
-                                "Selected: ${controller.selectedTag!.tagName}")),
-                      );
                     }
                   });
                 },
@@ -325,22 +315,25 @@ class _NewTaskFormState extends State<NewTaskForm> {
                       controller.taskdetails.text.isNotEmpty &&
                       controller.selectedmember.isNotEmpty ) {
                     controller.createTask(projectId);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Task created successfully!',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    );
                     Get.back();
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Please fill all the fields and set datetime!',
-                          style: TextStyle(color: Colors.white),
+                    ScaffoldMessenger.of(Get.context!).showSnackBar(
+                      SnackBar(
+                        content: const Row(
+                          children: [
+                            Icon(Icons.cancel, color: Colors.white),
+                            SizedBox(width: 8),
+                            Text('Create Task Failed.'),
+                          ],
                         ),
+                        // behavior: SnackBarBehavior.floating,
+                        // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 180, left: 15, right: 15),
+                        action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                        backgroundColor: Colors.red,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        duration: Duration(seconds: 3),
                       ),
                     );
                   }

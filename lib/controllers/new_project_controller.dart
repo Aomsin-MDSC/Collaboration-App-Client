@@ -144,8 +144,8 @@ class NewProjectController extends GetxController {
                 Text('Created Project Successfully.'),
               ],
             ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+            // behavior: SnackBarBehavior.floating,
+            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
             action: SnackBarAction(label: "OK", onPressed: () {}), //action
             backgroundColor: Colors.green,
             shape: RoundedRectangleBorder(
@@ -166,8 +166,8 @@ class NewProjectController extends GetxController {
                 Text('Create Project Failed.'),
               ],
             ),
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+            // behavior: SnackBarBehavior.floating,
+            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
             action: SnackBarAction(label: "OK", onPressed: () {}), //action
             backgroundColor: Colors.red,
             shape: RoundedRectangleBorder(
@@ -189,8 +189,8 @@ class NewProjectController extends GetxController {
               Text('Create Project Failed.'),
             ],
           ),
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+          // behavior: SnackBarBehavior.floating,
+          // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
           action: SnackBarAction(label: "OK", onPressed: () {}), //action
           backgroundColor: Colors.red,
           shape: RoundedRectangleBorder(

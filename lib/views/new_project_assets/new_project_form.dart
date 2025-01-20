@@ -131,14 +131,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
                               ),
                             ),
                             onPressed: () {
-                              // ฟังก์ชันเมื่อกดปุ่ม "Add Tag"
-                              // Get.to(NewTagView())?.then((result){if(result['refresh'] == true)
-                              //   {
-                              //     setState(() {
-                              //       refresh = true;
-                              //     });
-                              //   }
-                              // });
                               Get.to(NewTagView());
                             },
                             child: Text(
@@ -160,15 +152,9 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 onChanged: (value) {
                   setState(() {
                     if (value != "Add Tag") {
-                      // อัปเดตค่า selectedtag
                       if (value != null) {
                         controller.selectedTag = value;
                       }
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text(
-                                "Selected: ${controller.selectedTag!.tagName}")),
-                      );
                     }
                   });
                 },
@@ -252,22 +238,25 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 onPressed: () async {
                   if (controller.projectname.text.isNotEmpty) {
                     await controller.createProject();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Project created successfully!',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    );
                     Get.back();
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Please fill all the fields',
-                          style: TextStyle(color: Colors.white),
+                    ScaffoldMessenger.of(Get.context!).showSnackBar(
+                      SnackBar(
+                        content: const Row(
+                          children: [
+                            Icon(Icons.cancel, color: Colors.white),
+                            SizedBox(width: 8),
+                            Text('Create Project Failed.'),
+                          ],
                         ),
+                        // behavior: SnackBarBehavior.floating,
+                        // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 180, left: 15, right: 15),
+                        action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                        backgroundColor: Colors.red,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        duration: Duration(seconds: 3),
                       ),
                     );
                   }
@@ -284,7 +273,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                   backgroundColor: btcolor,
                 ),
                 child: const Text(
-                  "Save",
+                  "Create Project",
                   style: TextStyle(fontSize: 18, color: Colors.black),
                 ),
               ),

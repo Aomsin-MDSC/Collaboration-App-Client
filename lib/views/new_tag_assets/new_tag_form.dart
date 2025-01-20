@@ -188,22 +188,24 @@ class _NewTagFormState extends State<NewTagForm> {
                     await tagcontroller.createTag(onCompleted: () {
                       Get.back();
                     });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Tag created successfully!',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    );
-                    Get.back();
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Please fill all the fields',
-                          style: TextStyle(color: Colors.white),
+                    ScaffoldMessenger.of(Get.context!).showSnackBar(
+                      SnackBar(
+                        content: const Row(
+                          children: [
+                            Icon(Icons.cancel, color: Colors.white),
+                            SizedBox(width: 8),
+                            Text('Create Tag Failed.'),
+                          ],
                         ),
+                        // behavior: SnackBarBehavior.floating,
+                        // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
+                        action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                        backgroundColor: Colors.red,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        duration: Duration(seconds: 3),
                       ),
                     );
                   }
@@ -220,7 +222,7 @@ class _NewTagFormState extends State<NewTagForm> {
                   backgroundColor: btcolor,
                 ),
                 child: const Text(
-                  "Save",
+                  "Create Tag",
                   style: TextStyle(fontSize: 18),
                 ),
               ),

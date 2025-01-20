@@ -197,28 +197,7 @@ class _EditTagFormState extends State<EditTagForm> {
                       if (tagcontroller.edittagname.text.isNotEmpty) {
                         await tagcontroller.updateTag(tagId);
                         Get.back();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Tag update successfully!',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        );
-                        Get.back();
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Please fill all the fields',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        );
                       }
-                      /* await tagcontroller.updateTag(tagId);
-                      // Get.back(result: {'refresh': true});
-                      Get.back(); */
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -238,7 +217,6 @@ class _EditTagFormState extends State<EditTagForm> {
                   child: ElevatedButton(
                     onPressed: () async {
                       await tagcontroller.deleteTag(tagId);
-                      // Get.back(result: {'refresh': true});
                       Get.back();
                     },
                     style: ElevatedButton.styleFrom(

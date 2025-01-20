@@ -42,9 +42,6 @@ class _DropdownTagWidgetState extends State<DropdownTagWidget> {
               'tagName': widget.tag.tagName,
               'tagColor': widget.tag.tagColor
             });
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("Edit ${widget.tag.tagId} action")),
-            );
           },
         ),
       ],

@@ -169,11 +169,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                               ),
                             ),
                             onPressed: () {
-                              // ฟังก์ชันเมื่อกดปุ่ม "Add Tag"
                               Get.to(NewTagView());
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Add new tag action")),
-                              );
                             },
                             child: const Text(
                               "Add Tag",
