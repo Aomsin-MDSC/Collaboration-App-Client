@@ -17,6 +17,8 @@ class DropdownTagWidget extends StatefulWidget {
 }
 
 class _DropdownTagWidgetState extends State<DropdownTagWidget> {
+  final controller = Get.put(NewProjectController());
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -35,13 +37,19 @@ class _DropdownTagWidgetState extends State<DropdownTagWidget> {
         ),
         IconButton(
           icon: Icon(Icons.edit, color: Colors.black54),
-          onPressed: () {
+          onPressed: () async {
             // ฟังก์ชันเมื่อกดปุ่ม "Edit"
-            Get.to(EditTagView(), arguments: {
+            //controller.selectedTag = null;
+            await Get.to(EditTagView(), arguments: {
               'tagId': widget.tag.tagId,
               'tagName': widget.tag.tagName,
               'tagColor': widget.tag.tagColor
             });
+            if (controller.selectedTag != null &&
+                !controller.tags
+                    .any((tag) => tag.tagId == controller.selectedTag!.tagId)) {
+              controller.selectedTag = null;
+            }
           },
         ),
       ],

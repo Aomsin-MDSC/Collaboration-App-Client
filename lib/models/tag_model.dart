@@ -15,4 +15,12 @@ class TagModel {
       tagColor: json['tag_color'] as String,
     );
   }
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is TagModel && other.tagId == tagId;
+  }
+
+  @override
+  int get hashCode => tagId.hashCode;
 }
