@@ -91,11 +91,11 @@ class EditTagController extends GetxController {
     } catch (e) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
         SnackBar(
-          content: const Row(
+          content:  Row(
             children: [
               Icon(Icons.cancel, color: Colors.white),
               SizedBox(width: 8),
-              Text('Save Tag Failed.'),
+              Text('Save Tag Failed.${e}'),
             ],
           ),
           behavior: SnackBarBehavior.floating,

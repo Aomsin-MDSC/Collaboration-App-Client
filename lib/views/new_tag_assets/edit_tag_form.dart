@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import '../../controllers/edit_tag_controller.dart';
+import '../../controllers/new_project_controller.dart';
 
 class EditTagForm extends StatefulWidget {
   const EditTagForm({super.key});
@@ -17,6 +18,7 @@ class EditTagForm extends StatefulWidget {
 class _EditTagFormState extends State<EditTagForm> {
   void _spectrumColorPicker(BuildContext context) {
     final tagcontroller = Get.find<EditTagController>();
+
     final screenres = MediaQuery.of(context).size.width;
     //
     showDialog(
@@ -196,7 +198,7 @@ class _EditTagFormState extends State<EditTagForm> {
                     onPressed: () async {
                       if (tagcontroller.edittagname.text.isNotEmpty) {
                         await tagcontroller.updateTag(tagId);
-                        Get.back();
+                        Get.back(result: true);
                       }
                     },
                     style: ElevatedButton.styleFrom(
