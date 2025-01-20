@@ -107,6 +107,14 @@ class _NewProjectFormState extends State<NewProjectForm> {
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey.shade400),
                   ),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      controller.selectedTag = null;
+                      setState(() {
+                      });
+                    },
+                  ),
                 ),
                 icon: Icon(Icons.arrow_drop_down, color: Colors.black54),
                 value: controller.selectedTag,

@@ -101,7 +101,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   //     duration: const Duration(seconds: 5),
                   //     colorText: Colors.white,
                   //     backgroundColor: Colors.black54);
-                  print(controller.editmemberlist);
+                  //print(controller.editmemberlist);
                   controller.editselectedmember.clear();
                   controller.editselectedmember.addAll(newValue);
                 },
@@ -121,6 +121,14 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey.shade400),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      controller.selectedTag = null;
+                      setState(() {
+                      });
+                    },
                   ),
                 ),
                 icon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
@@ -167,6 +175,11 @@ class _EditProjectFormState extends State<EditProjectForm> {
                       if (value != null) {
                         controller.selectedTag = value;
                       }
+                      /* ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text(
+                                "Selected: ${controller.selectedTag!.tagName}")),
+                      ); */
                     }
                   });
                 },
@@ -249,6 +262,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (controller.editprojectname.text.isNotEmpty) {
+                        //print(controller.editselectedtag);
                         await controller.updateProject(projectId, tagId);
                         Get.back();
                       } else {
