@@ -160,7 +160,7 @@ class EditTaskController extends GetxController {
       /* final tagId = editselectedtag.isNotEmpty
           ? editTagsMap[editselectedtag.first]
           : tag_id; */
-      final tagId = selectedTag?.tagId != null ? selectedTag?.tagId : tag_id;
+      final tagId = selectedTag?.tagId != null ? selectedTag?.tagId : null;
 
       final response = await http.put(
         Uri.parse('http://10.24.8.16:5263/api/UpdateTask/$taskId'),

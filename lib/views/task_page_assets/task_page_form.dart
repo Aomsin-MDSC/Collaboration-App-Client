@@ -25,9 +25,9 @@ class _TaskPageFormState extends State<TaskPageForm> {
   // final Map<String, dynamic> arguments = Get.arguments;
   final int projectId = Get.arguments['projectId'];
   final int taskId = Get.arguments['taskId'];
-  final int tagId = Get.arguments['tagId'];
+  /* final int tagId = Get.arguments['tagId'];
   final String tagColor = Get.arguments['tagColor'];
-  final String tagName = Get.arguments['tagName'];
+  final String tagName = Get.arguments['tagName']; */
   final String taskColor = Get.arguments['taskColor'];
   final int userId = Get.arguments['userId'];
 

@@ -14,7 +14,11 @@ class HexColor extends Color {
       hexColor = "FF" + hexColor;
     }
 
-    return int.parse(hexColor, radix: 16);
+    try {
+      return int.parse(hexColor, radix: 16);
+    } catch (e) {
+      return 0xFFFFFFFF; // Default color value in case of error
+    }
   }
 
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));

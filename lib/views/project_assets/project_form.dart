@@ -249,8 +249,8 @@ class _ProjectFormState extends State<ProjectForm> {
                               'projectId': projectId,
                               'taskId': taskList.taskId,
                               'tagId': tagId,
-                              'tagColor': taskList.tagColor,
-                              'tagName': taskList.tagName,
+                              /* 'tagColor': taskList.tagColor,
+                              'tagName': taskList.tagName, */
                               'taskColor': taskList.taskColor,
                               'userId': userId
                             });
