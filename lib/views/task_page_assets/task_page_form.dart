@@ -126,6 +126,8 @@ class _TaskPageFormState extends State<TaskPageForm> {
        
                              Future.delayed(Duration.zero, () async {
                                await taskController.fetchTask(projectId);
+                               await getuser.fetchTags();
+                               print("Task Page Form :::: $result");
                              });
                            setState(() {});
                            }
