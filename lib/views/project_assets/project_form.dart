@@ -216,9 +216,12 @@ class _ProjectFormState extends State<ProjectForm> {
         Expanded(
           child: Obx(() {
             final filteredList = taskController.task.where((task) {
-              return task.taskName
-                  .toLowerCase()
-                  .contains(searchQuery.toLowerCase());
+                return task.taskName
+                    .toLowerCase()
+                    .contains(searchQuery.toLowerCase()) ||
+                  task.tagName
+                    .toLowerCase()
+                    .contains(searchQuery.toLowerCase());
             }).toList();
             return RefreshIndicator(
               onRefresh: () async {
