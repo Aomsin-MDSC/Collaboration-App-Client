@@ -200,17 +200,18 @@ class _EditTagFormState extends State<EditTagForm> {
                           await tagcontroller.updateTag(tagId, onCompleted: () {
                             Get.back(result: true);
                           });
-                        }
-                        else{
+                        } else {
                           ScaffoldMessenger.of(Get.context!).showSnackBar(
                             SnackBar(
-                              content:  Row(
+                              content:  const Row(
                                 children: [
                                   Icon(Icons.cancel, color: Colors.white),
                                   SizedBox(width: 8),
                                   Text('Save Tag Failed.'),
                                 ],
                               ),
+                              // behavior: SnackBarBehavior.floating,
+                              // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
                               action: SnackBarAction(label: "OK", onPressed: () {}), //action
                               backgroundColor: Colors.red,
                               shape: RoundedRectangleBorder(

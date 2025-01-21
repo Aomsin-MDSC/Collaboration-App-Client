@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../models/task_model.dart';
+
 class TaskPageForm extends StatefulWidget {
   final int taskId;
   const TaskPageForm({
@@ -46,37 +48,77 @@ class _TaskPageFormState extends State<TaskPageForm> {
     final ProjectController projectController = Get.find<ProjectController>();
     int currentUserId = projectController.userId.value;
 
+    return Obx(() {
+      final task = taskDetails.task.value.firstWhere(
+            (value) => value.taskId == widget.taskId,
+        orElse: () => Task(
+          taskId: -1,
+          taskName: 'Unknown Task',
+          taskDetail: '',
+          taskEnd: '',
+          taskColor: '',
+          taskStatus: false,
+          userId: 0,
+          tagId: -1,
+          projectId: 0,
+          userName: '',
+          taskOwner: -1,
+          tagName: 'No Tag',
+          tagColor: '#808080',
+          taskOrder: 0,
+        ),
+      );
 
-    return
-       Obx( () {
+      if (task.taskId == -1) {
+        Get.back();
+        return SizedBox.shrink();
+      }
 
-        final  taskId = taskDetails.task.value
-        .firstWhere((value) => value.taskId == widget.taskId)
-        .taskId;
-        final taskName = taskDetails.task.value
-        .firstWhere((value) => value.taskId == widget.taskId)
-        .taskName;
-
-        final taskDetail =taskDetails.task.value
-               .firstWhere((value) => value.taskId == widget.taskId)
-               .taskDetail;
-
-        final tagId = taskDetails.task.value
-               .firstWhere((value) => value.taskId == widget.taskId)
-               .tagId;       
-        final taskOwner = taskDetails.task.value
-        .firstWhere((value) => value.taskId == widget.taskId)
-        .taskOwner;
-
-        final tagColor = taskController.task.firstWhere((value) => value.taskId == widget.taskId).tagColor;
-
-        final taskOwnerName = (taskOwner == null || taskOwner == 0)
-            ? "Owner: Missing"
-            : getuser.membersMap.containsKey(taskOwner)
-              ? getuser.membersMap[taskOwner]
-              : taskDetails.task.firstWhere((t) => t.taskOwner == userId).userName;
-
-        final taskEnd = taskController.task.firstWhere((f) => f.taskId == widget.taskId).taskEnd;
+      final taskId = task.taskId;
+      final taskName = task.taskName;
+      final taskDetail = task.taskDetail;
+      final tagId = task.tagId;
+      final taskOwner = task.taskOwner;
+      final tagColor = taskController.task.firstWhere(
+            (value) => value.taskId == widget.taskId,
+        orElse: () => task,
+      ).tagColor;
+      final taskOwnerName = (taskOwner == null || taskOwner == 0)
+          ? "Owner: Missing"
+          : getuser.membersMap.containsKey(taskOwner)
+          ? getuser.membersMap[taskOwner]
+          : taskDetails.task.firstWhere((t) => t.taskOwner == userId).userName;
+      final taskEnd = taskController.task.firstWhere(
+            (f) => f.taskId == widget.taskId,
+        orElse: () => task,
+      ).taskEnd; // return
+      //  Obx( () {
+      //
+      //   final  taskId = taskDetails.task.value
+      //   .firstWhere((value) => value.taskId == widget.taskId)
+      //   .taskId;
+      //   final taskName = taskDetails.task.value
+      //   .firstWhere((value) => value.taskId == widget.taskId)
+      //   .taskName;
+      //
+      //   final taskDetail =taskDetails.task.value
+      //          .firstWhere((value) => value.taskId == widget.taskId)
+      //          .taskDetail;
+      //
+      //   final tagId = taskDetails.task.value
+      //          .firstWhere((value) => value.taskId == widget.taskId)
+      //          .tagId;
+      //   final taskOwner = taskDetails.task.value
+      //   .firstWhere((value) => value.taskId == widget.taskId)
+      //   .taskOwner;
+      //
+      //   final tagColor = taskController.task.firstWhere((value) => value.taskId == widget.taskId).tagColor;
+      //
+      //   final taskOwnerName = getuser.membersMap.containsKey(taskOwner)
+      // ? getuser.membersMap[taskOwner]
+      // : taskDetails.task.firstWhere((t) => t.taskOwner == userId).userName;
+      //
+      // final taskEnd = taskController.task.firstWhere((f) => f.taskId == widget.taskId).taskEnd;
          return Column(
          children: [
            Container(

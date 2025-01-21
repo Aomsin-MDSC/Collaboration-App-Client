@@ -356,9 +356,14 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       height: 60,
                       child: ElevatedButton(
                         onPressed: () async {
-                          await controller.deleteTask(taskId, projectId);
-                          Get.back();
-                          Get.back(); //********* wait for edit
+                          try {
+                            await controller.deleteTask(taskId, projectId);
+                            Get.back();
+                          } catch (e) {
+                            if (e.toString().contains("Bad state: No element")) {
+                              Get.back();
+                            }
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
