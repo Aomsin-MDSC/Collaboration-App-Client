@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:collaboration_app_client/controllers/edit_project_controller.dart';
@@ -16,6 +18,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../controllers/announce_controller.dart';
+import '../../controllers/edit_announce_controller.dart';
 import '../../controllers/tag_controller.dart';
 
 class ProjectForm extends StatefulWidget {
@@ -47,6 +50,8 @@ class _ProjectFormState extends State<ProjectForm> {
     projectId = arguments['projectId'];
     announcecontroller.fetchAnnounce(projectId);
 
+    // _startAnnounceChecker();
+
     final getUser = Get.put(NewProjectController());
     getUser.membersMap.value = {};
     Future.delayed(Duration.zero, () async {
@@ -54,6 +59,30 @@ class _ProjectFormState extends State<ProjectForm> {
       await getUser.fetchMembers(token!);
     });
   }
+
+  // void _startAnnounceChecker() {
+  //   final controller = Get.put(EditAnnounceController());
+  //   Timer.periodic(Duration(seconds: 1), (timer) {
+  //     final now = DateTime.now();
+  //     print("Timer tick: $now"); //นับเวลา
+  //
+  //     for (var announce in announcecontroller.announces) {
+  //       if (announce.announceDate != null && announce.announceDate!.isNotEmpty) {
+  //         final announceDate = DateTime.tryParse(announce.announceDate!);
+  //
+  //         if (announceDate != null) {
+  //           if ((announceDate.difference(now).inSeconds).abs() < 1) {
+  //             print("Deleting announce: ${announce.announceId}");
+  //             controller.deleteAnnounce(announce.announceId, projectId);
+  //           }
+  //         } else {
+  //           print("Invalid announceDate format: ${announce.announceDate}");
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
+
 
 
   Future<String?> getToken() async {

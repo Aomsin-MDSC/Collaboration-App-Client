@@ -1,5 +1,6 @@
 import 'package:collaboration_app_client/models/comment_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CommentWidget extends StatelessWidget {
   const CommentWidget({super.key, required this.comment});
@@ -30,7 +31,7 @@ class CommentWidget extends StatelessWidget {
           ),
         ),
         Text(
-          comment.commentDate.toString(),
+          DateFormat('dd/MM/yyyy HH:mm').format(comment.commentDate),
           style: TextStyle(fontSize: 14, color: Colors.grey),
         ),
       ],
