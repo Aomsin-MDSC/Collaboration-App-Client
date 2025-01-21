@@ -36,22 +36,24 @@ class _TaskPageViewState extends State<TaskPageView> {
           title: const Text(
             "TASK PAGE",
           ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () async {
+              await Taskcontroller.fetchTask(Taskcontroller.projectId);
+              Get.back();
+            },
+          ),
         ),
-        body: RefreshIndicator(
-          onRefresh: ()async{
-            await Taskcontroller.fetchTask(1);
-          },
-          child: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.all(30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TaskPageForm(
-                    taskId: widget.taskId,
-                  ),
-                ],
-              ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TaskPageForm(
+                  taskId: widget.taskId,
+                ),
+              ],
             ),
           ),
         ),
