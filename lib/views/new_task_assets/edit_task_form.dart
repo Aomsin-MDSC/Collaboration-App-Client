@@ -1,4 +1,5 @@
 import 'package:collaboration_app_client/controllers/edit_task_controller.dart';
+import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:collaboration_app_client/views/edit_tag_view.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
@@ -22,6 +23,7 @@ class EditTaskForm extends StatefulWidget {
 }
 
 class _EditTaskFormState extends State<EditTaskForm> {
+  final tagController = Get.put(TagController());
   final controller = Get.put(EditTaskController());
   final int projectId = Get.arguments['projectId'];
   final int taskId = Get.arguments['taskId'];
@@ -41,10 +43,13 @@ class _EditTaskFormState extends State<EditTaskForm> {
     controller.edittaskdetails.text = taskDetail;
     controller.editselectedDate = taskEnd;
     controller.edittaskcolor = taskColor;
+    controller.selectedTag = TagModel(tagId: tagId, tagName: "null", tagColor: tagcolor);
   }
 
   @override
   Widget build(BuildContext context) {
+    print("Selected Tag: ${controller.selectedTag?.tagName}");
+
     return Form(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -167,7 +172,9 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   ),
                 ),
                 icon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
-                value: controller.selectedTag,
+                value: controller.selectedTag?.tagId == -1
+                    ? null
+                    : controller.selectedTag,
                 isExpanded: true,
                 items: [
                   DropdownMenuItem<TagModel>(
@@ -196,7 +203,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       ),
                     ),
                   ),
-                  ...controller.tags.map((tag) {
+                  ...tagController.tags.map((tag) {
                     return DropdownMenuItem<TagModel>(
                       value: tag,
                       child: DropdownTagWidget(tag: tag),

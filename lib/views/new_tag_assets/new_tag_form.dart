@@ -1,4 +1,5 @@
 import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
+import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/new_project_assets/new_project_form.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,8 @@ class _NewTagFormState extends State<NewTagForm> {
   @override
   Widget build(BuildContext context) {
     final tagcontroller = Get.put(NewTagController());
+    final tagRefresher = Get.find<TagController>();
+
     return Form(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -185,7 +188,8 @@ class _NewTagFormState extends State<NewTagForm> {
               child: ElevatedButton(
                 onPressed: () async {
                   if (tagcontroller.tagname.text.isNotEmpty) {
-                    await tagcontroller.createTag(onCompleted: () {
+                    await tagcontroller.createTag(onCompleted: () async {
+                     await tagRefresher.fetchTag();
                       Get.back();
                     });
                   } else {

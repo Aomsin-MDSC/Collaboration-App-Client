@@ -16,7 +16,7 @@ class TaskController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    final Map<String, dynamic> arguments = Get.arguments;
+    final Map<String, dynamic>arguments = Get.arguments;
     projectId = arguments['projectId'];
     fetchTask(projectId);
   }

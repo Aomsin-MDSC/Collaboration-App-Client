@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../controllers/edit_task_controller.dart';
+import '../../controllers/tag_controller.dart';
+
 import '../../models/task_model.dart';
 
 class TaskPageForm extends StatefulWidget {
@@ -42,6 +45,9 @@ class _TaskPageFormState extends State<TaskPageForm> {
     final taskDetails = Get.put(TaskController());
     final getuser = Get.put(NewProjectController());
     final project = Get.put(ProjectController());
+    final tagController = Get.put(TagController());
+    final selectedTag = Get.put(EditTaskController());
+
 
 
   
@@ -148,7 +154,9 @@ class _TaskPageFormState extends State<TaskPageForm> {
                          Icons.edit,
                          size: 30,
                        ),
-                       onPressed: () {
+                       onPressed: () async {
+                      await  selectedTag.fetchTagMap(tagId);
+                      await   tagController.fetchTagMap(tagId);
                          print('Color is -------------');
                          print('Tag is -------------');
                   Get.to(

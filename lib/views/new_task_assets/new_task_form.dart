@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/new_project_controller.dart';
 import '../../utils/color.dart';
 import '../new_tag_view.dart';
 import '../project_view.dart';
@@ -19,6 +20,7 @@ class NewTaskForm extends StatefulWidget {
 
 class _NewTaskFormState extends State<NewTaskForm> {
   final controller = Get.put(NewTaskController());
+  final tagcontroller = Get.put(NewProjectController());
   final int projectId = Get.arguments['projectId'];
   final int tagId = Get.arguments['tagId'];
   final int userId = Get.arguments['userId'];
@@ -28,7 +30,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
     // TODO: implement initState
     controller.taskName.clear();
     controller.taskdetails.clear();
-    controller.selectedTag = null;
+    tagcontroller.selectedTag = null;
     controller.selectedDate = null;
     controller.taskcolor = "#808080";
     super.initState();
@@ -150,13 +152,14 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.clear),
                     onPressed: () {
-                      controller.selectedTag = null;
-                      setState(() {});
+                      tagcontroller.selectedTag = null;
+                      setState(() {
+                      });
                     },
                   ),
                 ),
                 icon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
-                value: controller.selectedTag,
+                value: tagcontroller.selectedTag,
                 hint: Text(
                   "Select Tag",
                   style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
@@ -189,7 +192,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                       ),
                     ),
                   ),
-                  ...controller.tags.map((tag) {
+                  ...tagcontroller.tags.map((tag) {
                     return DropdownMenuItem<TagModel>(
                       value: tag,
                       child: DropdownTagWidget(tag: tag),
@@ -201,7 +204,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                     if (value != "Add Tag") {
                       // อัปเดตค่า selectedtag
                       if (value != null) {
-                        controller.selectedTag = value;
+                        tagcontroller.selectedTag = value;
                       }
                       /* ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

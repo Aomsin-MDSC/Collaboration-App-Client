@@ -1,5 +1,6 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:collaboration_app_client/controllers/edit_project_controller.dart';
 import 'package:collaboration_app_client/controllers/in_project_controller.dart';
 import 'package:collaboration_app_client/controllers/new_project_controller.dart';
 import 'package:collaboration_app_client/controllers/new_task_controller.dart';
@@ -15,6 +16,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../controllers/announce_controller.dart';
+import '../../controllers/tag_controller.dart';
 
 class ProjectForm extends StatefulWidget {
   const ProjectForm({super.key});
@@ -32,6 +34,7 @@ class _ProjectFormState extends State<ProjectForm> {
   final controller = Get.put(TaskController());
   final announcecontroller = Get.put(AnnounceController());
   final projectcontroller = Get.put(ProjectController());
+  final tagController = Get.put(EditProjectController());
   late int projectId;
   final tagId = Get.arguments['tagId'];
   final userId = Get.arguments['userId'];
@@ -227,6 +230,7 @@ class _ProjectFormState extends State<ProjectForm> {
               onRefresh: () async {
                 taskController.fetchTask(projectId);
                 announcecontroller.fetchAnnounce(projectId);
+                tagController.fetchTagMap(tagId);
               },
               child: ReorderableListView.builder(
                 padding: EdgeInsets.only(bottom: 120),
@@ -241,7 +245,7 @@ class _ProjectFormState extends State<ProjectForm> {
 
                   return TextButton(
                       key: ValueKey(taskList.taskId),
-                      onPressed: () {
+                      onPressed: () async {
                         // Api Here
                         print(taskList.taskId);
                         Get.to(TaskPageView(taskId: taskList.taskId),

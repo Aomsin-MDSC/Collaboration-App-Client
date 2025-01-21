@@ -28,6 +28,8 @@ class _HomeViewState extends State<HomeView> {
     final ProjectController projectController = Get.find<ProjectController>();
     final AuthenticationController authenticationController =
         Get.put(AuthenticationController());
+  //  final tagController = Get.put(TagController());
+
 
     var refresh = Get.arguments?['refresh'] ?? false;
 
@@ -100,6 +102,7 @@ class _HomeViewState extends State<HomeView> {
                         } else {
                           print("Token not found");
                         }
+                        // tagController.fetchTagMap(tag_id)
                       },
                       child: ReorderableListView.builder(
                         itemCount: projectController.project.length,

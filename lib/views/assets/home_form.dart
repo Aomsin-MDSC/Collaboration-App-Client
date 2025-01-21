@@ -17,6 +17,7 @@ class ProjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(TagController());
 
     return TextButton(
       style: ButtonStyle(
@@ -27,13 +28,15 @@ class ProjectCard extends StatelessWidget {
           ),
         ),
       ),
-      onPressed: () {
+      onPressed: () async {
+       await controller.fetchTagMap(project.tagId);
         Get.to(() => const ProjectView(), arguments: {
           'projectId': project.projectId,
           'tagId': project.tagId,
           'userId' : project.userId,
           'projectName': project.projectName,
         });
+
       },
       child: Card(
         color: Colors.white,
@@ -79,7 +82,8 @@ class ProjectCard extends StatelessWidget {
                 subtitle: Text('Owner: ${project.userName}'), // api user
                 trailing: project.userId == currentUserId
                     ? IconButton(
-                        onPressed: () {
+                        onPressed: () async {
+                         await controller.fetchTagMap(project.tagId);
                           print('User ID matches, navigating to edit');
                           print('Project User ID: ${project.userId}');
                           print('Current User ID: $currentUserId');

@@ -11,6 +11,7 @@ import '../controllers/in_project_controller.dart';
 import '../controllers/new_announce_controller.dart';
 import '../controllers/new_task_controller.dart';
 import '../controllers/project_controller.dart';
+import '../controllers/tag_controller.dart';
 import '../models/project_model.dart';
 import '../views/new_task_view.dart';
 import 'widgets/expandable_fab_widget.dart';
@@ -67,6 +68,7 @@ class _ProjectViewState extends State<ProjectView> {
   @override
   Widget build(BuildContext context) {
     final ProjectController projectController = Get.find<ProjectController>();
+    final tagController = Get.put(TagController());
     int currentUserId = projectController.userId.value;
     final controller = Get.put(ProjectController());
 
@@ -150,8 +152,6 @@ class _ProjectViewState extends State<ProjectView> {
                                 icon: const Icon(Icons
                                     .announcement), // Toggle between search and close icon
                                 onPressed: () {
-                                  print(
-                                      'Button Pressed, Project ID: $projectId');
                                   Get.to(const NewAnnounceView(), arguments: {
                                     'projectId': projectId,
                                     'tagId': tagId,
@@ -173,9 +173,12 @@ class _ProjectViewState extends State<ProjectView> {
                                 heroTag: null,
                                 backgroundColor: btcolor,
                                 icon: const Icon(Icons.edit),
-                                onPressed: () {
+                                onPressed: () async {
+                                  print('Button Pressed, Project ID: ${projectController.project.first}');
+                            //  await  tagController.fetchTagMap(projectController.project.firstWhere((element) => element.userId == projectController.userId).tagId);
+
                                   // final product = projectController.project[index];
-                                  Get.to(const EditProjectView(), arguments: {
+                                  Get.to( EditProjectView(), arguments: {
                                     'projectId': projectId,
                                     'tagId': tagId,
                                   });

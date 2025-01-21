@@ -1,3 +1,4 @@
+import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
@@ -34,6 +35,8 @@ class _EditProjectFormState extends State<EditProjectForm> {
     // ];
 
     final controller = Get.put(EditProjectController());
+    final tagController = Get.put(TagController());
+
     final projectids = Get.put(ProjectController());
 
     final int projectId = Get.arguments['projectId'];
@@ -132,7 +135,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   ),
                 ),
                 icon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
-                value: controller.selectedTag,
+                value: tagController.selectedTag,
                 isExpanded: true,
                 items: [
                   DropdownMenuItem<TagModel>(
@@ -161,7 +164,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                       ),
                     ),
                   ),
-                  ...controller.tags.map((tag) {
+                  ...tagController.tags.map((tag) {
                     return DropdownMenuItem<TagModel>(
                       value: tag,
                       child: DropdownTagWidget(tag: tag),
