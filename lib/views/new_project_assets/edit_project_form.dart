@@ -128,7 +128,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.clear),
                     onPressed: () {
-                      controller.selectedTag = null;
+                      tagController.selectedTag = null;
                       setState(() {
                       });
                     },
