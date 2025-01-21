@@ -21,7 +21,7 @@ class DropdownTagWidget extends StatefulWidget {
 class _DropdownTagWidgetState extends State<DropdownTagWidget> {
   @override
   Widget build(BuildContext context) {
-      final controller = Get.put(NewTaskController());
+      final controller = Get.put(NewProjectController());
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,6 +48,11 @@ class _DropdownTagWidgetState extends State<DropdownTagWidget> {
             })?.then((result) async {
               result == true? await controller.fetchTags():print("Result form DropdownTagWidget ::: $result");
             });
+            if (controller.selectedTag != null &&
+                !controller.tags
+                    .any((tag) => tag.tagId == controller.selectedTag!.tagId)) {
+              controller.selectedTag = null;
+            }
           },
         ),
       ],
