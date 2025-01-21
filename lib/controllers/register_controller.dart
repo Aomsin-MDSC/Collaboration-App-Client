@@ -56,7 +56,7 @@ class RegisterController extends GetxController {
                   children: [
                     Icon(Icons.warning, color: Colors.white),
                     SizedBox(width: 8),
-                    Text('Username cannot be empty or whitespace.'),
+                    Expanded(child: Text('Username cannot be empty or whitespace.',style: TextStyle(overflow: TextOverflow.ellipsis),maxLines: 1,)),
                   ],
                 ),
                 action: SnackBarAction(label: "OK", onPressed: () {}),
@@ -74,7 +74,7 @@ class RegisterController extends GetxController {
                   children: [
                     Icon(Icons.warning, color: Colors.white),
                     SizedBox(width: 8),
-                    Text('This Username already exists.'),
+                    Expanded(child: Text('This Username already exists.',style: TextStyle(overflow: TextOverflow.ellipsis),maxLines: 1,)),
                   ],
                 ),
                 action: SnackBarAction(label: "OK", onPressed: () {}),
@@ -93,7 +93,7 @@ class RegisterController extends GetxController {
                   children: [
                     Icon(Icons.warning, color: Colors.white),
                     SizedBox(width: 8),
-                    Text('Password cannot be empty or whitespace.'),
+                    Expanded(child: Text('Password cannot be empty or whitespace.',style: TextStyle(overflow: TextOverflow.ellipsis),maxLines: 1,)),
                   ],
                 ),
                 action: SnackBarAction(label: "OK", onPressed: () {}),
