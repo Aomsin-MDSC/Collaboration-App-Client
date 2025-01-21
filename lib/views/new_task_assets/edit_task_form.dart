@@ -133,6 +133,13 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   fillColor: Colors.white,
                   border: OutlineInputBorder(),
                 )),
+                popupProps: PopupProps.menu(
+                  constraints: BoxConstraints(
+                    maxHeight: controller.edit_selected_members_map.length * 100.0 > 200
+                        ? 200
+                        : controller.edit_selected_members_map.length * 100.0,
+                  ),
+                ),
               );
             }),
 

@@ -123,6 +123,13 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   fillColor: Colors.white,
                   border: OutlineInputBorder(),
                 )),
+                popupProps: PopupProps.menu(
+                  constraints: BoxConstraints(
+                    maxHeight: controller.memberlist.length * 100.0 > 200
+                        ? 200
+                        : controller.memberlist.length * 100.0,
+                  ),
+                ),
               );
             }),
 
@@ -144,8 +151,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                     icon: const Icon(Icons.clear),
                     onPressed: () {
                       controller.selectedTag = null;
-                      setState(() {
-                      });
+                      setState(() {});
                     },
                   ),
                 ),
@@ -172,7 +178,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                               ),
                             ),
                             onPressed: () {
-                              Get.to(NewTagView());
+                              Get.to(const NewTagView());
                             },
                             child: const Text(
                               "Add Tag",
@@ -326,7 +332,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   if (controller.selectedDate != null &&
                       controller.taskName.text.isNotEmpty &&
                       controller.taskdetails.text.isNotEmpty &&
-                      controller.selectedmember.isNotEmpty ) {
+                      controller.selectedmember.isNotEmpty) {
                     // controller.
                     controller.createTask(projectId);
                     Get.back();
@@ -342,12 +348,13 @@ class _NewTaskFormState extends State<NewTaskForm> {
                         ),
                         // behavior: SnackBarBehavior.floating,
                         // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 180, left: 15, right: 15),
-                        action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                        action: SnackBarAction(
+                            label: "OK", onPressed: () {}), //action
                         backgroundColor: Colors.red,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        duration: Duration(seconds: 3),
+                        duration: const Duration(seconds: 3),
                       ),
                     );
                   }
