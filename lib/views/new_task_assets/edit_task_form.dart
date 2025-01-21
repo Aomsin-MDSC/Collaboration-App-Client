@@ -153,6 +153,13 @@ class _EditTaskFormState extends State<EditTaskForm> {
             const Text("Tag", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Obx(() {
+              if (tagController.selectedTag != null &&
+                !tagController.tags
+                    .any((tag) => tag.tagId == tagController.selectedTag!.tagId) ) {
+   
+                  tagController.selectedTag = null;
+
+              }
               return DropdownButtonFormField<TagModel>(
                 menuMaxHeight: 300,
                 iconSize: 35,
@@ -165,16 +172,16 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.clear),
                     onPressed: () {
-                      controller.selectedTag = null;
+                      tagController.selectedTag = null;
                       setState(() {
                       });
                     },
                   ),
                 ),
                 icon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
-                value: controller.selectedTag?.tagId == -1
+                value: tagController.selectedTag?.tagId == -1
                     ? null
-                    : controller.selectedTag,
+                    : tagController.selectedTag,
                 isExpanded: true,
                 items: [
                   DropdownMenuItem<TagModel>(
@@ -215,7 +222,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                     if (value != "Add Tag") {
                       // อัปเดตค่า selectedtag
                       if (value != null) {
-                        controller.selectedTag = value;
+                        tagController.selectedTag = value;
                       }
                       /* ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

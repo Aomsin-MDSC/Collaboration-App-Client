@@ -52,12 +52,15 @@ class _DropdownTagWidgetState extends State<DropdownTagWidget> {
             })?.then((result) async {
              if (controller.selectedTag != null &&
                 !controller.tags
-                    .any((tag) => tag.tagId == controller.selectedTag!.tagId)) {
+                    .any((tag) => tag.tagId == controller.selectedTag!.tagId) || edittagcontroller.selectedTag != null &&
+                !edittagcontroller.tags
+                    .any((tag) => tag.tagId == edittagcontroller.selectedTag!.tagId) ) {
               controller.selectedTag = null;
+              edittagcontroller.selectedTag = null;
             }
               if (result == true) {
                 await controller.fetchTags();
-                await edittagcontroller.fetchTagMap(widget.tag.tagId!);
+                await edittagcontroller.fetchTagMap(widget.tag.tagId);
               } else {
                 print("Result from DropdownTagWidget ::: $result");
               }

@@ -116,6 +116,14 @@ class _EditProjectFormState extends State<EditProjectForm> {
             const Text("Tag", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Obx(() {
+      if (tagController.selectedTag != null &&
+                !tagController.tags
+                    .any((tag) => tag.tagId == tagController.selectedTag!.tagId) ) {
+   
+                  tagController.selectedTag = null;
+print("Edit Project Form ::::${tagController.selectedTag?.tagName}");
+              }
+
               return DropdownButtonFormField<TagModel>(
                 menuMaxHeight: 300,
                 iconSize: 35,
@@ -176,7 +184,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                     if (value != "Add Tag") {
                       // อัปเดตค่า selectedtag
                       if (value != null) {
-                        controller.selectedTag = value;
+                        tagController.selectedTag = value;
                       }
                       /* ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
