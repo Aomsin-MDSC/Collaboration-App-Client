@@ -195,12 +195,13 @@ class _EditTagFormState extends State<EditTagForm> {
                   width: 150,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed: () async {
-                      if (tagcontroller.edittagname.text.isNotEmpty) {
-                        await tagcontroller.updateTag(tagId);
-                        Get.back(result: true);
-                      }
-                    },
+                      onPressed: () async {
+                        if (tagcontroller.edittagname.text.isNotEmpty) {
+                          await tagcontroller.updateTag(tagId, onCompleted: () {
+                            Get.back(result: true);
+                          });
+                        }
+                      },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),

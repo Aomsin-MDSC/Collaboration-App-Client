@@ -27,7 +27,53 @@ class EditTagController extends GetxController {
   Color get editcurrenttagColor =>
       Color(int.parse(tagcolor.replaceFirst('#', '0xff')));
 
-  Future<void> updateTag(int tagId) async {
+  Future<bool> checkTag(String tagName) async {
+    final url = Uri.parse('http://10.24.8.16:5263/api/CheckTags/${tagName}');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        return false;
+      } else if (response.statusCode == 404) {
+        var data = jsonDecode(response.body);
+        return true;
+      } else {
+        return true;
+      }
+    } catch (e) {
+      return true;
+    }
+  }
+
+  Future<void> updateTag(int tagId, {Function? onCompleted = null}) async {
+
+    final tagName = edittagname.text.trim();
+    bool tagExists = await checkTag(tagName);
+
+    if (tagExists) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.warning, color: Colors.white),
+              SizedBox(width: 8),
+              Text('Tag Already Exists.'),
+            ],
+          ),
+          action: SnackBarAction(label: "OK", onPressed: () {}), //action
+          backgroundColor: Colors.orange,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          duration: Duration(seconds: 3),
+        ),
+        // wait for edit snackbar
+      );
+      return;
+    }
+
     try {
       final url = Uri.parse('http://10.24.8.16:5263/api/UpdateTag/$tagId');
 
@@ -47,6 +93,7 @@ class EditTagController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        if (onCompleted != null) onCompleted();
         ScaffoldMessenger.of(Get.context!).showSnackBar(
           SnackBar(
             content: const Row(
