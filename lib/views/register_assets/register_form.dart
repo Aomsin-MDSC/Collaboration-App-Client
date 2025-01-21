@@ -74,8 +74,8 @@ class _LoginFormState extends State<RegisterForm> {
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.black87),
                   onPressed: () async {
-                    await controller.registerUser();
-                    Get.back();
+                    await controller.registerUser(onCompleted: (){Get.back();});
+
                   },
                   child: Text('register'.toUpperCase()))),
           const SizedBox(
