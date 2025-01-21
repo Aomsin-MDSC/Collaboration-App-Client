@@ -1,3 +1,4 @@
+import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:collaboration_app_client/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:collaboration_app_client/views/new_project_assets/new_project_form.dart';
@@ -15,11 +16,24 @@ class NewProjectView extends StatelessWidget {
     // final int projectId = Get.arguments['projectId'];
     // final controller = Get.put(EditProjectController());
     // controller.loadProjectDetails(projectId);
+    final controller = Get.put(ProjectController());
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
             "NEW PROJECT",
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () async {
+              final String? token = await controller.getToken();
+              if (token != null && token.isNotEmpty) {
+                controller.fetchApi(token);
+                Get.back();
+              } else {
+                print("Token not found");
+              }
+            },
           ),
         ),
         body: SingleChildScrollView(

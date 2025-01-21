@@ -15,8 +15,6 @@ import '../models/project_model.dart';
 import '../views/new_task_view.dart';
 import 'widgets/expandable_fab_widget.dart';
 
-
-
 class ProjectView extends StatefulWidget {
   const ProjectView({super.key});
 
@@ -70,7 +68,8 @@ class _ProjectViewState extends State<ProjectView> {
   Widget build(BuildContext context) {
     final ProjectController projectController = Get.find<ProjectController>();
     int currentUserId = projectController.userId.value;
-    
+    final controller = Get.put(ProjectController());
+
     String projectName = projectController.project.value
         .firstWhere((value) => value.projectId == projectId)
         .projectName;
@@ -95,8 +94,15 @@ class _ProjectViewState extends State<ProjectView> {
                           // content: Text("if want ?"),
                           actions: [
                             TextButton(
-                              onPressed: () {
-                                Get.back();
+                              onPressed: () async {
+                                final String? token =
+                                    await controller.getToken();
+                                if (token != null && token.isNotEmpty) {
+                                  controller.fetchApi(token);
+                                  Get.back();
+                                } else {
+                                  print("Token not found");
+                                }
                               },
                               child: Text("CLOSE"),
                             ),
@@ -105,11 +111,12 @@ class _ProjectViewState extends State<ProjectView> {
                       },
                     );
                   },
-                  child: Text(projectName,
+                  child: Text(
+                    projectName,
                     style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.white,
-                        overflow: TextOverflow.ellipsis, //same
+                      fontSize: 30,
+                      color: Colors.white,
+                      overflow: TextOverflow.ellipsis, //same
                     ),
                     // overflow: TextOverflow.ellipsis, //same
                     maxLines: 1,
@@ -121,7 +128,7 @@ class _ProjectViewState extends State<ProjectView> {
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: Padding(
             padding: const EdgeInsets.only(bottom: 20, right: 20),
-            child:  userId != currentUserId
+            child: userId != currentUserId
                 ? null // Hide FAB when the keyboard is visible
                 : ExpandableFab(
                     distance: 70,
@@ -129,40 +136,40 @@ class _ProjectViewState extends State<ProjectView> {
                       Column(
                         // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                                 Row(
+                          Row(
                             children: [
-                              
                               FloatingActionButton.extended(
                                 heroTag: null,
                                 label: const Text(
-                                "New Announce",
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.bold),
-                              ),
+                                  "New Announce",
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                ),
                                 backgroundColor: btcolor,
                                 icon: const Icon(Icons
                                     .announcement), // Toggle between search and close icon
                                 onPressed: () {
                                   print(
                                       'Button Pressed, Project ID: $projectId');
-                                  Get.to(const NewAnnounceView(),
-                                      arguments: {'projectId': projectId,'tagId': tagId,'userId':userId});
+                                  Get.to(const NewAnnounceView(), arguments: {
+                                    'projectId': projectId,
+                                    'tagId': tagId,
+                                    'userId': userId
+                                  });
                                 },
                               ),
                             ],
                           ),
-                         const SizedBox(height: 10),
-
+                          const SizedBox(height: 10),
                           Row(
                             children: [
-                    
                               const SizedBox(width: 20),
                               FloatingActionButton.extended(
-                                label:  const Text(
-                                  "Edit Project",
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold)),
+                                label: const Text("Edit Project",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold)),
                                 heroTag: null,
                                 backgroundColor: btcolor,
                                 icon: const Icon(Icons.edit),
@@ -175,7 +182,6 @@ class _ProjectViewState extends State<ProjectView> {
                                   // arguments: {'projectId': project.projectId});
                                 },
                               ),
-                              
                             ],
                           ),
                           const SizedBox(height: 10),
@@ -205,19 +211,15 @@ class _ProjectViewState extends State<ProjectView> {
                               ),
                             ],
                           ),
-                   
                         ],
                       ),
                     ],
                   ),
-            ),
-            
+          ),
           body: const Padding(
             padding: EdgeInsets.all(8.0),
             child: ProjectForm(),
           )),
     );
   }
-  
 }
-
