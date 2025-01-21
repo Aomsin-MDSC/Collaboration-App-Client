@@ -70,11 +70,13 @@ class _TaskPageFormState extends State<TaskPageForm> {
 
         final tagColor = taskController.task.firstWhere((value) => value.taskId == widget.taskId).tagColor;
 
-        final taskOwnerName = getuser.membersMap.containsKey(taskOwner)
-      ? getuser.membersMap[taskOwner]
-      : taskDetails.task.firstWhere((t) => t.taskOwner == userId).userName;
+        final taskOwnerName = (taskOwner == null || taskOwner == 0)
+            ? "Owner: Missing"
+            : getuser.membersMap.containsKey(taskOwner)
+              ? getuser.membersMap[taskOwner]
+              : taskDetails.task.firstWhere((t) => t.taskOwner == userId).userName;
 
-      final taskEnd = taskController.task.firstWhere((f) => f.taskId == widget.taskId).taskEnd;
+        final taskEnd = taskController.task.firstWhere((f) => f.taskId == widget.taskId).taskEnd;
          return Column(
          children: [
            Container(

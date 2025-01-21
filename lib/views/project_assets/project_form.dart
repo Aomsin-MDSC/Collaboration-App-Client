@@ -273,13 +273,15 @@ class _ProjectFormState extends State<ProjectForm> {
                                 ),
                               ),
 
-                        
                               Text(
                                 getUser.membersMap.containsKey(taskList.taskOwner)
                                     ? "Owner: ${getUser.membersMap[taskList.taskOwner]}"
-                                    : "Owner: ${taskList.userName}",
+                                    : (taskList.taskOwner == 0 || taskList.taskOwner == null)
+                                      ? "Owner: Missing"
+                                      : "Owner: ${taskList.userName}",
                                 style: TextStyle(color: textColor),
                               ),
+
 
                               SizedBox(
                                 height: 10,
