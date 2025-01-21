@@ -201,6 +201,25 @@ class _EditTagFormState extends State<EditTagForm> {
                             Get.back(result: true);
                           });
                         }
+                        else{
+                          ScaffoldMessenger.of(Get.context!).showSnackBar(
+                            SnackBar(
+                              content:  Row(
+                                children: [
+                                  Icon(Icons.cancel, color: Colors.white),
+                                  SizedBox(width: 8),
+                                  Text('Save Tag Failed.'),
+                                ],
+                              ),
+                              action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                              backgroundColor: Colors.red,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              duration: Duration(seconds: 3),
+                            ),
+                          );
+                        }
                       },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

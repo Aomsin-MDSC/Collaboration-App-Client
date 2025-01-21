@@ -125,8 +125,6 @@ class EditTagController extends GetxController {
               Text('Save Tag Failed.${e}'),
             ],
           ),
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
           action: SnackBarAction(label: "OK", onPressed: () {}), //action
           backgroundColor: Colors.red,
           shape: RoundedRectangleBorder(
