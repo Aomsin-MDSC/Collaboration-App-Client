@@ -39,15 +39,15 @@ class _DropdownTagWidgetState extends State<DropdownTagWidget> {
         ),
         IconButton(
           icon: Icon(Icons.edit, color: Colors.black54),
-          onPressed: () {
+          onPressed:  () async {
             // ฟังก์ชันเมื่อกดปุ่ม "Edit"
-            Get.to(EditTagView(), arguments: {
+         await  Get.to(EditTagView(), arguments: {
               'tagId': widget.tag.tagId,
               'tagName': widget.tag.tagName,
               'tagColor': widget.tag.tagColor
-            })?.then((result) async {
-              result == true? await controller.fetchTags():print("Result form DropdownTagWidget ::: $result");
-            });
+            });//?.then((result) async {
+            //  result == true? await controller.fetchTags():print("Result form DropdownTagWidget ::: $result");
+            //});
             if (controller.selectedTag != null &&
                 !controller.tags
                     .any((tag) => tag.tagId == controller.selectedTag!.tagId)) {
