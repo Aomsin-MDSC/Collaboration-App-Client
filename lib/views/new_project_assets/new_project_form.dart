@@ -96,11 +96,15 @@ class _NewProjectFormState extends State<NewProjectForm> {
                       ),
                     ),
                     popupProps: const PopupPropsMultiSelection.dialog(
-                      searchDelay: Duration(milliseconds: 200),
-                      dialogProps: DialogProps(
-                        backgroundColor: Colors.white,
-                      ),
-                    ),
+                        searchDelay: Duration(milliseconds: 200),
+                        dialogProps: DialogProps(
+                          backgroundColor: Colors.white,
+                        ),
+                        showSearchBox: true,
+                        searchFieldProps: TextFieldProps(
+                          decoration: InputDecoration(
+                              hintText: "Search Project Managers"),
+                        )),
                     onChanged: (newValue) {
                       controller.selectedManagers.clear();
                       controller.selectedManagers.addAll(newValue);
@@ -128,11 +132,15 @@ class _NewProjectFormState extends State<NewProjectForm> {
                       ),
                     ),
                     popupProps: const PopupPropsMultiSelection.dialog(
-                      searchDelay: Duration(milliseconds: 200),
-                      dialogProps: DialogProps(
-                        backgroundColor: Colors.white,
-                      ),
-                    ),
+                        searchDelay: Duration(milliseconds: 200),
+                        dialogProps: DialogProps(
+                          backgroundColor: Colors.white,
+                        ),
+                        showSearchBox: true,
+                        searchFieldProps: TextFieldProps(
+                          decoration:
+                              InputDecoration(hintText: "Search Members"),
+                        )),
                     onChanged: (newValue) {
                       controller.selectedMembers.clear();
                       controller.selectedMembers.addAll(newValue);

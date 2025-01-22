@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
+import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
@@ -12,7 +13,7 @@ import 'package:http/http.dart' as http;
 
 class EditProjectController extends GetxController {
   static EditProjectController get instance => Get.find();
-
+  final tagController = Get.put(TagController());
   final ProjectController controler = Get.find<ProjectController>();
   final editprojectname = TextEditingController();
   var editmemberlist = <String>[].obs;
@@ -200,7 +201,7 @@ class EditProjectController extends GetxController {
       //     ? editselectedmember.map((e) => editmembersMap[e]).toList()
       //     : edit_selected_members_map.map((e) => editmembersMap[e]).toList();
 
-      final tagId = selectedTag?.tagId != null ? selectedTag?.tagId : null;
+      final tagId = tagController.selectedTag?.tagId != null ? tagController.selectedTag?.tagId : null;
       print("Tag ID::::::::::::::::::::::: $tagId");
 
       if (token == null) {

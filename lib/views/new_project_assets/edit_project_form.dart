@@ -87,61 +87,81 @@ class _EditProjectFormState extends State<EditProjectForm> {
             const Text("Member", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Obx(() {
-           return Column(
-    children: [
-      // Project Managers Dropdown
-      DropdownSearch<String>.multiSelection(
-        items: controller.editmemberlist
-            .where((member) => !controller.edit_selected_members_map.contains(member)) // Exclude selected members
-            .toList(), 
-        selectedItems: controller.edit_selected_manager_map.toList(), // Selected managers
-        dropdownDecoratorProps: const DropDownDecoratorProps(
-          dropdownSearchDecoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(),
-            labelText: "Select Project Managers",
-          ),
-        ),
-        popupProps: const PopupPropsMultiSelection.dialog(
-          searchDelay: Duration(milliseconds: 200),
-          showSearchBox: true
-        ),
-        onChanged: (newValue) {
-          controller.edit_selected_manager_map.clear();
-          controller.edit_selected_manager_map.addAll(newValue);
-          controller.edit_selected_members_map.removeWhere((member) => newValue.contains(member)); // Remove duplicates
-        },
-      ),
+              return Column(
+                children: [
+                  // Project Managers Dropdown
+                  DropdownSearch<String>.multiSelection(
+                    items: controller.editmemberlist
+                        .where((member) => !controller.edit_selected_members_map
+                            .contains(member)) // Exclude selected members
+                        .toList(),
+                    selectedItems: controller.edit_selected_manager_map
+                        .toList(), // Selected managers
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        labelText: "Select Project Managers",
+                      ),
+                    ),
+                    popupProps: const PopupPropsMultiSelection.dialog(
+                        searchDelay: Duration(milliseconds: 200),
+                        dialogProps: DialogProps(
+                          backgroundColor: Colors.white,
+                        ),
+                        showSearchBox: true,
+                        searchFieldProps: TextFieldProps(
+                          decoration: InputDecoration(
+                              hintText: "Search Project Managers"),
+                        )),
+                    onChanged: (newValue) {
+                      controller.edit_selected_manager_map.clear();
+                      controller.edit_selected_manager_map.addAll(newValue);
+                      controller.edit_selected_members_map.removeWhere(
+                          (member) =>
+                              newValue.contains(member)); // Remove duplicates
+                    },
+                  ),
 
-      const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-      // Members Dropdown
-      DropdownSearch<String>.multiSelection(
-        items: controller.editmemberlist
-            .where((member) => !controller.edit_selected_manager_map.contains(member)) // Exclude selected members
-            .toList(), 
-        selectedItems: controller.edit_selected_members_map.toList(), // Selected members
-        dropdownDecoratorProps: const DropDownDecoratorProps(
-          dropdownSearchDecoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(),
-            labelText: "Select Members",
-          ),
-        ),
-        popupProps: const PopupPropsMultiSelection.dialog(
-          searchDelay: Duration(milliseconds: 200),
-          showSearchBox: true
-        ),
-        onChanged: (newValue) {
-          controller.edit_selected_members_map.clear();
-          controller.edit_selected_members_map.addAll(newValue);
-          controller.edit_selected_manager_map.removeWhere((manager) => newValue.contains(manager)); // Remove duplicates
-        },
-      ),
-    ],
-  );
+                  // Members Dropdown
+                  DropdownSearch<String>.multiSelection(
+                    items: controller.editmemberlist
+                        .where((member) => !controller.edit_selected_manager_map
+                            .contains(member)) // Exclude selected members
+                        .toList(),
+                    selectedItems: controller.edit_selected_members_map
+                        .toList(), // Selected members
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        labelText: "Select Members",
+                      ),
+                    ),
+                    popupProps: const PopupPropsMultiSelection.dialog(
+                        searchDelay: Duration(milliseconds: 200),
+                        dialogProps: DialogProps(
+                          backgroundColor: Colors.white,
+                        ),
+                        showSearchBox: true,
+                        searchFieldProps: TextFieldProps(
+                          decoration:
+                              InputDecoration(hintText: "Search Members"),
+                        )),
+                    onChanged: (newValue) {
+                      controller.edit_selected_members_map.clear();
+                      controller.edit_selected_members_map.addAll(newValue);
+                      controller.edit_selected_manager_map.removeWhere(
+                          (manager) =>
+                              newValue.contains(manager)); // Remove duplicates
+                    },
+                  ),
+                ],
+              );
             }),
 
             // Tag Dropdown
@@ -149,12 +169,12 @@ class _EditProjectFormState extends State<EditProjectForm> {
             const Text("Tag", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Obx(() {
-      if (tagController.selectedTag != null &&
-                !tagController.tags
-                    .any((tag) => tag.tagId == tagController.selectedTag!.tagId) ) {
-   
-                  tagController.selectedTag = null;
-print("Edit Project Form ::::${tagController.selectedTag?.tagName}");
+              if (tagController.selectedTag != null &&
+                  !tagController.tags.any(
+                      (tag) => tag.tagId == tagController.selectedTag!.tagId)) {
+                tagController.selectedTag = null;
+                print(
+                    "Edit Project Form ::::${tagController.selectedTag?.tagName}");
               }
 
               return DropdownButtonFormField<TagModel>(
@@ -170,8 +190,7 @@ print("Edit Project Form ::::${tagController.selectedTag?.tagName}");
                     icon: const Icon(Icons.clear),
                     onPressed: () {
                       tagController.selectedTag = null;
-                      setState(() {
-                      });
+                      setState(() {});
                     },
                   ),
                 ),
