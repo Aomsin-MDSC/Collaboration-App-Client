@@ -16,9 +16,15 @@ class EditProjectController extends GetxController {
   final ProjectController controler = Get.find<ProjectController>();
   final editprojectname = TextEditingController();
   var editmemberlist = <String>[].obs;
+  
+  // var memberlist = <String>[].obs;  
+  // var selectedManagers = <String>[].obs; 
+  // var selectedMembers = <String>[].obs; 
+
   var editselectedmember = <String>[].obs;
   var editmembersMap = <String, int>{}.obs;
   var edit_selected_members_map = <String>[].obs;
+  var edit_selected_manager_map = <String>[].obs;
 
   // late int projectId;
   final projectname = TextEditingController();
@@ -90,7 +96,12 @@ class EditProjectController extends GetxController {
             data.map((e) => e['user_name'] as String).toList(); */
 
         edit_selected_members_map.value = data
-            .where((e) => e['user_id'] != userId)
+            .where((e) => e['user_id'] != userId && e['member_role'] == 1)
+            .map((e) => e['user_name'] as String)
+            .toList();
+
+       edit_selected_manager_map.value = data
+            .where((e) => e['user_id'] != userId && e['member_role'] == 0)
             .map((e) => e['user_name'] as String)
             .toList();
 
@@ -159,12 +170,25 @@ class EditProjectController extends GetxController {
 
       print(
           "editselectedmember::::::::::::::::::::::: $edit_selected_members_map");
-
-      final memberIds =
-          editselectedmember.map((e) => editmembersMap[e]).toList();
+      
+        final memberIds = [
+      ...edit_selected_manager_map.map((manager) => {
+            'UserId': editmembersMap[manager]!.toInt(),
+            'MemberRole': 0, 
+          }),
+      ...edit_selected_members_map.map((member) => {
+            'UserId': editmembersMap[member]!.toInt(),
+            'MemberRole': 1, 
+          }),
+    ];
+      // final memberIds =
+      //     editselectedmember.map((e) => editmembersMap[e]).toList();
 
       if (!memberIds.contains(userId)) {
-        memberIds.add(userId);
+        memberIds.add({
+          'UserId': userId!.toInt(),
+          'MemberRole': 0, // 0 for manager, 1 for member
+        });
       }
 
       print("Member IDs::::::::::::::::::::::: $memberIds");
@@ -183,6 +207,18 @@ class EditProjectController extends GetxController {
         print("Token not found!");
         return;
       }
+    String  body = jsonEncode({
+          'ProjectName': editprojectname.text.isNotEmpty
+              ? editprojectname.text
+              : projectids.project.value
+                  .firstWhere((element) => element.projectId == projectId)
+                  .projectName,
+          'TagId': tagId,
+          'CreatorId': userId,
+          'Members': memberIds,
+        });
+        print("Edit Project Page Controller :::::: $body"); 
+        print(projectId);  
 
       final response = await http.put(
         Uri.parse('http://10.24.8.16:5263/api/UpdateProject/$projectId'),
