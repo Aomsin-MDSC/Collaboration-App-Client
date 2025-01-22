@@ -43,7 +43,8 @@ class _EditTaskFormState extends State<EditTaskForm> {
     controller.edittaskdetails.text = taskDetail;
     controller.editselectedDate = taskEnd;
     controller.edittaskcolor = taskColor;
-    controller.selectedTag = TagModel(tagId: tagId, tagName: "null", tagColor: tagcolor);
+    tagController.selectedTag =
+        tagController.tags.firstWhereOrNull((tag) => tag.tagId == tagId);
   }
 
   @override
@@ -140,7 +141,9 @@ class _EditTaskFormState extends State<EditTaskForm> {
                 )),
                 popupProps: PopupProps.menu(
                   constraints: BoxConstraints(
-                    maxHeight: controller.edit_selected_members_map.length * 100.0 > 200
+                    maxHeight: controller.edit_selected_members_map.length *
+                                100.0 >
+                            200
                         ? 200
                         : controller.edit_selected_members_map.length * 100.0,
                   ),
@@ -154,11 +157,9 @@ class _EditTaskFormState extends State<EditTaskForm> {
             const SizedBox(height: 10),
             Obx(() {
               if (tagController.selectedTag != null &&
-                !tagController.tags
-                    .any((tag) => tag.tagId == tagController.selectedTag!.tagId) ) {
-   
-                  tagController.selectedTag = null;
-
+                  !tagController.tags.any(
+                      (tag) => tag.tagId == tagController.selectedTag!.tagId)) {
+                tagController.selectedTag = null;
               }
               return DropdownButtonFormField<TagModel>(
                 menuMaxHeight: 300,
@@ -173,8 +174,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                     icon: const Icon(Icons.clear),
                     onPressed: () {
                       tagController.selectedTag = null;
-                      setState(() {
-                      });
+                      setState(() {});
                     },
                   ),
                 ),
@@ -356,48 +356,49 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   child: ElevatedButton(
                     onPressed: () async {
                       print("Edit task page : taskOwner = $taskOwner");
-                      await  controller.updateTask(projectId, taskId, tagId,taskOwner);
+                      await controller.updateTask(
+                          projectId, taskId, tagId, taskOwner);
                       Get.back();
                       // Get.back();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          backgroundColor: btcolor,
-                        ),
-                        child: const Text(
-                          "SAVE",
-                          style: TextStyle(fontSize: 18),
-                        ),
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
                       ),
+                      backgroundColor: btcolor,
                     ),
-                    SizedBox(
-                      width: 150,
-                      height: 60,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          try {
-                            await controller.deleteTask(taskId, projectId);
-                            Get.back();
-                          } catch (e) {
-                            if (e.toString().contains("Bad state: No element")) {
-                              Get.back();
-                            }
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          backgroundColor: btcolordelete,
-                        ),
-                        child: const Text(
-                          "DELETE",
-                          style: TextStyle(fontSize: 18,color: Colors.white),
-                        ),
+                    child: const Text(
+                      "SAVE",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 150,
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      try {
+                        await controller.deleteTask(taskId, projectId);
+                        Get.back();
+                      } catch (e) {
+                        if (e.toString().contains("Bad state: No element")) {
+                          Get.back();
+                        }
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
                       ),
+                      backgroundColor: btcolordelete,
                     ),
+                    child: const Text(
+                      "DELETE",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  ),
+                ),
               ],
             )
 

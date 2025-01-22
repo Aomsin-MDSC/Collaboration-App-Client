@@ -76,7 +76,9 @@ class _TaskPageFormState extends State<TaskPageForm> {
       );
 
       if (task.taskId == -1) {
-        Get.back();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.back();
+        });
         return SizedBox.shrink();
       }
 
@@ -90,7 +92,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
         orElse: () => task,
       ).tagColor;
       final taskOwnerName = (taskOwner == null || taskOwner == 0)
-          ? "Owner: Missing"
+          ? "Missing"
           : getuser.membersMap.containsKey(taskOwner)
           ? getuser.membersMap[taskOwner]
           : taskDetails.task.firstWhere((t) => t.taskOwner == userId).userName;

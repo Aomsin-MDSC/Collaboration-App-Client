@@ -76,63 +76,73 @@ class _NewProjectFormState extends State<NewProjectForm> {
             const SizedBox(height: 50),
             const Text("Member", style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
-Obx(() {
-  return Column(
-    children: [
-      // Project Managers Dropdown
-      DropdownSearch<String>.multiSelection(
-        items: controller.memberlist
-            .where((member) => !controller.selectedMembers.contains(member)) // Exclude selected members
-            .toList(), 
-        selectedItems: controller.selectedManagers.toList(), // Selected managers
-        dropdownDecoratorProps: const DropDownDecoratorProps(
-          dropdownSearchDecoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(),
-            labelText: "Select Project Managers",
-          ),
-        ),
-        popupProps: const PopupPropsMultiSelection.dialog(
-          searchDelay: Duration(milliseconds: 200),
-          showSearchBox: true
-        ),
-        onChanged: (newValue) {
-          controller.selectedManagers.clear();
-          controller.selectedManagers.addAll(newValue);
-          controller.selectedMembers.removeWhere((member) => newValue.contains(member)); // Remove duplicates
-        },
-      ),
+            Obx(() {
+              return Column(
+                children: [
+                  // Project Managers Dropdown
+                  DropdownSearch<String>.multiSelection(
+                    items: controller.memberlist
+                        .where((member) => !controller.selectedMembers
+                            .contains(member)) // Exclude selected members
+                        .toList(),
+                    selectedItems: controller.selectedManagers
+                        .toList(), // Selected managers
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        labelText: "Select Project Managers",
+                      ),
+                    ),
+                    popupProps: const PopupPropsMultiSelection.dialog(
+                      searchDelay: Duration(milliseconds: 200),
+                      dialogProps: DialogProps(
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                    onChanged: (newValue) {
+                      controller.selectedManagers.clear();
+                      controller.selectedManagers.addAll(newValue);
+                      controller.selectedMembers.removeWhere((member) =>
+                          newValue.contains(member)); // Remove duplicates
+                    },
+                  ),
 
-      const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-      // Members Dropdown
-      DropdownSearch<String>.multiSelection(
-        items: controller.memberlist
-            .where((member) => !controller.selectedManagers.contains(member)) // Exclude selected managers
-            .toList(), 
-        selectedItems: controller.selectedMembers.toList(), // Selected members
-        dropdownDecoratorProps: const DropDownDecoratorProps(
-          dropdownSearchDecoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(),
-            labelText: "Select Members",
-          ),
-        ),
-        popupProps: const PopupPropsMultiSelection.dialog(
-          searchDelay: Duration(milliseconds: 200),
-          showSearchBox: true
-        ),
-        onChanged: (newValue) {
-          controller.selectedMembers.clear();
-          controller.selectedMembers.addAll(newValue);
-          controller.selectedManagers.removeWhere((manager) => newValue.contains(manager)); // Remove duplicates
-        },
-      ),
-    ],
-  );
-}),
+                  // Members Dropdown
+                  DropdownSearch<String>.multiSelection(
+                    items: controller.memberlist
+                        .where((member) => !controller.selectedManagers
+                            .contains(member)) // Exclude selected managers
+                        .toList(),
+                    selectedItems:
+                        controller.selectedMembers.toList(), // Selected members
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        labelText: "Select Members",
+                      ),
+                    ),
+                    popupProps: const PopupPropsMultiSelection.dialog(
+                      searchDelay: Duration(milliseconds: 200),
+                      dialogProps: DialogProps(
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                    onChanged: (newValue) {
+                      controller.selectedMembers.clear();
+                      controller.selectedMembers.addAll(newValue);
+                      controller.selectedManagers.removeWhere((manager) =>
+                          newValue.contains(manager)); // Remove duplicates
+                    },
+                  ),
+                ],
+              );
+            }),
 
             // Tag Dropdown
             const SizedBox(height: 60),
@@ -152,12 +162,11 @@ Obx(() {
                     icon: const Icon(Icons.clear),
                     onPressed: () {
                       controller.selectedTag = null;
-                      setState(() {
-                      });
+                      setState(() {});
                     },
                   ),
                 ),
-                icon: Icon(Icons.arrow_drop_down, color: Colors.black54),
+                icon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
                 value: controller.selectedTag,
                 hint: Text(
                   "Select Tag",
@@ -175,14 +184,14 @@ Obx(() {
                           child: TextButton(
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
+                                const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.zero),
                               ),
                             ),
                             onPressed: () {
-                              Get.to(NewTagView());
+                              Get.to(const NewTagView());
                             },
-                            child: Text(
+                            child: const Text(
                               "Add Tag",
                               style: TextStyle(color: Colors.black),
                             ),
@@ -300,12 +309,13 @@ Obx(() {
                         ),
                         // behavior: SnackBarBehavior.floating,
                         // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 180, left: 15, right: 15),
-                        action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                        action: SnackBarAction(
+                            label: "OK", onPressed: () {}), //action
                         backgroundColor: Colors.red,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        duration: Duration(seconds: 3),
+                        duration: const Duration(seconds: 3),
                       ),
                     );
                   }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:collaboration_app_client/controllers/in_project_controller.dart';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
+import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:http/http.dart' as http;
@@ -18,6 +19,7 @@ class EditTaskController extends GetxController {
   DateTime? editselectedDate; // get day selected
 
   final TaskController tcontroller = Get.find<TaskController>();
+  final tagController = Get.put(TagController());
 
   var editmemberlist = <String>[].obs;
   var editselectedmember = <String>[].obs;
@@ -160,7 +162,7 @@ class EditTaskController extends GetxController {
       /* final tagId = editselectedtag.isNotEmpty
           ? editTagsMap[editselectedtag.first]
           : tag_id; */
-      final tagId = selectedTag?.tagId != null ? selectedTag?.tagId : null;
+      final tagId = tagController.selectedTag?.tagId != null ? tagController.selectedTag?.tagId : null;
 
       final response = await http.put(
         Uri.parse('http://10.24.8.16:5263/api/UpdateTask/$taskId'),
