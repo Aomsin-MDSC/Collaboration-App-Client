@@ -35,10 +35,10 @@ class ProjectController extends GetxController {
 
   Future<void> fetchApi(String token) async {
     try {
-      final fetchedUserId  = await getUserId();
+      final fetchedUserId = await getUserId();
       print("User ID: $fetchedUserId ");
-      if (fetchedUserId  != null) {
-        userId.value = fetchedUserId ;
+      if (fetchedUserId != null) {
+        userId.value = fetchedUserId;
       }
       isLoading(true);
       print("Fetching API...");
@@ -83,12 +83,28 @@ class ProjectController extends GetxController {
     if (token != null) {
       try {
         final decodedToken = JwtDecoder.decode(token);
-        return decodedToken['userId'] != null ? int.tryParse(decodedToken['userId'].toString()) : null;
+        return decodedToken['userId'] != null ? int.tryParse(
+            decodedToken['userId'].toString()) : null;
       } catch (e) {
         print('Error decoding token: $e');
       }
     }
     return null;
+  }
+
+  Future<int?> fetchMemberRole(int projectId, int userId) async {
+    try {
+      final response = await http.get(Uri.parse(
+          'http://10.24.8.16:5263/api/GetMemberRole/$projectId/$userId'));
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        return responseData['member_role'];
+      }
+    }
+    catch (e) {
+      print('Error fetching Member_role: $e');
+      return null;
+    }
   }
 }
 
