@@ -41,6 +41,7 @@ class ProjectCard extends StatelessWidget {
               'tagId': project.tagId,
               'userId': project.userId,
               'projectName': project.projectName,
+              'canEdit': canEdit,
             });
           },
           child: Card(

@@ -41,6 +41,7 @@ class _ProjectFormState extends State<ProjectForm> {
   late int projectId;
   final tagId = Get.arguments['tagId'];
   final userId = Get.arguments['userId'];
+  final bool canEdit = Get.arguments['canEdit'];
 
   @override
   void initState() {
@@ -175,7 +176,7 @@ class _ProjectFormState extends State<ProjectForm> {
                             style: const TextStyle(
                                 fontSize: 14, color: Colors.grey),
                           ),
-                          trailing: projectcontroller.userId == announce.userId
+                          trailing: canEdit
                               ? IconButton(
                                   onPressed: () {
                                     final announceId = announce.announceId;
@@ -285,7 +286,8 @@ class _ProjectFormState extends State<ProjectForm> {
                               /* 'tagColor': taskList.tagColor,
                               'tagName': taskList.tagName, */
                               'taskColor': taskList.taskColor,
-                              'userId': userId
+                              'userId': userId,
+                              'canEdit': canEdit,
                             });
                       },
                       child: Card(

@@ -27,6 +27,7 @@ class _ProjectViewState extends State<ProjectView> {
   final int projectId = Get.arguments['projectId'];
   final int tagId = Get.arguments['tagId'];
   final int userId = Get.arguments['userId'];
+  final bool canEdit = Get.arguments['canEdit'];
   //final String projectName = Get.arguments['projectName'];
 
   // late final NewTaskController newTaskController;
@@ -130,9 +131,8 @@ class _ProjectViewState extends State<ProjectView> {
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: Padding(
             padding: const EdgeInsets.only(bottom: 20, right: 20),
-            child: userId != currentUserId
-                ? null // Hide FAB when the keyboard is visible
-                : ExpandableFab(
+            child: canEdit
+                ? ExpandableFab(
                     distance: 70,
                     children: [
                       Column(
@@ -217,7 +217,8 @@ class _ProjectViewState extends State<ProjectView> {
                         ],
                       ),
                     ],
-                  ),
+                  )
+                  : Container(),
           ),
           body: const Padding(
             padding: EdgeInsets.all(8.0),

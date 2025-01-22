@@ -53,6 +53,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
   
     final ProjectController projectController = Get.find<ProjectController>();
     int currentUserId = projectController.userId.value;
+    final bool canEdit = Get.arguments['canEdit'];
 
     return Obx(() {
       final task = taskDetails.task.value.firstWhere(
@@ -150,7 +151,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
                          ),
                        ),
                      ),
-                     userId == currentUserId
+                     canEdit
                          ? IconButton(
                        icon: const Icon(
                          Icons.edit,
