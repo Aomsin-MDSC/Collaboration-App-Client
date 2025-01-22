@@ -89,7 +89,7 @@ class TaskPageController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        Get.snackbar("Success", "Comment successfully!");
+
       } else {
         print("Failed to comment: ${jsonDecode(response.body)['message'] ?? response.statusCode}");
       }

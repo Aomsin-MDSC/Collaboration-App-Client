@@ -35,6 +35,23 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
   } */
 
   @override
+  void initState() {
+    super.initState();
+    final arguments = Get.arguments as Map<String, dynamic>?;
+
+    if (arguments != null) {
+      final String announceTitle = arguments['announceTitle'];
+      final String announceText = arguments['announceText'];
+      final String announceDate = arguments['announceDate'];
+
+
+      controller.editannouncename.text = announceTitle;
+      controller.editannouncedetail.text = announceText;
+      controller.editselectedDate = DateTime.parse(announceDate);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final int projectId = Get.arguments['projectId'];
     final arguments = Get.arguments ?? {};
@@ -57,10 +74,6 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
         child: Text('Error: Announce ID is missing'),
       );
     }
-
-    controller.editannouncename.text = announceTitle;
-    controller.editannouncedetail.text = announceText;
-    controller.editselectedDate = DateTime.parse(announceDate);
 
     return Form(
       child: Container(
@@ -183,6 +196,9 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                                 selectedTime.hour,
                                 selectedTime.minute,
                               );
+                              print("Selected DateTime: ${controller.editselectedDate}");
+
+                              print("object");
                             });
                           }
                         }
@@ -217,6 +233,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                     onPressed: () async{
                       print("PBANK${announceId}");
                       await controller.updateAnnounce(announceId);
+                      print("Selected DateTime: ${controller.editselectedDate}");
                       Get.back(result: true);
                     },
                     style: ElevatedButton.styleFrom(
