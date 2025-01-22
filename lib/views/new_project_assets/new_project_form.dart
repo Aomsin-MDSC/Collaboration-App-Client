@@ -76,22 +76,63 @@ class _NewProjectFormState extends State<NewProjectForm> {
             const SizedBox(height: 50),
             const Text("Member", style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
-            Obx(() {
-              return DropdownSearch<String>.multiSelection(
-                items: controller.memberlist.toList(),
-                selectedItems: controller.selectedmember.toList(),
-                dropdownDecoratorProps: const DropDownDecoratorProps(
-                    dropdownSearchDecoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                )),
-                onChanged: (newValue) {
-                  controller.selectedmember.clear();
-                  controller.selectedmember.addAll(newValue);
-                },
-              );
-            }),
+Obx(() {
+  return Column(
+    children: [
+      // Project Managers Dropdown
+      DropdownSearch<String>.multiSelection(
+        items: controller.memberlist
+            .where((member) => !controller.selectedMembers.contains(member)) // Exclude selected members
+            .toList(), 
+        selectedItems: controller.selectedManagers.toList(), // Selected managers
+        dropdownDecoratorProps: const DropDownDecoratorProps(
+          dropdownSearchDecoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(),
+            labelText: "Select Project Managers",
+          ),
+        ),
+        popupProps: const PopupPropsMultiSelection.dialog(
+          searchDelay: Duration(milliseconds: 200),
+          showSearchBox: true
+        ),
+        onChanged: (newValue) {
+          controller.selectedManagers.clear();
+          controller.selectedManagers.addAll(newValue);
+          controller.selectedMembers.removeWhere((member) => newValue.contains(member)); // Remove duplicates
+        },
+      ),
+
+      const SizedBox(height: 20),
+
+      // Members Dropdown
+      DropdownSearch<String>.multiSelection(
+        items: controller.memberlist
+            .where((member) => !controller.selectedManagers.contains(member)) // Exclude selected managers
+            .toList(), 
+        selectedItems: controller.selectedMembers.toList(), // Selected members
+        dropdownDecoratorProps: const DropDownDecoratorProps(
+          dropdownSearchDecoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(),
+            labelText: "Select Members",
+          ),
+        ),
+        popupProps: const PopupPropsMultiSelection.dialog(
+          searchDelay: Duration(milliseconds: 200),
+          showSearchBox: true
+        ),
+        onChanged: (newValue) {
+          controller.selectedMembers.clear();
+          controller.selectedMembers.addAll(newValue);
+          controller.selectedManagers.removeWhere((manager) => newValue.contains(manager)); // Remove duplicates
+        },
+      ),
+    ],
+  );
+}),
 
             // Tag Dropdown
             const SizedBox(height: 60),

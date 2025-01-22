@@ -15,7 +15,10 @@ class NewProjectController extends GetxController {
   static NewProjectController get instance => Get.find();
   final ProjectController projectController = Get.find<ProjectController>();
   final projectname = TextEditingController();
-  var memberlist = <String>[].obs;
+  var memberlist = <String>[].obs;  
+  var selectedManagers = <String>[].obs; 
+  var selectedMembers = <String>[].obs; 
+
   var selectedmember = <String>[].obs;
   RxMap<int, String> membersMap = RxMap<int, String>();
 
@@ -107,12 +110,22 @@ class NewProjectController extends GetxController {
       //   print('No tag selected!');
       //   return;
       // }
+          final memberIds = [
+      ...selectedManagers.map((manager) => {
+            'UserId': int.parse(membersMap.entries.firstWhere((entry) => entry.value == manager).key.toString()),
+            'MemberRole': 0, 
+          }),
+      ...selectedMembers.map((member) => {
+            'UserId': int.parse(membersMap.entries.firstWhere((entry) => entry.value == member).key.toString()),
+            'MemberRole': 1, 
+          }),
+    ];
 
-      final memberIds = selectedmember
-          .map((e) => {'UserId': int.parse(membersMap.entries.firstWhere((entry) => entry.value == e).key.toString())})
-          .toList();
+      // final memberIds = selectedmember
+      //     .map((e) => {'UserId': int.parse(membersMap.entries.firstWhere((entry) => entry.value == e).key.toString())})
+      //     .toList();
 
-      memberIds.add({'UserId': userId});
+      memberIds.add({'UserId': userId,'Member_role': 0});
 
       final tagId = selectedTag != null ? selectedTag!.tagId : null;
       print("Selected TagId: $memberIds");
