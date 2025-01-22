@@ -11,6 +11,13 @@ class RegisterForm extends StatefulWidget {
   State<RegisterForm> createState() => _LoginFormState();
 }
 
+bool _passwordVisible = true;
+
+@override
+void initState() {
+  _passwordVisible;
+}
+
 class _LoginFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
@@ -44,14 +51,25 @@ class _LoginFormState extends State<RegisterForm> {
             height: 20,
           ),
           TextFormField(
+            obscureText: _passwordVisible,
             controller: controller.password,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               filled: true,
               fillColor: Colors.white,
-              prefixIcon: Icon(Icons.fingerprint),
+              prefixIcon: const Icon(Icons.fingerprint),
               // labelText: "Password",
               hintText: "Password",
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _passwordVisible = !_passwordVisible;
+                  });
+                },
+                icon: _passwordVisible
+                    ? const Icon(Icons.visibility_off_outlined)
+                    : const Icon(Icons.visibility_outlined),
+              ),
             ),
             maxLength: 50,
             validator: (value) {
@@ -74,8 +92,9 @@ class _LoginFormState extends State<RegisterForm> {
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.black87),
                   onPressed: () async {
-                    await controller.registerUser(onCompleted: (){Get.back();});
-
+                    await controller.registerUser(onCompleted: () {
+                      Get.back();
+                    });
                   },
                   child: Text('register'.toUpperCase()))),
           const SizedBox(
