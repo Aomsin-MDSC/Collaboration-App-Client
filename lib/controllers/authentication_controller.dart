@@ -160,6 +160,27 @@ class AuthenticationController extends GetxController {
     }
   }
 
+  Future<void> deleteTokenToDatabase(int userId) async {
+    try {
+      final url = Uri.parse('http://10.24.8.16:5263/api/DeleteTokenDevice');
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'UserId': userId, // Firebase token
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print('Device Token deleted successfully!');
+      } else {
+        print('Failed to delete token: ${response.body}');
+      }
+    } catch (e) {
+      throw('Error deleting token: $e');
+    }
+  }
+
   Future<int?> getUserId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('jwt_token');
@@ -177,8 +198,19 @@ class AuthenticationController extends GetxController {
 
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
+
+    final userId = await getUserId();
+    print("DeleteDevice : $userId");
+
+    if (userId != null) {
+      await deleteTokenToDatabase(userId);
+      print("Token deleted");
+    } else {
+      print("UserId is null. Unable to delete token.");
+    }
+
     await prefs.remove('jwt_token');
-    print("Token deleted");
+    print("User Token deleted");
 
     Get.off(() => const LoginView());
   }

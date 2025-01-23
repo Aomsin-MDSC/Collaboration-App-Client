@@ -85,7 +85,6 @@ class TaskController extends GetxController {
 
         print('Response: ${response.body}');
         print('Response: ${taskupdate}');
-        Get.snackbar('Success', 'Task status updated successfully');
       } else {
         Get.snackbar('Error', 'Fail to update task status');
       }
