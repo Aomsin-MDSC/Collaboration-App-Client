@@ -30,6 +30,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
     // TODO: implement initState
     controller.taskName.clear();
     controller.taskdetails.clear();
+    controller.selectedmember.clear();
     tagcontroller.selectedTag = null;
     controller.selectedDate = null;
     controller.taskcolor = "#808080";
