@@ -325,9 +325,28 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (controller.editprojectname.text.isNotEmpty) {
-                        //print(controller.editselectedtag);
                         await controller.updateProject(projectId, tagId);
                         Get.back();
+                      } else {
+                        ScaffoldMessenger.of(Get.context!).showSnackBar(
+                          SnackBar(
+                            content: const Row(
+                              children: [
+                                Icon(Icons.cancel, color: Colors.white),
+                                SizedBox(width: 8),
+                                Text('Save Project Failed.'),
+                              ],
+                            ),
+                            // behavior: SnackBarBehavior.floating,
+                            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+                            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                            backgroundColor: Colors.red,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            duration: Duration(seconds: 3),
+                          ),
+                        );
                       }
                     },
                     style: ElevatedButton.styleFrom(
