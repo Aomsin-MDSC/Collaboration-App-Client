@@ -52,7 +52,9 @@ class ProjectCard extends StatelessWidget {
               child: Column(
                 children: [
                   ListTile(
-                    title: Row(
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Flexible(
                           child: Text(
@@ -86,7 +88,6 @@ class ProjectCard extends StatelessWidget {
                           ),
                       ],
                     ),
-                    subtitle: Text('Owner: ${project.userName}'),
                     trailing: canEdit
                         ? IconButton(
                       onPressed: () async {
