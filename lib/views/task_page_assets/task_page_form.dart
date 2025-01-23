@@ -35,10 +35,10 @@ class _TaskPageFormState extends State<TaskPageForm> {
   final String tagName = Get.arguments['tagName']; */
   final String taskColor = Get.arguments['taskColor'];
   final int userId = Get.arguments['userId'];
+  final bool canEdit = Get.arguments['canEdit'];
 
   @override
   Widget build(BuildContext context) {
-
     final TaskController taskController = Get.find<TaskController>();
 
     final controller = Get.put(TaskPageController());
@@ -48,16 +48,12 @@ class _TaskPageFormState extends State<TaskPageForm> {
     final tagController = Get.put(TagController());
     final selectedTag = Get.put(EditTaskController());
 
-
-
-  
     final ProjectController projectController = Get.find<ProjectController>();
     int currentUserId = projectController.userId.value;
-    final bool canEdit = Get.arguments['canEdit'];
 
     return Obx(() {
       final task = taskDetails.task.value.firstWhere(
-            (value) => value.taskId == widget.taskId,
+        (value) => value.taskId == widget.taskId,
         orElse: () => Task(
           taskId: -1,
           taskName: 'Unknown Task',
@@ -80,7 +76,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Get.back();
         });
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       }
 
       final taskId = task.taskId;
@@ -88,19 +84,25 @@ class _TaskPageFormState extends State<TaskPageForm> {
       final taskDetail = task.taskDetail;
       final tagId = task.tagId;
       final taskOwner = task.taskOwner;
-      final tagColor = taskController.task.firstWhere(
+      final tagColor = taskController.task
+          .firstWhere(
             (value) => value.taskId == widget.taskId,
-        orElse: () => task,
-      ).tagColor;
+            orElse: () => task,
+          )
+          .tagColor;
       final taskOwnerName = (taskOwner == null || taskOwner == 0)
           ? "Missing"
           : getuser.membersMap.containsKey(taskOwner)
-          ? getuser.membersMap[taskOwner]
-          : taskDetails.task.firstWhere((t) => t.taskOwner == userId).userName;
-      final taskEnd = taskController.task.firstWhere(
+              ? getuser.membersMap[taskOwner]
+              : taskDetails.task
+                  .firstWhere((t) => t.taskOwner == userId)
+                  .userName;
+      final taskEnd = taskController.task
+          .firstWhere(
             (f) => f.taskId == widget.taskId,
-        orElse: () => task,
-      ).taskEnd; // return
+            orElse: () => task,
+          )
+          .taskEnd; // return
       //  Obx( () {
       //
       //   final  taskId = taskDetails.task.value
@@ -128,247 +130,253 @@ class _TaskPageFormState extends State<TaskPageForm> {
       // : taskDetails.task.firstWhere((t) => t.taskOwner == userId).userName;
       //
       // final taskEnd = taskController.task.firstWhere((f) => f.taskId == widget.taskId).taskEnd;
-         return Column(
-         children: [
-           Container(
-             padding: const EdgeInsets.all(16),
-             decoration: BoxDecoration(
-               color: Colors.white,
-               borderRadius: BorderRadius.circular(16),
-             ),
-             child: Column(
-               crossAxisAlignment: CrossAxisAlignment.start,
-               children: [
-                 // Title with Icon
-                 Row(
-                   children: [
-                     Expanded(
-                       child: Center(
-                         child: Text(
-                           taskName,
-                           style: const TextStyle(
-                               fontSize: 26, fontWeight: FontWeight.bold),
-                         ),
-                       ),
-                     ),
-                     canEdit
-                         ? IconButton(
-                       icon: const Icon(
-                         Icons.edit,
-                         size: 30,
-                       ),
-                       onPressed: () async {
-                      await  selectedTag.fetchTagMap(tagId);
-                      await   tagController.fetchTagMap(tagId);
-                         print('Color is -------------');
-                         print('Tag is -------------');
-                  Get.to(
-                            EditTaskView(),
-                           arguments: {
-                             'projectId': projectId,
-                             'taskId': taskId,
-                             'taskName': taskName,
-                             'taskDetail': taskDetail,
-                             'taskOwner': taskOwnerName,
-                             'tagId': tagId,
-                             'taskEnd': DateTime.parse(taskEnd),
-                             'taskColor': taskColor,
-                             'tagColor': tagColor,
-                             'userId': userId,
-                           },
-                         )?.then((result) {
-                           if (result == true) {
-       
-                             Future.delayed(Duration.zero, () async {
-                               await taskController.fetchTask(projectId);
-                               await getuser.fetchTags();
-                               print("Task Page Form :::: $result");
-                             });
-                           setState(() {});
-                           }
-                         });
-       
-                       },
-                     ) : Container(), //empty box
-                   ],
-                 ),
-                 const SizedBox(height: 20),
-                 // Details Section
-                 RichText(
-                   text: TextSpan(
-                     style: const TextStyle(fontSize: 18, color: Colors.black),
-                     children: [
-                       TextSpan(
-                         text: "Details: ",
-                         style: const TextStyle(fontWeight: FontWeight.bold),
-                       ),
-                       TextSpan(
-                         text: taskController.task.firstWhere((f) => f.taskId == widget.taskId).taskDetail,
-                       ),
-                     ],
-                   ),
-                 ),
-                 const SizedBox(height: 40),
-                 RichText(
-                   text: TextSpan(
-                     style: const TextStyle(fontSize: 18, color: Colors.black),
-                     children: [
-                 const TextSpan(
-                   text: "Assigned to : ",
-                   style: TextStyle(fontWeight: FontWeight.bold),
-                 ),
-                 TextSpan(
-                   text: taskOwnerName, // value not change when fetch
-                   style: const TextStyle(fontWeight: FontWeight.normal),
-                 ),
-               ],
-             ),
-           ),
-           RichText(
-             text: TextSpan(
-               style: TextStyle(fontSize: 18, color: Colors.black),
-               children: [
-                 TextSpan(
-                   text: "Deadline: ",
-                   style: TextStyle(fontWeight: FontWeight.bold),
-                 ),
-                 TextSpan(
-                   text: DateFormat('dd/MM/yyyy').format(
-                     DateTime.parse(taskEnd),
-                   ),
-                   style: TextStyle(fontWeight: FontWeight.normal),
-                 ),
-               ],
-             ),
-           ),
-           const SizedBox(height: 40),
-           Row(
-             children: [
-               Flexible(
-                 child: Container(
-                   padding: const EdgeInsets.all(10),
-                   decoration: BoxDecoration(
-                     color: HexColor(tagColor), // api color
-                     borderRadius: BorderRadius.circular(8),
-                   ),
-                   child: Text(
-                     taskController.task.firstWhere((f) => f.taskId == widget.taskId).tagName,
-                     style: TextStyle(
-                       color: HexColor(taskController.task.firstWhere((value) => value.taskId == widget.taskId).tagColor).computeLuminance() > 0.5 ? Colors.black : Colors.white,
-                     ),
-                     overflow: TextOverflow.ellipsis,
-                     maxLines: 1,
-                   ), // api tag
-                 ),
-               ),
-               const Spacer(),
-               AnimatedToggleSwitch<bool>.dual(
-                   active: taskOwner == project.userId.toInt()
-                       ? true
-                       : false,
-                   height: 40,
-                   current: taskDetails.task.value
-                       .firstWhere(
-                           (value) => value.taskId == widget.taskId)
-                       .taskStatus,
-                   first: false,
-                   second: true,
-                   onChanged: (value) async {
-                     // API Here
-                     await TaskController.instance
-                         .updateTaskStatus(taskId, value,taskName);
-                     await taskController.fetchTask(projectId);
-                     setState(() {
-                       taskDetails.task.value
-                           .firstWhere((value) =>
-                               value.taskId == widget.taskId)
-                           .taskStatus = value;
-                     });
-                   },
-                   textBuilder: (value) => value
-                       ? const Center(
-                           child: Text(
-                             'Done',
-                             style: TextStyle(
-                               color: Colors.white,
-                               fontSize: 16,
-                               fontWeight: FontWeight.bold,
-                             ),
-                           ),
-                         )
-                       : const Center(
-                           child: Text(
-                             'Pending',
-                             style: TextStyle(
-                               color: Colors.white,
-                               fontSize: 16,
-                               fontWeight: FontWeight.bold,
-                             ),
-                           ),
-                         ),
-                   styleBuilder: (value) => value
-                       ? ToggleStyle(
-                           backgroundColor: Colors.green,
-                           indicatorColor: Colors.white,
-                           indicatorBorder: Border.all(
-                             color: Colors.green,
-                             width: 3,
-                           ))
-                       : ToggleStyle(
-                           backgroundColor: Colors.redAccent,
-                           indicatorColor: Colors.white,
-                           indicatorBorder: Border.all(
-                             color: Colors.redAccent,
-                             width: 3,
-                           )
-                          )
+      return Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Title with Icon
+                Row(
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          taskName,
+                          style: const TextStyle(
+                              fontSize: 26, fontWeight: FontWeight.bold),
                         ),
-                      ],
-                     ),
+                      ),
+                    ),
+                    canEdit
+                        ? IconButton(
+                            icon: const Icon(
+                              Icons.edit,
+                              size: 30,
+                            ),
+                            onPressed: () async {
+                              await selectedTag.fetchTagMap(tagId);
+                              await tagController.fetchTagMap(tagId);
+                              print('Color is -------------');
+                              print('Tag is -------------');
+                              Get.to(
+                                const EditTaskView(),
+                                arguments: {
+                                  'projectId': projectId,
+                                  'taskId': taskId,
+                                  'taskName': taskName,
+                                  'taskDetail': taskDetail,
+                                  'taskOwner': taskOwnerName,
+                                  'tagId': tagId,
+                                  'taskEnd': DateTime.parse(taskEnd),
+                                  'taskColor': taskColor,
+                                  'tagColor': tagColor,
+                                  'userId': userId,
+                                },
+                              )?.then((result) {
+                                if (result == true) {
+                                  Future.delayed(Duration.zero, () async {
+                                    await taskController.fetchTask(projectId);
+                                    await getuser.fetchTags();
+                                    print("Task Page Form :::: $result");
+                                  });
+                                  setState(() {});
+                                }
+                              });
+                            },
+                          )
+                        : Container(), //empty box
+                  ],
+                ),
+                const SizedBox(height: 20),
+                // Details Section
+                RichText(
+                  text: TextSpan(
+                    style: const TextStyle(fontSize: 18, color: Colors.black),
+                    children: [
+                      const TextSpan(
+                        text: "Details: ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: taskController.task
+                            .firstWhere((f) => f.taskId == widget.taskId)
+                            .taskDetail,
+                      ),
                     ],
                   ),
                 ),
-                   const SizedBox(
-                       height: 20,
-                   ),
-                   Obx(() {
-       return Container(
-         padding: const EdgeInsets.all(16),
-         decoration: BoxDecoration(
-           color: Colors.white,
-           borderRadius: BorderRadius.circular(16),
-         ),
-         child: Column(
-           crossAxisAlignment: CrossAxisAlignment.start,
-           children: [
-             // Title with Icon
-             const Row(
-               children: [
-                 Expanded(
-                   child: Text(
-                     "Comment",
-                     style: TextStyle(
-                         fontSize: 20, fontWeight: FontWeight.bold),
-                   ),
-                 ),
-               ],
-             ),
-             const SizedBox(height: 10),
-             const Divider(
-               color: Colors.grey,
-               thickness: 2,
-             ),
-             const SizedBox(height: 10),
-             ...controller.comments.map((comment) {
-               return CommentWidget(comment: comment);
-             }),
-           ],
-          ),);            
-        }
-       )
-      ],
-    );
-   }
-  );      
- }
+                const SizedBox(height: 40),
+                RichText(
+                  text: TextSpan(
+                    style: const TextStyle(fontSize: 18, color: Colors.black),
+                    children: [
+                      const TextSpan(
+                        text: "Assigned to : ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: taskOwnerName, // value not change when fetch
+                        style: const TextStyle(fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
+                ),
+                RichText(
+                  text: TextSpan(
+                    style: const TextStyle(fontSize: 18, color: Colors.black),
+                    children: [
+                      const TextSpan(
+                        text: "Deadline: ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: DateFormat('dd/MM/yyyy').format(
+                          DateTime.parse(taskEnd),
+                        ),
+                        style: const TextStyle(fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 40),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: HexColor(tagColor), // api color
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          taskController.task
+                              .firstWhere((f) => f.taskId == widget.taskId)
+                              .tagName,
+                          style: TextStyle(
+                            color: HexColor(taskController.task
+                                            .firstWhere((value) =>
+                                                value.taskId == widget.taskId)
+                                            .tagColor)
+                                        .computeLuminance() >
+                                    0.5
+                                ? Colors.black
+                                : Colors.white,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ), // api tag
+                      ),
+                    ),
+                    const Spacer(),
+                    AnimatedToggleSwitch<bool>.dual(
+                        active:
+                            taskOwner == project.userId.toInt() ? true : false,
+                        height: 40,
+                        current: taskDetails.task.value
+                            .firstWhere(
+                                (value) => value.taskId == widget.taskId)
+                            .taskStatus,
+                        first: false,
+                        second: true,
+                        onChanged: (value) async {
+                          // API Here
+                          await TaskController.instance
+                              .updateTaskStatus(taskId, value, taskName);
+                          await taskController.fetchTask(projectId);
+                          setState(() {
+                            taskDetails.task.value
+                                .firstWhere(
+                                    (value) => value.taskId == widget.taskId)
+                                .taskStatus = value;
+                          });
+                        },
+                        textBuilder: (value) => value
+                            ? const Center(
+                                child: Text(
+                                  'Done',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            : const Center(
+                                child: Text(
+                                  'Pending',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                        styleBuilder: (value) => value
+                            ? ToggleStyle(
+                                backgroundColor: Colors.green,
+                                indicatorColor: Colors.white,
+                                indicatorBorder: Border.all(
+                                  color: Colors.green,
+                                  width: 3,
+                                ))
+                            : ToggleStyle(
+                                backgroundColor: Colors.redAccent,
+                                indicatorColor: Colors.white,
+                                indicatorBorder: Border.all(
+                                  color: Colors.redAccent,
+                                  width: 3,
+                                ))),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Obx(() {
+            return Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title with Icon
+                  const Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "Comment",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  const Divider(
+                    color: Colors.grey,
+                    thickness: 2,
+                  ),
+                  const SizedBox(height: 10),
+                  ...controller.comments.map((comment) {
+                    return CommentWidget(comment: comment);
+                  }),
+                ],
+              ),
+            );
+          })
+        ],
+      );
+    });
+  }
 }
