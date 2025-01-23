@@ -24,7 +24,7 @@ class ProjectCard extends StatelessWidget {
     return FutureBuilder<int?>(
       future: projectcontroll.fetchMemberRole(project.projectId, currentUserId),
       builder: (context, snapshot) {
-        final canEdit = snapshot.data == 0 || project.userId == currentUserId;
+        final canEdit = snapshot.data == 0;
 
         return TextButton(
           style: ButtonStyle(
