@@ -90,14 +90,19 @@ class AuthenticationController extends GetxController {
           ),
         );
       } else {
-        // Other errors
+
         ScaffoldMessenger.of(Get.context!).showSnackBar(
           SnackBar(
-            content: const Row(
+            content: Row(
               children: [
-                Icon(Icons.cancel, color: Colors.white),
-                SizedBox(width: 8),
-                Text('Error.'),
+                const Icon(Icons.error, color: Colors.white),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    response.body,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ],
             ),
             // behavior: SnackBarBehavior.floating,

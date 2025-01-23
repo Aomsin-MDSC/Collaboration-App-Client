@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collaboration_app_client/utils/app_lifecycle_observer.dart';
 import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/Login_View.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
@@ -132,7 +133,11 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.black, primary: Colors.black),
         useMaterial3: true,
       ),
-      home: hasToken ? const HomeView() : const LoginView(),
+      home:  AppLifecycleObserver(
+        child: hasToken ? const HomeView() : const LoginView(),
+      ),
     );
   }
 }
+
+
