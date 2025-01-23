@@ -64,7 +64,7 @@ class ProjectCard extends StatelessWidget {
                             style: TextStyle(fontSize: 16),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(height: 10),
                         if (project.tagId != -1)
                           Flexible(
                             child: Container(
