@@ -90,6 +90,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 fillColor: Colors.white,
                 // prefixIcon: Icon(Icons.abc),
                 border: const OutlineInputBorder(),
+
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.clear),
                   onPressed: () {
@@ -97,6 +98,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   },
                 ),
               ),
+              maxLines: null,
               maxLength: 200,
               validator: (value) {
                 if (value == null || value.isEmpty) {

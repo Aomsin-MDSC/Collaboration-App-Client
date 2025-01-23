@@ -110,6 +110,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   },
                 ),
               ),
+              maxLines: null,
               maxLength: 200,
               validator: (value) {
                 if (value == null || value.isEmpty) {
