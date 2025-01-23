@@ -183,7 +183,7 @@ class _ProjectFormState extends State<ProjectForm> {
                                     print("PAOM${announce.announceTitle}");
                                     if (announceId != null) {
                                       Get.to(
-                                        EditAnnounceView(),
+                                        const EditAnnounceView(),
                                         arguments: {
                                           'announceId': announceId,
                                           'projectId': projectId,
@@ -263,7 +263,7 @@ class _ProjectFormState extends State<ProjectForm> {
                 tagController.fetchTagMap(tagId);
               },
               child: ReorderableListView.builder(
-                padding: EdgeInsets.only(bottom: 120),
+                padding: const EdgeInsets.only(bottom: 120),
                 shrinkWrap: true,
                 itemCount: filteredList.length,
                 itemBuilder: (context, index) {
@@ -309,16 +309,12 @@ class _ProjectFormState extends State<ProjectForm> {
                               ),
 
                               Text(
-                                getUser.membersMap.containsKey(taskList.taskOwner)
-                                    ? "Owner: ${getUser.membersMap[taskList.taskOwner]}"
-                                    : (taskList.taskOwner == 0 || taskList.taskOwner == null)
-                                      ? "Owner: Missing"
-                                      : "Owner: ${taskList.userName}",
+                                "Owner : ${taskList.ownerName == '' ? "Missing" : taskList.ownerName }", // api",
                                 style: TextStyle(color: textColor),
                               ),
 
 
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               if (taskList.tagId != -1) Flexible(
@@ -341,7 +337,7 @@ class _ProjectFormState extends State<ProjectForm> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                             ],

@@ -8,7 +8,7 @@ class Task {
   final int userId;
   final int tagId;
   final int projectId;
-  final String userName;
+  final String ownerName;
   final int taskOwner;
   final String tagName;
   final String tagColor;
@@ -25,7 +25,7 @@ class Task {
     required this.tagId,
     required this.projectId,
     required this.taskColor,
-    required this.userName,
+    required this.ownerName,
     required this.taskOwner,
     required this.tagName,
     required this.tagColor,
@@ -43,7 +43,7 @@ class Task {
       userId: json['user_id'] ?? '',
       tagId: json['tag_id'] != null ? json['tag_id'] : -1,
       projectId: json['project_id'] ?? '',
-      userName: json['user_name'] ?? '',
+      ownerName: json['owner_name'] ?? '',
       taskOwner: json['task_Owner'] != null ? json['task_Owner'] : 0,
       tagName: json['tag_name'] != null ? json['tag_name'] : "No Tag",
       tagColor: json['tag_color'] != null ? json['tag_color'] : "#808080",

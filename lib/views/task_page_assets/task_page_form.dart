@@ -64,7 +64,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
           userId: 0,
           tagId: -1,
           projectId: 0,
-          userName: '',
+          ownerName: '',
           taskOwner: -1,
           tagName: 'No Tag',
           tagColor: '#808080',
@@ -90,13 +90,7 @@ class _TaskPageFormState extends State<TaskPageForm> {
             orElse: () => task,
           )
           .tagColor;
-      final taskOwnerName = (taskOwner == null || taskOwner == 0)
-          ? "Missing"
-          : getuser.membersMap.containsKey(taskOwner)
-              ? getuser.membersMap[taskOwner]
-              : taskDetails.task
-                  .firstWhere((t) => t.taskOwner == userId)
-                  .userName;
+      final taskOwnerName = task.ownerName == '' ? 'Missing' : task.ownerName;
       final taskEnd = taskController.task
           .firstWhere(
             (f) => f.taskId == widget.taskId,
