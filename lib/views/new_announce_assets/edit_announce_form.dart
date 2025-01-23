@@ -231,10 +231,32 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () async{
-                      print("PBANK${announceId}");
-                      await controller.updateAnnounce(announceId);
-                      print("Selected DateTime: ${controller.editselectedDate}");
-                      Get.back(result: true);
+                      if (controller.editannouncename.text.isNotEmpty && controller.editannouncedetail.text.isNotEmpty) {
+                        print("PBANK${announceId}");
+                        await controller.updateAnnounce(announceId);
+                        print("Selected DateTime: ${controller.editselectedDate}");
+                        Get.back(result: true);
+                      } else {
+                        ScaffoldMessenger.of(Get.context!).showSnackBar(
+                          SnackBar(
+                            content: const Row(
+                              children: [
+                                Icon(Icons.cancel, color: Colors.white),
+                                SizedBox(width: 8),
+                                Text('Edit Announce Failed.'),
+                              ],
+                            ),
+                            // behavior: SnackBarBehavior.floating,
+                            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+                            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                            backgroundColor: Colors.red,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            duration: Duration(seconds: 3),
+                          ),
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

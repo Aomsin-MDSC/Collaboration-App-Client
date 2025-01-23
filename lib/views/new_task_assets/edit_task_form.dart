@@ -356,10 +356,32 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () async {
-                      print("Edit task page : taskOwner = $taskOwner");
-                      await controller.updateTask(
-                          projectId, taskId, tagId, taskOwner);
-                      Get.back();
+                      if (controller.edittaskname.text.isNotEmpty && controller.edittaskdetails.text.isNotEmpty) {
+                        print("Edit task page : taskOwner = $taskOwner");
+                        await controller.updateTask(
+                            projectId, taskId, tagId, taskOwner);
+                        Get.back();
+                      } else {
+                        ScaffoldMessenger.of(Get.context!).showSnackBar(
+                          SnackBar(
+                            content: const Row(
+                              children: [
+                                Icon(Icons.cancel, color: Colors.white),
+                                SizedBox(width: 8),
+                                Text('Edit Task Failed.'),
+                              ],
+                            ),
+                            // behavior: SnackBarBehavior.floating,
+                            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+                            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                            backgroundColor: Colors.red,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            duration: Duration(seconds: 3),
+                          ),
+                        );
+                      }
                       // Get.back();
                     },
                     style: ElevatedButton.styleFrom(
