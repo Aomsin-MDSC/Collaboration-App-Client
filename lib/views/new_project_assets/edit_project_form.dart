@@ -195,7 +195,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   ),
                 ),
                 icon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
-                value: tagController.selectedTag,
+                value: tagId == -1 ? null : tagController.selectedTag,
                 isExpanded: true,
                 items: [
                   DropdownMenuItem<TagModel>(
@@ -208,14 +208,14 @@ class _EditProjectFormState extends State<EditProjectForm> {
                           child: TextButton(
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
+                                const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.zero),
                               ),
                             ),
                             onPressed: () {
-                              Get.to(NewTagView());
+                              Get.to(const NewTagView());
                             },
-                            child: Text(
+                            child: const Text(
                               "Add Tag",
                               style: TextStyle(color: Colors.black),
                             ),
@@ -325,6 +325,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (controller.editprojectname.text.isNotEmpty) {
+                        //print(tagId);
                         await controller.updateProject(projectId, tagId);
                         Get.back();
                       } else {
@@ -339,12 +340,13 @@ class _EditProjectFormState extends State<EditProjectForm> {
                             ),
                             // behavior: SnackBarBehavior.floating,
                             // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
-                            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                            action: SnackBarAction(
+                                label: "OK", onPressed: () {}), //action
                             backgroundColor: Colors.red,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            duration: Duration(seconds: 3),
+                            duration: const Duration(seconds: 3),
                           ),
                         );
                       }

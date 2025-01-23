@@ -401,7 +401,7 @@ class EditProjectController extends GetxController {
   @override
   void onInit() async {
     fetchSelectedMembers(Get.arguments['projectId']);
-    fetchTagMap(Get.arguments['tagId']);
+    tagController.fetchTagMap(Get.arguments['tagId']);
     // loadProjectDetails(projectId);
     super.onInit();
     String? token = await getToken();
