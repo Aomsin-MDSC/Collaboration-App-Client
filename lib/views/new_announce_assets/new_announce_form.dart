@@ -158,7 +158,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                         child: Icon(
                           Icons.date_range,
                           color: controller.selectedDate != null
-                              ? Colors.red
+                              ? Colors.green
                               : Colors.black,
                           size: 70,
                         ),

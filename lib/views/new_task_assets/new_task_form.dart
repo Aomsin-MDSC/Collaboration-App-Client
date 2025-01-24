@@ -250,7 +250,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                         child: Icon(
                           Icons.date_range,
                           color: controller.selectedDate != null
-                              ? Colors.red
+                              ? Colors.green
                               : Colors.black,
                           size: 70,
                         ),

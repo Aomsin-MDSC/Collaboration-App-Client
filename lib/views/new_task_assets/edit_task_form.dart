@@ -263,7 +263,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                         child: Icon(
                           Icons.date_range,
                           color: controller.editselectedDate != null
-                              ? Colors.red
+                              ? Colors.green
                               : Colors.black,
                           size: 70,
                         ),
