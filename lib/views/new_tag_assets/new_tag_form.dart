@@ -96,17 +96,6 @@ class _NewTagFormState extends State<NewTagForm> {
               },
             ),
 
-            // circle color ---------------
-            const SizedBox(
-              height: 50,
-            ),
-            GetBuilder<NewTagController>(builder: (controller) {
-              return CircleAvatar(
-                radius: 40,
-                backgroundColor: controller.currenttagColor,
-              );
-            }),
-
             //select color ---------------
             const SizedBox(
               height: 60,
@@ -125,6 +114,8 @@ class _NewTagFormState extends State<NewTagForm> {
 
             // Tag review
             const SizedBox(height: 60),
+            Text("Tag Preview :",style: TextStyle(fontSize: 22,color: Colors.black,),),
+            const SizedBox(height: 20,),
             GetBuilder<NewTagController>(builder: (controller) {
               // preview [container] Taxt
               return Container(
@@ -136,7 +127,7 @@ class _NewTagFormState extends State<NewTagForm> {
                 child: Text(
                   controller.tagname.text.isNotEmpty
                       ? controller.tagname.text
-                      : "Tag Preview",
+                      : "Your Tag",
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
