@@ -9,10 +9,7 @@ import 'package:collaboration_app_client/views/widgets/comment_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
-import '../../controllers/edit_task_controller.dart';
 import '../../controllers/tag_controller.dart';
-
 import '../../models/task_model.dart';
 
 class TaskPageForm extends StatefulWidget {
@@ -46,10 +43,8 @@ class _TaskPageFormState extends State<TaskPageForm> {
     final getuser = Get.put(NewProjectController());
     final project = Get.put(ProjectController());
     final tagController = Get.put(TagController());
-    final selectedTag = Get.put(EditTaskController());
 
-    final ProjectController projectController = Get.find<ProjectController>();
-    int currentUserId = projectController.userId.value;
+    Get.find<ProjectController>();
 
     return Obx(() {
       final task = taskDetails.task.value.firstWhere(
@@ -96,34 +91,8 @@ class _TaskPageFormState extends State<TaskPageForm> {
             (f) => f.taskId == widget.taskId,
             orElse: () => task,
           )
-          .taskEnd; // return
-      //  Obx( () {
-      //
-      //   final  taskId = taskDetails.task.value
-      //   .firstWhere((value) => value.taskId == widget.taskId)
-      //   .taskId;
-      //   final taskName = taskDetails.task.value
-      //   .firstWhere((value) => value.taskId == widget.taskId)
-      //   .taskName;
-      //
-      //   final taskDetail =taskDetails.task.value
-      //          .firstWhere((value) => value.taskId == widget.taskId)
-      //          .taskDetail;
-      //
-      //   final tagId = taskDetails.task.value
-      //          .firstWhere((value) => value.taskId == widget.taskId)
-      //          .tagId;
-      //   final taskOwner = taskDetails.task.value
-      //   .firstWhere((value) => value.taskId == widget.taskId)
-      //   .taskOwner;
-      //
-      //   final tagColor = taskController.task.firstWhere((value) => value.taskId == widget.taskId).tagColor;
-      //
-      //   final taskOwnerName = getuser.membersMap.containsKey(taskOwner)
-      // ? getuser.membersMap[taskOwner]
-      // : taskDetails.task.firstWhere((t) => t.taskOwner == userId).userName;
-      //
-      // final taskEnd = taskController.task.firstWhere((f) => f.taskId == widget.taskId).taskEnd;
+          .taskEnd;
+
       return Column(
         children: [
           Container(
@@ -154,7 +123,6 @@ class _TaskPageFormState extends State<TaskPageForm> {
                               size: 30,
                             ),
                             onPressed: () async {
-                              await selectedTag.fetchTagMap(tagId);
                               await tagController.fetchTagMap(tagId);
                               print('Color is -------------');
                               print('Tag is -------------');

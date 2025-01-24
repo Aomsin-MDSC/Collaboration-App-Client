@@ -14,7 +14,7 @@ class CommentWidget extends StatelessWidget {
       children: [
         Text(
           comment.userName,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         RichText(
           text: TextSpan(
@@ -32,7 +32,7 @@ class CommentWidget extends StatelessWidget {
         ),
         Text(
           DateFormat('dd/MM/yyyy HH:mm').format(comment.commentDate),
-          style: TextStyle(fontSize: 14, color: Colors.grey),
+          style: const TextStyle(fontSize: 14, color: Colors.grey),
         ),
       ],
     );

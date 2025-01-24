@@ -1,15 +1,12 @@
 import 'dart:convert';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:collaboration_app_client/models/tag_model.dart';
-import 'package:collaboration_app_client/views/project_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-import 'in_project_controller.dart';
 
 class NewProjectController extends GetxController {
   static NewProjectController get instance => Get.find();
@@ -102,14 +99,6 @@ class NewProjectController extends GetxController {
       }
       print("Selected members: $selectedmember");
 
-      // if (selectedmember.isEmpty) {
-      //   print('No members selected!');
-      //   return;
-      // }
-      // if (selectedTag == null) {
-      //   print('No tag selected!');
-      //   return;
-      // }
           final memberIds = [
       ...selectedManagers.map((manager) => {
             'UserId': int.parse(membersMap.entries.firstWhere((entry) => entry.value == manager).key.toString()),
@@ -120,10 +109,6 @@ class NewProjectController extends GetxController {
             'MemberRole': 1, 
           }),
     ];
-
-      // final memberIds = selectedmember
-      //     .map((e) => {'UserId': int.parse(membersMap.entries.firstWhere((entry) => entry.value == e).key.toString())})
-      //     .toList();
 
       memberIds.add({'UserId': userId,'Member_role': 0});
 

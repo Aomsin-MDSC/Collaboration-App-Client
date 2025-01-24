@@ -105,7 +105,7 @@ class _LoginFormState extends State<LoginForm> {
           Center(
             child: TextButton(
               onPressed: () {
-                Get.to(RegisterView());
+                Get.to(const RegisterView());
               },
               child: Text.rich(// Get.to(const RegisterView())?.then((va){print(va);})
                 TextSpan(

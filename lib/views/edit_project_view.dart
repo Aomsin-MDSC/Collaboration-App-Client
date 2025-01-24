@@ -1,8 +1,6 @@
 import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import '../controllers/edit_project_controller.dart';
 import 'new_project_assets/edit_project_form.dart';
 
 

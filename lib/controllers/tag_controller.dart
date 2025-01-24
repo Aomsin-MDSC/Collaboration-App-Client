@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:collaboration_app_client/models/tag_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -25,10 +24,9 @@ class TagController extends GetxController {
           );
           tags.add(t);
 
-          if (tag_id != null && tag_id == t.tagId) {
+          if (tag_id == t.tagId) {
             selectedTag = t;
           }
-          print(t.tagName);
         }
       } else {
         throw Exception('Failed to load tags');
@@ -52,8 +50,6 @@ class TagController extends GetxController {
             tagColor: i['tag_color'],
           );
           tags.add(t);
-
-          print(t.tagName);
         }
       } else {
         throw Exception('Failed to load tags');

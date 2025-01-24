@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:collaboration_app_client/controllers/announce_controller.dart';
-import 'package:collaboration_app_client/models/announce_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -58,7 +56,7 @@ class EditAnnounceController extends GetxController {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
         print("Announce updated successfully!");
@@ -79,7 +77,7 @@ class EditAnnounceController extends GetxController {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
         print("Failed to updated announce: ${response.body}");
@@ -101,7 +99,7 @@ class EditAnnounceController extends GetxController {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
         ),
       );
       throw ("Something went wrong: $e");
@@ -137,7 +135,7 @@ class EditAnnounceController extends GetxController {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
 
@@ -158,7 +156,7 @@ class EditAnnounceController extends GetxController {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
         print("Failed to deleted announce: ${response.body}");
@@ -180,7 +178,7 @@ class EditAnnounceController extends GetxController {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
         ),
       );
       throw ("Something went wrong: $e");

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:collaboration_app_client/views/home_view.dart';
 import 'package:collaboration_app_client/views/Login_View.dart';
 
 class AppLifecycleObserver extends StatefulWidget {

@@ -5,11 +5,9 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
-
 import '../../controllers/new_project_controller.dart';
 import '../../utils/color.dart';
 import '../new_tag_view.dart';
-import '../project_view.dart';
 
 class NewTaskForm extends StatefulWidget {
   const NewTaskForm({super.key});
@@ -292,14 +290,6 @@ class _NewTaskFormState extends State<NewTaskForm> {
                                   showLabel: true,
                                   pickerAreaHeightPercent: 0.8,
                                 ),
-                                // child: BlockPicker(
-                                //   pickerColor: controller.taskcurrenttagColor,
-                                //   onColorChanged: (Color color) {
-                                //     setState(() {
-                                //       controller.taskchangeColor(color);
-                                //     });
-                                //   },
-                                // ),
                               ),
                               actions: <Widget>[
                                 TextButton(

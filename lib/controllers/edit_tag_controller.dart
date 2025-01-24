@@ -68,7 +68,7 @@ class EditTagController extends GetxController {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
         await controller.fetchTags();
@@ -90,7 +90,7 @@ class EditTagController extends GetxController {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
       }
@@ -100,8 +100,8 @@ class EditTagController extends GetxController {
         SnackBar(
           content:  Row(
             children: [
-              Icon(Icons.cancel, color: Colors.white),
-              SizedBox(width: 8),
+              const Icon(Icons.cancel, color: Colors.white),
+              const SizedBox(width: 8),
               Text('Save Tag Failed.${e}'),
             ],
           ),
@@ -110,7 +110,7 @@ class EditTagController extends GetxController {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
         ),
       );
     }
@@ -145,11 +145,10 @@ class EditTagController extends GetxController {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
         await controller.fetchTags();
-        // print('Tag deleted successfully');
       } else {
         ScaffoldMessenger.of(Get.context!).showSnackBar(
           SnackBar(
@@ -167,7 +166,7 @@ class EditTagController extends GetxController {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
         // print('Failed to delete tag');
@@ -189,10 +188,9 @@ class EditTagController extends GetxController {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
         ),
       );
-      // print('Error deleting tag: $e');
     }
   }
 }

@@ -1,13 +1,9 @@
 import 'dart:convert';
-
 import 'package:collaboration_app_client/controllers/in_project_controller.dart';
-import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import '../models/task_model.dart';
 import 'new_project_controller.dart';
 
 class NewTaskController extends GetxController {

@@ -1,12 +1,9 @@
 import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
 import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/utils/color.dart';
-import 'package:collaboration_app_client/views/new_project_assets/new_project_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
-
-import '../new_project_view.dart';
 
 class NewTagForm extends StatefulWidget {
   const NewTagForm({super.key});
@@ -147,37 +144,6 @@ class _NewTagFormState extends State<NewTagForm> {
                   ),
                 ),
               );
-
-              // preview snackbar {tag name & color #}
-              // return ElevatedButton(
-              //   onPressed: () {
-              //     Get.snackbar(
-              //       "Tag Preview",
-              //       "Tag Name: ${controller.tagname.text.isNotEmpty
-              //           ? controller.tagname.text
-              //           : 'No Tag Name'}\nColor: ${controller.tagcolor}",
-              //       colorText: Colors.white,
-              //       margin: const EdgeInsets.all(10),
-              //     );
-              //   },
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: controller.currenttagColor,
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(10),
-              //     ),
-              //     minimumSize: const Size(300, 50),
-              //   ),
-              //   child: Text(
-              //     controller.tagname.text.isNotEmpty
-              //         ? controller.tagname.text
-              //         : "Tag Preview",
-              //     style: const TextStyle(
-              //       color: Colors.white,
-              //       fontSize: 18,
-              //       fontWeight: FontWeight.bold,
-              //     ),
-              //   ),
-              // );
             }),
 
             // Save Button
@@ -213,11 +179,6 @@ class _NewTagFormState extends State<NewTagForm> {
                       ),
                     );
                   }
-                  // tagcontroller.createTag().then((_){Navigator.of(context).pop();});
-                  /* await tagcontroller.createTag(onCompleted: (){
-                    // Get.back(result: {'refresh': true});
-                    Get.back();
-                  }); */
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

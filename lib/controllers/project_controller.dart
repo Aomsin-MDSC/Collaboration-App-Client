@@ -55,11 +55,8 @@ class ProjectController extends GetxController {
 
       if (response.statusCode == 200) {
         List<dynamic> jsonData = json.decode(response.body);
-        // print('Decoded data: $jsonData');
         project.value = jsonData.map((data) => Project.fromJson(data)).toList();
-        // print("Projects loaded: ${project.length}");
         project.forEach((project) {
-          // print('Project ID: ${project.projectId}, User ID: ${project.userId}');
         });
       } else {
         print('Failed to load projects');

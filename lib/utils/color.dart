@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-final bgcolor = Color(0xFFE5F6FC);
-final topiccolor = Color(0xFF335FAA);
-final btcolor = Color(0xFFF7B633);
-final iconAppColor = Color(0xFFF7B633);
-final btcolordelete = Color(0xFFD22B2B);
+const bgcolor = Color(0xFFE5F6FC);
+const topiccolor = Color(0xFF335FAA);
+const btcolor = Color(0xFFF7B633);
+const iconAppColor = Color(0xFFF7B633);
+const btcolordelete = Color(0xFFD22B2B);
 
 class HexColor extends Color {
   static int _getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
 
     if (hexColor.length == 6) {
-      hexColor = "FF" + hexColor;
+      hexColor = "FF$hexColor";
     }
 
     try {
