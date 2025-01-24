@@ -98,18 +98,6 @@ class _EditTagFormState extends State<EditTagForm> {
                     tagcontroller.edittagname.text); // Update tag name
               },
             ),
-
-            // circle color ---------------
-            const SizedBox(
-              height: 60,
-            ),
-            GetBuilder<EditTagController>(builder: (controller) {
-              return CircleAvatar(
-                radius: 40,
-                backgroundColor: controller.editcurrenttagColor,
-              );
-            }),
-
             //select color ---------------
             const SizedBox(
               height: 60,
@@ -128,6 +116,8 @@ class _EditTagFormState extends State<EditTagForm> {
 
             // Tag review
             const SizedBox(height: 60),
+            Text("Tag Preview :",style: TextStyle(fontSize: 22,color: Colors.black,),),
+            const SizedBox(height: 20,),
             GetBuilder<EditTagController>(builder: (controller) {
               // preview [container] Taxt
               return Container(
@@ -140,7 +130,7 @@ class _EditTagFormState extends State<EditTagForm> {
                 child: Text(
                   controller.edittagname.text.isNotEmpty
                       ? controller.edittagname.text
-                      : "Tag Preview",
+                      : "Your Tag",
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -148,37 +138,6 @@ class _EditTagFormState extends State<EditTagForm> {
                   ),
                 ),
               );
-
-              // preview snackbar {tag name & color #}
-              // return ElevatedButton(
-              //   onPressed: () {
-              //     Get.snackbar(
-              //       "Tag Preview",
-              //       "Tag Name: ${controller.tagname.text.isNotEmpty
-              //           ? controller.tagname.text
-              //           : 'No Tag Name'}\nColor: ${controller.tagcolor}",
-              //       colorText: Colors.white,
-              //       margin: const EdgeInsets.all(10),
-              //     );
-              //   },
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: controller.currenttagColor,
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(10),
-              //     ),
-              //     minimumSize: const Size(300, 50),
-              //   ),
-              //   child: Text(
-              //     controller.tagname.text.isNotEmpty
-              //         ? controller.tagname.text
-              //         : "Tag Preview",
-              //     style: const TextStyle(
-              //       color: Colors.white,
-              //       fontSize: 18,
-              //       fontWeight: FontWeight.bold,
-              //     ),
-              //   ),
-              // );
             }),
 
             // Save Button

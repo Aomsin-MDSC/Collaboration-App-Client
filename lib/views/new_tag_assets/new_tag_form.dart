@@ -95,7 +95,6 @@ class _NewTagFormState extends State<NewTagForm> {
                     tagcontroller.tagname.text); // Update tag name
               },
             ),
-
             //select color ---------------
             const SizedBox(
               height: 60,
@@ -117,7 +116,6 @@ class _NewTagFormState extends State<NewTagForm> {
             Text("Tag Preview :",style: TextStyle(fontSize: 22,color: Colors.black,),),
             const SizedBox(height: 20,),
             GetBuilder<NewTagController>(builder: (controller) {
-              // preview [container] Taxt
               return Container(
                 padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 decoration: BoxDecoration(
