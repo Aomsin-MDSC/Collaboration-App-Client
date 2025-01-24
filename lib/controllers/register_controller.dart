@@ -1,7 +1,4 @@
 import 'dart:convert';
-
-import 'package:collaboration_app_client/views/Login_View.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -40,7 +37,7 @@ class RegisterController extends GetxController {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
       }
@@ -55,26 +52,26 @@ class RegisterController extends GetxController {
               SnackBar(
                 content: Row(
                   children: [
-                    Icon(Icons.warning, color: Colors.white),
-                    SizedBox(width: 8),
+                    const Icon(Icons.warning, color: Colors.white),
+                    const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         errorMessage,
-                        style: TextStyle(overflow: TextOverflow.ellipsis),
+                        style: const TextStyle(overflow: TextOverflow.ellipsis),
                         maxLines: 1,
                       ),
                     ),
                   ],
                 ),
                 backgroundColor: Colors.orange,
-                duration: Duration(seconds: 3),
+                duration: const Duration(seconds: 3),
               ),
             );
           }
         } catch (e) {
           print('Error decoding response: $e');
           ScaffoldMessenger.of(Get.context!).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Row(
                 children: [
                   Icon(Icons.error, color: Colors.white),
@@ -111,7 +108,7 @@ class RegisterController extends GetxController {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
         throw Exception('Registration failed');
@@ -122,8 +119,8 @@ class RegisterController extends GetxController {
         SnackBar(
           content: Row(
             children: [
-              Icon(Icons.error, color: Colors.white),
-              SizedBox(width: 8),
+              const Icon(Icons.error, color: Colors.white),
+              const SizedBox(width: 8),
               Text('An unexpected error occurred: $error'),
             ],
           ),
@@ -132,7 +129,7 @@ class RegisterController extends GetxController {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
         ),
       );
       print("Error occurred: $error");

@@ -1,11 +1,8 @@
 import 'package:collaboration_app_client/models/project_model.dart';
-import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:collaboration_app_client/views/edit_project_view.dart';
 import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../controllers/project_controller.dart';
 import '../../controllers/tag_controller.dart';
 
@@ -61,10 +58,10 @@ class ProjectCard extends StatelessWidget {
                             project.projectName,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         if (project.tagId != -1)
                           Flexible(
                             child: Container(
@@ -72,7 +69,7 @@ class ProjectCard extends StatelessWidget {
                                   horizontal: 5),
                               decoration: BoxDecoration(
                                 color: Color(int.parse(
-                                    '0xFF' + project.tagColor.substring(1))),
+                                    '0xFF${project.tagColor.substring(1)}')),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
@@ -93,7 +90,7 @@ class ProjectCard extends StatelessWidget {
                       onPressed: () async {
                         await controller.fetchTagMap(project.tagId);
                         Get.to(
-                          EditProjectView(),
+                          const EditProjectView(),
                           arguments: {
                             'projectId': project.projectId,
                             'tagId': project.tagId,

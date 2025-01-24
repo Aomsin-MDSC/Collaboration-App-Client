@@ -3,9 +3,6 @@ import 'package:collaboration_app_client/controllers/task_page_controller.dart';
 import 'package:collaboration_app_client/views/task_page_assets/task_page_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:http/http.dart';
-import 'new_announce_assets/edit_announce_form.dart';
 
 class TaskPageView extends StatefulWidget {
   final int taskId;
@@ -114,7 +111,7 @@ class _TaskPageViewState extends State<TaskPageView> {
             },
             child: Container(
               padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.black,
               ),

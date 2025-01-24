@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:collaboration_app_client/controllers/project_controller.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -61,13 +60,13 @@ class AuthenticationController extends GetxController {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
         print('Login successful: $data');
+        
         // Navigate to the HomeView
-        // Get.put(ProjectController()); // Ensure ProjectController is initialized
-        Get.offAll(() => HomeView(), arguments: {'refresh': true});
+        Get.offAll(() => const HomeView(), arguments: {'refresh': true});
       } else if (response.statusCode == 401) {
         // Invalid username or password
         ScaffoldMessenger.of(Get.context!).showSnackBar(
@@ -86,7 +85,7 @@ class AuthenticationController extends GetxController {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
       } else {
@@ -112,7 +111,7 @@ class AuthenticationController extends GetxController {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
       }
@@ -136,7 +135,7 @@ class AuthenticationController extends GetxController {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
         ),
       );
     }

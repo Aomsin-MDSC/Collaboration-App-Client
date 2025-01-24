@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:collaboration_app_client/utils/app_lifecycle_observer.dart';
 import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/Login_View.dart';
 import 'package:collaboration_app_client/views/home_view.dart';
-import 'package:collaboration_app_client/views/new_announce_view.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -120,7 +118,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white),
           centerTitle: true,

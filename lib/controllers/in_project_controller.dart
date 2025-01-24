@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
-import '../models/project_model.dart';
 import '../models/task_model.dart';
-import 'new_project_controller.dart';
 
 class TaskController extends GetxController {
   static TaskController get instance => Get.find();

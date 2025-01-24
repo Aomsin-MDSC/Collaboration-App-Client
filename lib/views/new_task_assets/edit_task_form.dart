@@ -1,19 +1,13 @@
 import 'package:collaboration_app_client/controllers/edit_task_controller.dart';
 import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/models/tag_model.dart';
-import 'package:collaboration_app_client/views/edit_tag_view.dart';
-import 'package:collaboration_app_client/views/home_view.dart';
-import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:collaboration_app_client/views/widgets/dropdown_tag_widget.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
-
-import '../../controllers/task_page_controller.dart';
 import '../../utils/color.dart';
 import '../new_tag_view.dart';
-import '../task_page_view.dart';
 
 class EditTaskForm extends StatefulWidget {
   const EditTaskForm({super.key});
@@ -310,14 +304,6 @@ class _EditTaskFormState extends State<EditTaskForm> {
                                   showLabel: true,
                                   pickerAreaHeightPercent: 0.8,
                                 ),
-                                // child: BlockPicker(
-                                //   pickerColor: controller.taskcurrenttagColor,
-                                //   onColorChanged: (Color color) {
-                                //     setState(() {
-                                //       controller.taskchangeColor(color);
-                                //     });
-                                //   },
-                                // ),
                               ),
                               actions: <Widget>[
                                 TextButton(
@@ -424,31 +410,6 @@ class _EditTaskFormState extends State<EditTaskForm> {
                 ),
               ],
             )
-
-            // icon delete task
-            // const SizedBox(height: 30,),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: [
-            //     Column(
-            //       children: [
-            //         Text("Delete Task".toUpperCase(), style: TextStyle(fontSize: 20),),
-            //         const SizedBox(height: 10,),
-            //         GestureDetector(
-            //           onTap: () async {
-            //             print("Deletedelete");
-            //           },
-            //           child: Icon(
-            //             Icons.delete,
-            //             color: Colors.green,
-            //             size: 70,
-            //
-            //           )
-            //         ),
-            //       ],
-            //     ),
-            //   ],
-            // ),
           ],
         ),
       ),

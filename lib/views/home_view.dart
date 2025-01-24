@@ -3,11 +3,8 @@ import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/new_project_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/project_controller.dart';
-import '../controllers/tag_controller.dart';
 import 'assets/home_form.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -28,8 +25,7 @@ class _HomeViewState extends State<HomeView> {
     final ProjectController projectController = Get.find<ProjectController>();
     final AuthenticationController authenticationController =
         Get.put(AuthenticationController());
-  //  final tagController = Get.put(TagController());
-
+    //  final tagController = Get.put(TagController());
 
     var refresh = Get.arguments?['refresh'] ?? false;
 
@@ -62,7 +58,7 @@ class _HomeViewState extends State<HomeView> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 20,right: 20),
+          padding: const EdgeInsets.only(bottom: 20, right: 20),
           child: FloatingActionButton.extended(
             backgroundColor: btcolor,
             // onPressed: (){Get.to(NewProjectView());},
@@ -74,11 +70,14 @@ class _HomeViewState extends State<HomeView> {
               //     });
               //   }
               // });
-              Get.to(NewProjectView());
+              Get.to(const NewProjectView());
             },
-            label: Text("New Project",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-            icon: Icon(Icons.edit),
+            label: const Text(
+              "New Project",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
+            icon: const Icon(Icons.edit),
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -109,9 +108,6 @@ class _HomeViewState extends State<HomeView> {
                         padding: const EdgeInsets.only(bottom: 120),
                         itemBuilder: (context, index) {
                           final product = projectController.project[index];
-                          // print( "keyPAOM${ValueKey(product.projectId).value}");
-                          // print("currentPAOM${projectController.userId.value}");
-                          // print("Project ID: ${product.projectId}, Project User ID: ${product.userId}, Current User ID: $userId");
                           return ProjectCard(
                             key: ValueKey(product.projectId),
                             project: product,
