@@ -30,6 +30,11 @@ class _EditTaskFormState extends State<EditTaskForm> {
   final String taskColor = Get.arguments['taskColor'];
   final String tagcolor = Get.arguments['tagColor'];
 
+  bool _emptytaskname = false;
+  bool _emptytaskdetail = false;
+  bool _emptytaskmember = false;
+  bool _emptydetatime = false;
+
   @override
   void initState() {
     super.initState();
@@ -65,10 +70,18 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     controller.edittaskname.clear();
+                    setState(() {
+                      _emptytaskname = true;
+                    });
                   },
                 ),
               ),
               maxLength: 50,
+              onChanged: (value) {
+                setState(() {
+                  _emptytaskname = value.isEmpty;
+                });
+              },
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'This field is required';
@@ -78,6 +91,11 @@ class _EditTaskFormState extends State<EditTaskForm> {
                 return null;
               },
             ),
+            if (_emptytaskname)
+              const Text(
+                'Please enter taskname',
+                style: TextStyle(color: Colors.red, fontSize: 14),
+              ),
 
             // detail ---------------
             const SizedBox(
@@ -101,11 +119,19 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     controller.edittaskdetails.clear();
+                    setState(() {
+                      _emptytaskdetail = true;
+                    });
                   },
                 ),
               ),
               maxLines: null,
               maxLength: 200,
+              onChanged: (value) {
+                setState(() {
+                  _emptytaskdetail = value.isEmpty;
+                });
+              },
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'This field is required';
@@ -115,6 +141,11 @@ class _EditTaskFormState extends State<EditTaskForm> {
                 return null;
               },
             ),
+            if (_emptytaskdetail)
+              const Text(
+                'Please enter details',
+                style: TextStyle(color: Colors.red, fontSize: 14),
+              ),
 
             // member ---------------
             const SizedBox(height: 60),
@@ -127,6 +158,7 @@ class _EditTaskFormState extends State<EditTaskForm> {
                 onChanged: (newValue) {
                   controller.editselectedmember.clear();
                   controller.editselectedmember.add(newValue!);
+                  _emptytaskmember = newValue.isEmpty;
                 },
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
@@ -145,6 +177,11 @@ class _EditTaskFormState extends State<EditTaskForm> {
                 ),
               );
             }),
+            if (_emptytaskmember)
+              const Text(
+                'Please assign member',
+                style: TextStyle(color: Colors.red, fontSize: 14),
+              ),
 
             // Add Tag
             const SizedBox(height: 60),
@@ -251,8 +288,13 @@ class _EditTaskFormState extends State<EditTaskForm> {
                         if (selected != null &&
                             selected != controller.editselectedDate) {
                           setState(() {
+                            _emptydetatime = false;
                             controller.editselectedDate =
                                 selected; // save day [new selected]
+                          });
+                        } else if (selected == null) {
+                          setState(() {
+                            _emptydetatime = true;
                           });
                         }
                       },
@@ -326,6 +368,12 @@ class _EditTaskFormState extends State<EditTaskForm> {
                 ),
               ],
             ),
+            SizedBox(height: 10,),
+            if (_emptydetatime)
+              const Text(
+                'Please select datetime.',
+                style: TextStyle(color: Colors.red, fontSize: 14),
+              ),
 
             // Save Button
             const SizedBox(height: 60),

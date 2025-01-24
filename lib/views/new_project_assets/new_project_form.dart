@@ -15,6 +15,7 @@ class NewProjectForm extends StatefulWidget {
 }
 
 class _NewProjectFormState extends State<NewProjectForm> {
+  bool _isFieldEmpty = true;
   @override
   Widget build(BuildContext context) {
     // final List<String> task = [
@@ -30,7 +31,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
     //   "10",
     // ];
     final controller = Get.put(NewProjectController());
-
     return Form(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -51,10 +51,18 @@ class _NewProjectFormState extends State<NewProjectForm> {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     controller.projectname.clear();
+                    setState(() {
+                      _isFieldEmpty = true;
+                    });
                   },
                 ),
               ),
               maxLength: 50,
+              onChanged: (value) {
+                setState(() {
+                  _isFieldEmpty = value.isEmpty;
+                });
+              },
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'This field is required';
@@ -64,6 +72,11 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 return null;
               },
             ),
+            if (_isFieldEmpty)
+              const Text(
+                'Please enter your project name',
+                style: TextStyle(color: Colors.red, fontSize: 14),
+              ),
 
             // Member Dropdown
             const SizedBox(height: 50),
@@ -165,15 +178,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
                       controller.selectedTag = null;
                       setState(() {});
                     },
-                    /* suffixIcon: controller.selectedTag != null
-                        ? IconButton(
-                            icon: const Icon(Icons.clear),
-                            onPressed: () {
-                              controller.selectedTag = null;
-                              setState(() {});
-                            },
-                          )
-                        : null, */
                   ),
                 ),
                 value: controller.selectedTag,
@@ -239,6 +243,9 @@ class _NewProjectFormState extends State<NewProjectForm> {
                     await controller.createProject();
                     Get.back();
                   } else {
+                    // setState(() {
+                    //   _isFieldEmpty = true;
+                    // });
                     ScaffoldMessenger.of(Get.context!).showSnackBar(
                       SnackBar(
                         content: const Row(

@@ -17,6 +17,12 @@ class NewTaskForm extends StatefulWidget {
 }
 
 class _NewTaskFormState extends State<NewTaskForm> {
+
+  bool _emptytaskname = true;
+  bool _emptydetail = true;
+  bool _emptymember = true;
+  bool _emptydatetime = true;
+
   final controller = Get.put(NewTaskController());
   final tagcontroller = Get.put(NewProjectController());
   final int projectId = Get.arguments['projectId'];
@@ -56,10 +62,18 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     controller.taskName.clear();
+                    setState(() {
+                      _emptytaskname = true;
+                    });
                   },
                 ),
               ),
               maxLength: 50,
+              onChanged: (value) {
+                setState(() {
+                  _emptytaskname = value.isEmpty;
+                });
+              },
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'This field is required';
@@ -69,6 +83,11 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 return null;
               },
             ),
+            if (_emptytaskname)
+              const Text(
+                'Please enter taskname',
+                style: TextStyle(color: Colors.red, fontSize: 14),
+              ),
 
             // detail ---------------
             const SizedBox(
@@ -93,11 +112,19 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     controller.taskdetails.clear();
+                    setState(() {
+                      _emptydetail = true;
+                    });
                   },
                 ),
               ),
               maxLines: null,
               maxLength: 200,
+              onChanged: (value) {
+                setState(() {
+                  _emptydetail = value.isEmpty;
+                });
+              },
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'This field is required';
@@ -107,6 +134,11 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 return null;
               },
             ),
+            if (_emptydetail)
+              const Text(
+                'Please enter details',
+                style: TextStyle(color: Colors.red, fontSize: 14),
+              ),
 
             // member ---------------
             const SizedBox(height: 50),
@@ -118,6 +150,9 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 onChanged: (newValue) {
                   controller.selectedmember.clear();
                   controller.selectedmember.add(newValue!);
+                  setState(() {
+                    _emptymember = newValue.isEmpty;
+                  });
                 },
                 dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
@@ -134,6 +169,12 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 ),
               );
             }),
+            SizedBox(height: 10,),
+            if (_emptymember)
+              const Text(
+                'Please enter your project name',
+                style: TextStyle(color: Colors.red, fontSize: 14),
+              ),
 
             // Dropdown Tag
             const SizedBox(height: 60),
@@ -238,8 +279,13 @@ class _NewTaskFormState extends State<NewTaskForm> {
                         if (selected != null &&
                             selected != controller.selectedDate) {
                           setState(() {
+                            _emptydatetime = false;
                             controller.selectedDate =
                                 selected; // save day [new selected]
+                          });
+                        } else if (selected == null) {
+                          setState(() {
+                            _emptydatetime = true;
                           });
                         }
                       },
@@ -311,7 +357,12 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 ),
               ],
             ),
-
+            SizedBox(height: 10,),
+            if (_emptydatetime)
+              const Text(
+                'Please select datetime',
+                style: TextStyle(color: Colors.red, fontSize: 14),
+              ),
             // Save Button
             const SizedBox(height: 60),
             SizedBox(

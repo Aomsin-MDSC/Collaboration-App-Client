@@ -18,6 +18,7 @@ class EditProjectForm extends StatefulWidget {
 }
 
 class _EditProjectFormState extends State<EditProjectForm> {
+  bool _setEmpty = false;
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(EditProjectController());
@@ -64,6 +65,12 @@ class _EditProjectFormState extends State<EditProjectForm> {
                 return null;
               },
             ),
+            if (_setEmpty)
+              const Text(
+                "Please enter a project name.",
+                style: TextStyle(color: Colors.red, fontSize: 14),
+              ),
+
 
             // Member Dropdown
             const SizedBox(height: 50),
@@ -242,6 +249,9 @@ class _EditProjectFormState extends State<EditProjectForm> {
                         await controller.updateProject(projectId, tagId);
                         Get.back();
                       } else {
+                        setState(() {
+                          _setEmpty = true;
+                        });
                         ScaffoldMessenger.of(Get.context!).showSnackBar(
                           SnackBar(
                             content: const Row(

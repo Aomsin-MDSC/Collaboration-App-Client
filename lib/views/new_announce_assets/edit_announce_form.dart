@@ -1,4 +1,5 @@
 import 'package:collaboration_app_client/utils/color.dart';
+import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/edit_announce_controller.dart';
@@ -12,7 +13,9 @@ class EditAnnounceForm extends StatefulWidget {
 
 class _EditAnnounceFormState extends State<EditAnnounceForm> {
   final controller = Get.put(EditAnnounceController());
-
+  bool _emptytitle = false;
+  bool _emptytext = false;
+  bool _emptydate = false;
   @override
   void initState() {
     super.initState();
@@ -66,10 +69,18 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     controller.editannouncename.clear();
+                    setState(() {
+                      _emptytitle = true;
+                    });
                   },
                 ),
               ),
               maxLength: 100,
+              onChanged: (value) {
+                setState(() {
+                  _emptytitle = value.isEmpty;
+                });
+              },
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'This field is required';
@@ -79,6 +90,11 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                 return null;
               },
             ),
+            if (_emptytitle)
+              const Text(
+                'Please enter announce title',
+                style: TextStyle(color: Colors.red, fontSize: 14),
+              ),
 
             // details
             const SizedBox(
@@ -106,12 +122,20 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     controller.editannouncedetail.clear();
+                    setState(() {
+                      _emptytext = true;
+                    });
                   },
                 ),
               ),
               maxLines: null,
               textAlignVertical: TextAlignVertical.top,
               maxLength: 100,
+              onChanged: (value) {
+                setState(() {
+                  _emptytext = value.isEmpty;
+                });
+              },
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'This field is required';
@@ -121,6 +145,11 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                 return null;
               },
             ),
+            if (_emptytext)
+              const Text(
+                'Please enter announce datails',
+                style: TextStyle(color: Colors.red, fontSize: 14),
+              ),
 
             // text icon [etc.]
             const SizedBox(
@@ -155,6 +184,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                           );
                           if (selectedTime != null) {
                             setState(() {
+                              _emptydate = false;
                               controller.editselectedDate = DateTime(
                                 selectedDate.year,
                                 selectedDate.month,
@@ -165,6 +195,10 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                               print("Selected DateTime: ${controller.editselectedDate}");
 
                               print("object");
+                            });
+                          } else if (selectedTime == null) {
+                            setState(() {
+                              _emptydate = true;
                             });
                           }
                         }
@@ -181,7 +215,12 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                           size: 70,
                         ),
                       ),
-                    )
+                    ),
+                    if (_emptydate)
+                      const Text(
+                        'Please select datetime',
+                        style: TextStyle(color: Colors.red, fontSize: 14),
+                      ),
                   ],
                 )
               ],

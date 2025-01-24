@@ -53,9 +53,7 @@ class NewTagController extends GetxController {
                 Text('Created Tag Successfully.'),
               ],
             ),
-            // behavior: SnackBarBehavior.floating,
-            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
-            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            action: SnackBarAction(label: "OK", onPressed: () {}),
             backgroundColor: Colors.green,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),

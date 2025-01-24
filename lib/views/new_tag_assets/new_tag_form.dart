@@ -1,3 +1,4 @@
+import 'package:collaboration_app_client/controllers/new_project_controller.dart';
 import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
 import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/utils/color.dart';
@@ -144,7 +145,7 @@ class _NewTagFormState extends State<NewTagForm> {
                 onPressed: () async {
                   if (tagcontroller.tagname.text.isNotEmpty) {
                     await tagcontroller.createTag(onCompleted: () async {
-                     await tagRefresher.fetchTag();
+                      await tagRefresher.fetchTag();
                       Get.back();
                     });
                   } else {
@@ -157,8 +158,6 @@ class _NewTagFormState extends State<NewTagForm> {
                             Text('Create Tag Failed.'),
                           ],
                         ),
-                        // behavior: SnackBarBehavior.floating,
-                        // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 175, left: 15, right: 15),
                         action: SnackBarAction(label: "OK", onPressed: () {}), //action
                         backgroundColor: Colors.red,
                         shape: RoundedRectangleBorder(

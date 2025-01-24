@@ -79,6 +79,11 @@ class _LoginFormState extends State<RegisterForm> {
               }
               return null;
             },
+            onFieldSubmitted: (_) async {
+              await controller.registerUser(onCompleted: () {
+                Get.back();
+              });
+            },
           ),
           const SizedBox(
             height: 30,

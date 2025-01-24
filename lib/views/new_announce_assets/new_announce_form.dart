@@ -11,6 +11,9 @@ class NewAnnounceForm extends StatefulWidget {
 }
 
 class _NewAnnounceFormState extends State<NewAnnounceForm> {
+  bool _emptytitle = true;
+  bool _emptytext = true;
+  bool _emptydate = true;
 
   final projectId = Get.arguments['projectId'];
   final tagId = Get.arguments['tagId'];
@@ -51,10 +54,18 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     controller.announceTitle.clear();
+                    setState(() {
+                      _emptytitle = true;
+                    });
                   },
                 ),
               ),
               maxLength: 100,
+              onChanged: (value) {
+                setState(() {
+                  _emptytitle = value.isEmpty;
+                });
+              },
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'This field is required';
@@ -64,6 +75,11 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                 return null;
               },
             ),
+            if (_emptytitle)
+              const Text(
+                "Please enter announce title.",
+                style: TextStyle(color: Colors.red, fontSize: 14),
+              ),
 
             // details
             const SizedBox(
@@ -91,12 +107,20 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     controller.announceText.clear();
+                    setState(() {
+                      _emptytext = true;
+                    });
                   },
                 ),
               ),
               maxLines: null,
               textAlignVertical: TextAlignVertical.top,
               maxLength: 100,
+              onChanged: (value) {
+                setState(() {
+                  _emptytext = value.isEmpty;
+                });
+              },
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'This field is required';
@@ -106,6 +130,11 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                 return null;
               },
             ),
+            if (_emptytext)
+              const Text(
+                "Please enter announce details.",
+                style: TextStyle(color: Colors.red, fontSize: 14),
+              ),
 
             // text icon [etc.]
             const SizedBox(
@@ -133,6 +162,9 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                           lastDate: DateTime(2101),
                         );
                         if (selectedDate != null) {
+                          setState(() {
+                            _emptydate = false;
+                          });
                           TimeOfDay? selectedTime = await showTimePicker(
                             context: context,
                             initialTime: TimeOfDay.fromDateTime(
@@ -149,6 +181,10 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                               );
                             });
                           }
+                        } else if (selectedDate == null) {
+                          setState(() {
+                            _emptydate = true;
+                          });
                         }
                       },
                       child: Tooltip(
@@ -163,7 +199,12 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                           size: 70,
                         ),
                       ),
-                    )
+                    ),
+                    if (_emptydate)
+                      const Text(
+                        "Please select Datetime.",
+                        style: TextStyle(color: Colors.red, fontSize: 14),
+                      ),
                   ],
                 )
               ],
@@ -202,6 +243,82 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                       ),
                     );
                   }
+                  // } else if (controller.announceTitle.text.isEmpty) {
+                  //   // setState(() {
+                  //   //   _emptytitle = true;
+                  //   //   _emptytext = false;
+                  //   //   _emptydate = false;
+                  //   // });
+                  //   ScaffoldMessenger.of(Get.context!).showSnackBar(
+                  //     SnackBar(
+                  //       content: const Row(
+                  //         children: [
+                  //           Icon(Icons.cancel, color: Colors.white),
+                  //           SizedBox(width: 8),
+                  //           Text('Please enter announce title.'),
+                  //         ],
+                  //       ),
+                  //       // behavior: SnackBarBehavior.floating,
+                  //       // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+                  //       action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                  //       backgroundColor: Colors.red,
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(10),
+                  //       ),
+                  //       duration: Duration(seconds: 3),
+                  //     ),
+                  //   );
+                  // } else if (controller.announceText.text.isEmpty) {
+                  //   // setState(() {
+                  //   //   _emptytitle = false;
+                  //   //   _emptytext = true;
+                  //   //   _emptydate = false;
+                  //   // });
+                  //   ScaffoldMessenger.of(Get.context!).showSnackBar(
+                  //     SnackBar(
+                  //       content: const Row(
+                  //         children: [
+                  //           Icon(Icons.cancel, color: Colors.white),
+                  //           SizedBox(width: 8),
+                  //           Text('Please enter announce details.'),
+                  //         ],
+                  //       ),
+                  //       // behavior: SnackBarBehavior.floating,
+                  //       // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+                  //       action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                  //       backgroundColor: Colors.red,
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(10),
+                  //       ),
+                  //       duration: Duration(seconds: 3),
+                  //     ),
+                  //   );
+                  // } else if (controller.selectedDate == null) {
+                  //   // setState(() {
+                  //   //   _emptytitle = false;
+                  //   //   _emptytext = false;
+                  //   //   _emptydate = true;
+                  //   // });
+                  //   ScaffoldMessenger.of(Get.context!).showSnackBar(
+                  //     SnackBar(
+                  //       content: const Row(
+                  //         children: [
+                  //           Icon(Icons.cancel, color: Colors.white),
+                  //           SizedBox(width: 8),
+                  //           Text('Please select Datetime.'),
+                  //         ],
+                  //       ),
+                  //       // behavior: SnackBarBehavior.floating,
+                  //       // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
+                  //       action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                  //       backgroundColor: Colors.red,
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(10),
+                  //       ),
+                  //       duration: Duration(seconds: 3),
+                  //     ),
+                  //   );
+                  // }
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
