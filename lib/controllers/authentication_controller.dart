@@ -67,20 +67,122 @@ class AuthenticationController extends GetxController {
         
         // Navigate to the HomeView
         Get.offAll(() => const HomeView(), arguments: {'refresh': true});
-      } else if (response.statusCode == 401) {
-        // Invalid username or password
+      } else if (response.statusCode == 400) {
+        try {
+          if (response.body.isNotEmpty) {
+            final responseData = json.decode(response.body);
+
+            String errorMessage = responseData['message'];
+
+            ScaffoldMessenger.of(Get.context!).showSnackBar(
+              SnackBar(
+                content: Row(
+                  children: [
+                    const Icon(Icons.warning, color: Colors.white),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        errorMessage,
+                        style: const TextStyle(overflow: TextOverflow.ellipsis),
+                        maxLines: 1,
+                      ),
+                    ),
+                  ],
+                ),
+                action: SnackBarAction(label: "OK", onPressed: () {}),
+                backgroundColor: Colors.orange,
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          }
+        } catch (e) {
+          print('Error decoding response: $e');
+          ScaffoldMessenger.of(Get.context!).showSnackBar(
+            SnackBar(
+              content: const Row(
+                children: [
+                  Icon(Icons.error, color: Colors.white),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Failed to decode error response.',
+                      style: TextStyle(overflow: TextOverflow.ellipsis),
+                      maxLines: 1,
+                    ),
+                  ),
+                ],
+              ),
+              action: SnackBarAction(label: "OK", onPressed: () {}),
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 3),
+            ),
+          );
+        }
+      }
+      else if (response.statusCode == 401) {
+        try {
+          if (response.body.isNotEmpty) {
+            final responseData = json.decode(response.body);
+
+            String errorMessage = responseData['message'];
+
+            ScaffoldMessenger.of(Get.context!).showSnackBar(
+              SnackBar(
+                content: Row(
+                  children: [
+                    const Icon(Icons.warning, color: Colors.white),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        errorMessage,
+                        style: const TextStyle(overflow: TextOverflow.ellipsis),
+                        maxLines: 1,
+                      ),
+                    ),
+                  ],
+                ),
+                action: SnackBarAction(label: "OK", onPressed: () {}),
+                backgroundColor: Colors.orange,
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          }
+        } catch (e) {
+          print('Error decoding response: $e');
+          ScaffoldMessenger.of(Get.context!).showSnackBar(
+            SnackBar(
+              content: const Row(
+                children: [
+                  Icon(Icons.error, color: Colors.white),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Failed to decode error response.',
+                      style: TextStyle(overflow: TextOverflow.ellipsis),
+                      maxLines: 1,
+                    ),
+                  ),
+                ],
+              ),
+              action: SnackBarAction(label: "OK", onPressed: () {}),
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 3),
+            ),
+          );
+        }
+      }
+      else {
+        // If status code is not 200 or 400, show a generic failure message
         ScaffoldMessenger.of(Get.context!).showSnackBar(
           SnackBar(
             content: const Row(
               children: [
-                Icon(Icons.cancel, color: Colors.white),
+                Icon(Icons.error, color: Colors.white),
                 SizedBox(width: 8),
                 Text('Login Failed.'),
               ],
             ),
-            // behavior: SnackBarBehavior.floating,
-            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 180, left: 15, right: 15),
-            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+            action: SnackBarAction(label: "OK", onPressed: () {}),
             backgroundColor: Colors.red,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -88,32 +190,7 @@ class AuthenticationController extends GetxController {
             duration: const Duration(seconds: 3),
           ),
         );
-      } else {
-
-        ScaffoldMessenger.of(Get.context!).showSnackBar(
-          SnackBar(
-            content: Row(
-              children: [
-                const Icon(Icons.error, color: Colors.white),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    response.body,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-            // behavior: SnackBarBehavior.floating,
-            // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 180, left: 15, right: 15),
-            action: SnackBarAction(label: "OK", onPressed: () {}), //action
-            backgroundColor: Colors.red,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            duration: const Duration(seconds: 3),
-          ),
-        );
+        throw Exception('Registration failed');
       }
     } catch (e) {
       // Handle any exceptions

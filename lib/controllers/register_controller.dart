@@ -63,6 +63,7 @@ class RegisterController extends GetxController {
                     ),
                   ],
                 ),
+                action: SnackBarAction(label: "OK", onPressed: () {}),
                 backgroundColor: Colors.orange,
                 duration: const Duration(seconds: 3),
               ),
@@ -71,8 +72,8 @@ class RegisterController extends GetxController {
         } catch (e) {
           print('Error decoding response: $e');
           ScaffoldMessenger.of(Get.context!).showSnackBar(
-            const SnackBar(
-              content: Row(
+            SnackBar(
+              content: const Row(
                 children: [
                   Icon(Icons.error, color: Colors.white),
                   SizedBox(width: 8),
@@ -85,20 +86,20 @@ class RegisterController extends GetxController {
                   ),
                 ],
               ),
+              action: SnackBarAction(label: "OK", onPressed: () {}),
               backgroundColor: Colors.red,
-              duration: Duration(seconds: 3),
+              duration: const Duration(seconds: 3),
             ),
           );
         }
       }
-
       else {
         // If status code is not 200 or 400, show a generic failure message
         ScaffoldMessenger.of(Get.context!).showSnackBar(
           SnackBar(
             content: const Row(
               children: [
-                Icon(Icons.cancel, color: Colors.white),
+                Icon(Icons.error, color: Colors.white),
                 SizedBox(width: 8),
                 Text('Create Failed.'),
               ],
