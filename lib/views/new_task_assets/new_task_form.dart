@@ -73,7 +73,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
 
             // detail ---------------
             const SizedBox(
-              height: 60,
+              height: 50,
             ),
             const Text(
               "Details",
@@ -110,8 +110,8 @@ class _NewTaskFormState extends State<NewTaskForm> {
             ),
 
             // member ---------------
-            const SizedBox(height: 60),
-            const Text("Member", style: TextStyle(fontSize: 18)),
+            const SizedBox(height: 50),
+            const Text("Assign to", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Obx(() {
               return DropdownSearch<String>(
@@ -267,7 +267,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                 Column(
                   children: [
                     Text(
-                      "Color".toUpperCase(),
+                      "Task Color".toUpperCase(),
                       style: const TextStyle(fontSize: 18),
                     ),
                     const SizedBox(height: 10),
