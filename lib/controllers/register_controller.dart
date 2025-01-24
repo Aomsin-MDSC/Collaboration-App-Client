@@ -44,89 +44,57 @@ class RegisterController extends GetxController {
           ),
         );
       }
-      else if (response.statusCode == 400) {
+      if (response.statusCode == 400) {
         try {
-          final responseData = json.decode(response.body);
-          // Check for specific error message in the response
-          if (responseData['message'] ==
-              'Username cannot be empty or whitespace') {
+          if (response.body.isNotEmpty) {
+            final responseData = json.decode(response.body);
+
+            String errorMessage = responseData['message'];
+
             ScaffoldMessenger.of(Get.context!).showSnackBar(
               SnackBar(
-                content: const Row(
+                content: Row(
                   children: [
                     Icon(Icons.warning, color: Colors.white),
                     SizedBox(width: 8),
-                    Expanded(child: Text('Username cannot be empty or whitespace.',style: TextStyle(overflow: TextOverflow.ellipsis),maxLines: 1,)),
+                    Expanded(
+                      child: Text(
+                        errorMessage,
+                        style: TextStyle(overflow: TextOverflow.ellipsis),
+                        maxLines: 1,
+                      ),
+                    ),
                   ],
                 ),
-                action: SnackBarAction(label: "OK", onPressed: () {}),
                 backgroundColor: Colors.orange,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                duration: Duration(seconds: 3),
-              ),
-            );
-          } else if (responseData['message'] == 'Username is already taken.') {
-            ScaffoldMessenger.of(Get.context!).showSnackBar(
-              SnackBar(
-                content: const Row(
-                  children: [
-                    Icon(Icons.warning, color: Colors.white),
-                    SizedBox(width: 8),
-                    Expanded(child: Text('This Username already exists.',style: TextStyle(overflow: TextOverflow.ellipsis),maxLines: 1,)),
-                  ],
-                ),
-                action: SnackBarAction(label: "OK", onPressed: () {}),
-                backgroundColor: Colors.orange,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                duration: Duration(seconds: 3),
-              ),
-            );
-          } else if (responseData['message'] ==
-              'Password cannot be empty or whitespace') {
-            ScaffoldMessenger.of(Get.context!).showSnackBar(
-              SnackBar(
-                content: const Row(
-                  children: [
-                    Icon(Icons.warning, color: Colors.white),
-                    SizedBox(width: 8),
-                    Expanded(child: Text('Password cannot be empty or whitespace.',style: TextStyle(overflow: TextOverflow.ellipsis),maxLines: 1,)),
-                  ],
-                ),
-                action: SnackBarAction(label: "OK", onPressed: () {}),
-                backgroundColor: Colors.orange,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
                 duration: Duration(seconds: 3),
               ),
             );
           }
-        }catch (e) {
-          // Handle case where the response body is not valid JSON
+        } catch (e) {
+          print('Error decoding response: $e');
           ScaffoldMessenger.of(Get.context!).showSnackBar(
             SnackBar(
-              content: const Row(
+              content: Row(
                 children: [
                   Icon(Icons.error, color: Colors.white),
                   SizedBox(width: 8),
-                  Text('Failed to decode error response.'),
+                  Expanded(
+                    child: Text(
+                      'Failed to decode error response.',
+                      style: TextStyle(overflow: TextOverflow.ellipsis),
+                      maxLines: 1,
+                    ),
+                  ),
                 ],
               ),
-              action: SnackBarAction(label: "OK", onPressed: () {}),
               backgroundColor: Colors.red,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
               duration: Duration(seconds: 3),
             ),
           );
-          print('Error decoding response: $e');
         }
       }
+
       else {
         // If status code is not 200 or 400, show a generic failure message
         ScaffoldMessenger.of(Get.context!).showSnackBar(
