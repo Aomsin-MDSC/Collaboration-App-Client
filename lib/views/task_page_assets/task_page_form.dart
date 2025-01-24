@@ -325,11 +325,6 @@ class _TaskPageFormState extends State<TaskPageForm> {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  const Divider(
-                    color: Colors.grey,
-                    thickness: 2,
-                  ),
-                  const SizedBox(height: 10),
                   ...controller.comments.map((comment) {
                     return CommentWidget(comment: comment);
                   }),
