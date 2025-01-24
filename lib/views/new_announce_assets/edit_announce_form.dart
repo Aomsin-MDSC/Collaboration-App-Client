@@ -1,5 +1,4 @@
 import 'package:collaboration_app_client/utils/color.dart';
-import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/edit_announce_controller.dart';
@@ -14,26 +13,6 @@ class EditAnnounceForm extends StatefulWidget {
 class _EditAnnounceFormState extends State<EditAnnounceForm> {
   final controller = Get.put(EditAnnounceController());
 
-/*   @override
-  void initState() {
-    super.initState();
-    final arguments = Get.arguments as Map<String, dynamic>?;
-    if (arguments != null) {
-      final String announceTitle = arguments['announceTitle'];
-      final String announceText = arguments['announceText'];
-      final String announceDate = arguments['announceDate'];
-      final int announceId = arguments['announceId'];
-
-      if (announceId == null) {
-        print('Announce ID is null');
-      } else {
-        controller.editannouncename.text = announceTitle;
-        controller.editannouncedetail.text = announceText;
-        controller.editselectedDate = DateTime.parse(announceDate);
-      }
-    }
-  } */
-
   @override
   void initState() {
     super.initState();
@@ -43,7 +22,6 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
       final String announceTitle = arguments['announceTitle'];
       final String announceText = arguments['announceText'];
       final String announceDate = arguments['announceDate'];
-
 
       controller.editannouncename.text = announceTitle;
       controller.editannouncedetail.text = announceText;
@@ -55,25 +33,13 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
   Widget build(BuildContext context) {
     final int projectId = Get.arguments['projectId'];
     final arguments = Get.arguments ?? {};
-    final int tagId = Get.arguments['tagId'];
-    final int userId = Get.arguments['userId'];
     if (arguments == null || arguments is! Map<String, dynamic>) {
       print('Invalid or missing arguments');
       return const Center(
         child: Text('Error: Missing or invalid arguments'),
       );
     }
-
     final int announceId = arguments['announceId'];
-    final String announceTitle = arguments['announceTitle'];
-    final String announceText = arguments['announceText'];
-    final String announceDate = arguments['announceDate'];
-    if (announceId == null) {
-      print('Announce ID is null');
-      return const Center(
-        child: Text('Error: Announce ID is missing'),
-      );
-    }
 
     return Form(
       child: Container(
@@ -84,7 +50,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
             // title
             const Text(
               "Title",
-              style: const TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 18),
             ),
             const SizedBox(
               height: 10,
@@ -253,7 +219,7 @@ class _EditAnnounceFormState extends State<EditAnnounceForm> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            duration: Duration(seconds: 3),
+                            duration: const Duration(seconds: 3),
                           ),
                         );
                       }

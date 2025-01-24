@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:collaboration_app_client/controllers/edit_project_controller.dart';
 import 'package:collaboration_app_client/controllers/in_project_controller.dart';
 import 'package:collaboration_app_client/controllers/new_project_controller.dart';
 import 'package:collaboration_app_client/controllers/new_task_controller.dart';
 import 'package:collaboration_app_client/controllers/project_controller.dart';
+import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/utils/color.dart';
 import 'package:collaboration_app_client/views/edit_announce_view.dart';
 import 'package:collaboration_app_client/views/task_page_view.dart';
@@ -31,7 +31,7 @@ class _ProjectFormState extends State<ProjectForm> {
   final controller = Get.put(TaskController());
   final announcecontroller = Get.put(AnnounceController());
   final projectcontroller = Get.put(ProjectController());
-  final tagController = Get.put(EditProjectController());
+  final tagController = Get.put(TagController());
   late int projectId;
   final tagId = Get.arguments['tagId'];
   final userId = Get.arguments['userId'];
@@ -147,37 +147,27 @@ class _ProjectFormState extends State<ProjectForm> {
                                   onPressed: () {
                                     final announceId = announce.announceId;
                                     print("PAOM${announce.announceTitle}");
-                                    if (announceId != null) {
-                                      Get.to(
-                                        const EditAnnounceView(),
-                                        arguments: {
-                                          'announceId': announceId,
-                                          'projectId': projectId,
-                                          'tagId': tagId,
-                                          'userId': userId,
-                                          'announceTitle':
-                                              announce.announceTitle,
-                                          'announceText': announce.announceText,
-                                          'announceDate': announce.announceDate,
-                                        },
-                                      )?.then((result) {
-                                        if (result == true) {
-                                          print('Project Form::::::::: Result form get.back() $result');
-                                          Future.delayed(Duration.zero,
-                                              () async {
-                                            await announcecontroller
-                                                .fetchAnnounce(projectId);
-                                            await controller
-                                                .fetchTask(projectId);
-                                            // print(announcecontroller.announces.firstWhere((t) => t.announceId == t.announceId).announceText);
-                                          });
-                                          setState(() {
-                                          });
-                                        }
-                                      });
-                                    } else {
-                                      print('Announce ID is null');
-                                    }
+                                    Get.to(
+                                      const EditAnnounceView(),
+                                      arguments: {
+                                        'announceId': announceId,
+                                        'projectId': projectId,
+                                        'announceTitle': announce.announceTitle,
+                                        'announceText': announce.announceText,
+                                        'announceDate': announce.announceDate,
+                                      },
+                                    )?.then((result) {
+                                      if (result == true) {
+                                        print(
+                                            'Project Form::::::::: Result form get.back() $result');
+                                        Future.delayed(Duration.zero, () async {
+                                          await announcecontroller
+                                              .fetchAnnounce(projectId);
+                                          await controller.fetchTask(projectId);
+                                        });
+                                        setState(() {});
+                                      }
+                                    });
                                   },
                                   icon: const Icon(Icons.settings),
                                   iconSize: 30,
@@ -215,12 +205,12 @@ class _ProjectFormState extends State<ProjectForm> {
         Expanded(
           child: Obx(() {
             final filteredList = taskController.task.where((task) {
-                return task.taskName
-                    .toLowerCase()
-                    .contains(searchQuery.toLowerCase()) ||
+              return task.taskName
+                      .toLowerCase()
+                      .contains(searchQuery.toLowerCase()) ||
                   task.tagName
-                    .toLowerCase()
-                    .contains(searchQuery.toLowerCase());
+                      .toLowerCase()
+                      .contains(searchQuery.toLowerCase());
             }).toList();
             return RefreshIndicator(
               onRefresh: () async {
@@ -249,8 +239,6 @@ class _ProjectFormState extends State<ProjectForm> {
                               'projectId': projectId,
                               'taskId': taskList.taskId,
                               'tagId': tagId,
-                              /* 'tagColor': taskList.tagColor,
-                              'tagName': taskList.tagName, */
                               'taskColor': taskList.taskColor,
                               'userId': userId,
                               'canEdit': canEdit,
@@ -266,43 +254,41 @@ class _ProjectFormState extends State<ProjectForm> {
                             children: [
                               Flexible(
                                 child: Text(
-                                  taskList.taskName!, // api
+                                  taskList.taskName, // api
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   style:
                                       TextStyle(fontSize: 16, color: textColor),
                                 ),
                               ),
-
                               Text(
-                                "Owner : ${taskList.ownerName == '' ? "Missing" : taskList.ownerName }", // api",
+                                "Owner : ${taskList.ownerName == '' ? "Missing" : taskList.ownerName}", // api",
                                 style: TextStyle(color: textColor),
                               ),
-
-
                               const SizedBox(
                                 height: 10,
                               ),
-                              if (taskList.tagId != -1) Flexible(
-                                child: Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                    color: HexColor(
-                                        taskList.tagColor), // api color
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Text(
-                                    taskList.tagName, // api tag
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
+                              if (taskList.tagId != -1)
+                                Flexible(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    decoration: BoxDecoration(
+                                      color: HexColor(
+                                          taskList.tagColor), // api color
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      taskList.tagName, // api tag
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
                               const SizedBox(
                                 height: 10,
                               ),

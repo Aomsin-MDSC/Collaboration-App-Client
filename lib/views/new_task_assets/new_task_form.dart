@@ -25,7 +25,6 @@ class _NewTaskFormState extends State<NewTaskForm> {
 
   @override
   void initState() {
-    // TODO: implement initState
     controller.taskName.clear();
     controller.taskdetails.clear();
     controller.selectedmember.clear();
@@ -176,7 +175,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                           width: double.infinity,
                           child: TextButton(
                             style: ButtonStyle(
-                              shape: MaterialStateProperty.all(
+                              shape: WidgetStateProperty.all(
                                 const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.zero),
                               ),
@@ -207,11 +206,6 @@ class _NewTaskFormState extends State<NewTaskForm> {
                       if (value != null) {
                         tagcontroller.selectedTag = value;
                       }
-                      /* ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text(
-                                "Selected: ${controller.selectedTag!.tagName}")),
-                      ); */
                     }
                   });
                 },
