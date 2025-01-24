@@ -370,6 +370,7 @@ class _EditProjectFormState extends State<EditProjectForm> {
                     onPressed: () async {
                       await controller.deleteProject(projectId);
                       Get.back();
+                      Get.back();
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
