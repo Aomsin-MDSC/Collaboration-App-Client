@@ -34,6 +34,35 @@ class _DropdownTagWidgetState extends State<DropdownTagWidget> {
             labelStyle: const TextStyle(color: Colors.white),
           ),
         ),
+        /* if (controller.selectedTag != null)
+          IconButton(
+            icon: const Icon(Icons.edit, color: Colors.black54),
+            onPressed: () async {
+              await Get.to(const EditTagView(), arguments: {
+                'tagId': widget.tag.tagId,
+                'tagName': widget.tag.tagName,
+                'tagColor': widget.tag.tagColor
+              })?.then((result) async {
+                if (controller.selectedTag != null &&
+                        !controller.tags.any((tag) =>
+                            tag.tagId == controller.selectedTag!.tagId) ||
+                    edittagcontroller.selectedTag != null &&
+                        !edittagcontroller.tags.any((tag) =>
+                            tag.tagId ==
+                            edittagcontroller.selectedTag!.tagId)) {
+                  controller.selectedTag = null;
+                  edittagcontroller.selectedTag = null;
+                }
+                if (result == true) {
+                  await controller.fetchTags();
+                  await edittagcontroller.fetchTagMap(widget.tag.tagId);
+                } else {
+                  print("Result from DropdownTagWidget ::: $result");
+                }
+              });
+            },
+          ), */
+          
         IconButton(
           icon: const Icon(Icons.edit, color: Colors.black54),
           onPressed: () async {

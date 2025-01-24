@@ -1,18 +1,11 @@
 import 'package:collaboration_app_client/controllers/new_project_controller.dart';
 import 'package:collaboration_app_client/models/tag_model.dart';
 import 'package:collaboration_app_client/utils/color.dart';
-import 'package:collaboration_app_client/views/Login_View.dart';
-import 'package:collaboration_app_client/views/home_view.dart';
-import 'package:collaboration_app_client/views/project_view.dart';
 import 'package:collaboration_app_client/views/widgets/dropdown_tag_widget.dart';
-
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../edit_tag_view.dart';
 import '../new_tag_view.dart';
-import '../new_task_view.dart';
 
 class NewProjectForm extends StatefulWidget {
   const NewProjectForm({super.key});
@@ -74,7 +67,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
 
             // Member Dropdown
             const SizedBox(height: 50),
-            const Text("Member", style: const TextStyle(fontSize: 18)),
+            const Text("Member", style: TextStyle(fontSize: 18)),
             const SizedBox(height: 10),
             Obx(() {
               return Column(
@@ -172,9 +165,17 @@ class _NewProjectFormState extends State<NewProjectForm> {
                       controller.selectedTag = null;
                       setState(() {});
                     },
+                    /* suffixIcon: controller.selectedTag != null
+                        ? IconButton(
+                            icon: const Icon(Icons.clear),
+                            onPressed: () {
+                              controller.selectedTag = null;
+                              setState(() {});
+                            },
+                          )
+                        : null, */
                   ),
                 ),
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
                 value: controller.selectedTag,
                 hint: Text(
                   "Select Tag",
@@ -191,7 +192,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                           width: double.infinity,
                           child: TextButton(
                             style: ButtonStyle(
-                              shape: MaterialStateProperty.all(
+                              shape: WidgetStateProperty.all(
                                 const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.zero),
                               ),
@@ -227,74 +228,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
               );
             }),
 
-            // // Task List
-            // const SizedBox(height: 20),
-            // const Text("Task", style: TextStyle(fontSize: 18)),
-            // const SizedBox(height: 10),
-            // Column(
-            //   children: [
-            //     Container(
-            //       height: task.length < 4 ? null : 300,
-            //       color: Colors.black38,
-            //       padding: const EdgeInsets.all(13),
-            //       child: ListView.builder(
-            //         shrinkWrap: true,
-            //         itemCount: task.length,
-            //         itemBuilder: (context, index) {
-            //           return TextButton(
-            //             style: ButtonStyle(
-            //                 padding: WidgetStateProperty.all<EdgeInsets>(
-            //                   EdgeInsets.zero,
-            //                 ),
-            //                 shape:
-            //                     WidgetStateProperty.all<RoundedRectangleBorder>(
-            //                   RoundedRectangleBorder(
-            //                     borderRadius: BorderRadius.circular(18.0),
-            //                   ),
-            //                 )
-            //                 // Set padding to zero
-            //                 ),
-            //             onPressed: () {
-            //               Get.snackbar('Index', '${task[index]}',
-            //                   duration: const Duration(seconds: 1),
-            //                   colorText: Colors.white,
-            //                   backgroundColor: Colors.black54);
-            //             },
-            //             child: Card(
-            //               child: ListTile(
-            //                 title: Text(
-            //                   task[index],
-            //                   textAlign: TextAlign.center,
-            //                 ),
-            //               ),
-            //             ),
-            //           );
-            //         },
-            //       ),
-            //     ),
-            //     SizedBox(
-            //         width: double.infinity,
-            //         child: ElevatedButton(
-            //             style: ElevatedButton.styleFrom(
-            //               shape: RoundedRectangleBorder(
-            //                 borderRadius: BorderRadius.circular(16),
-            //               ),
-            //               backgroundColor: Colors.black,
-            //               foregroundColor: Colors.white,
-            //             ),
-            //             onPressed: () {
-            //               Get.to(
-            //                 //Api Here
-            //                 const NewTaskView(),
-            //               );
-            //             },
-            //             child: const Icon(
-            //               Icons.add,
-            //               color: Colors.white,
-            //             )))
-            //   ],
-            // ),
-
             // Save Button
             const SizedBox(height: 150),
             SizedBox(
@@ -327,11 +260,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
                       ),
                     );
                   }
-                  /* // Api Here
-                  await controller.createProject();
-                  // Get.offAll(()=> HomeView(),arguments: {'refresh':true});
-                  // Get.back(result: {'refresh': true});
-                  Get.back(); */
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

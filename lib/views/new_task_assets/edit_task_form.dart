@@ -188,13 +188,13 @@ class _EditTaskFormState extends State<EditTaskForm> {
                           width: double.infinity,
                           child: TextButton(
                             style: ButtonStyle(
-                              shape: MaterialStateProperty.all(
+                              shape: WidgetStateProperty.all(
                                 const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.zero),
                               ),
                             ),
                             onPressed: () {
-                              Get.to(NewTagView());
+                              Get.to(const NewTagView());
                             },
                             child: const Text(
                               "Add Tag",
@@ -219,11 +219,6 @@ class _EditTaskFormState extends State<EditTaskForm> {
                       if (value != null) {
                         tagController.selectedTag = value;
                       }
-                      /* ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text(
-                                "Selected: ${controller.selectedTag!.tagName}")),
-                      ); */
                     }
                   });
                 },
@@ -342,7 +337,8 @@ class _EditTaskFormState extends State<EditTaskForm> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () async {
-                      if (controller.edittaskname.text.isNotEmpty && controller.edittaskdetails.text.isNotEmpty) {
+                      if (controller.edittaskname.text.isNotEmpty &&
+                          controller.edittaskdetails.text.isNotEmpty) {
                         print("Edit task page : taskOwner = $taskOwner");
                         await controller.updateTask(
                             projectId, taskId, tagId, taskOwner);
@@ -359,12 +355,13 @@ class _EditTaskFormState extends State<EditTaskForm> {
                             ),
                             // behavior: SnackBarBehavior.floating,
                             // margin: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).size.height - 260, left: 15, right: 15),
-                            action: SnackBarAction(label: "OK", onPressed: () {}), //action
+                            action: SnackBarAction(
+                                label: "OK", onPressed: () {}), //action
                             backgroundColor: Colors.red,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            duration: Duration(seconds: 3),
+                            duration: const Duration(seconds: 3),
                           ),
                         );
                       }

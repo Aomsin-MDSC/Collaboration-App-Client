@@ -1,12 +1,8 @@
-import 'package:collaboration_app_client/controllers/new_tag_controller.dart';
-import 'package:collaboration_app_client/controllers/tag_controller.dart';
 import 'package:collaboration_app_client/utils/color.dart';
-import 'package:collaboration_app_client/views/new_project_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import '../../controllers/edit_tag_controller.dart';
-import '../../controllers/new_project_controller.dart';
 
 class EditTagForm extends StatefulWidget {
   const EditTagForm({super.key});
@@ -217,7 +213,7 @@ class _EditTagFormState extends State<EditTagForm> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              duration: Duration(seconds: 3),
+                              duration: const Duration(seconds: 3),
                             ),
                           );
                         }

@@ -11,7 +11,6 @@ class ProjectController extends GetxController {
   var isLoading = true.obs;
   Rx<int> userId = 0.obs;
 
-
   @override
   void onInit() async {
     super.onInit();
@@ -56,8 +55,7 @@ class ProjectController extends GetxController {
       if (response.statusCode == 200) {
         List<dynamic> jsonData = json.decode(response.body);
         project.value = jsonData.map((data) => Project.fromJson(data)).toList();
-        project.forEach((project) {
-        });
+        project.forEach((project) {});
       } else {
         print('Failed to load projects');
         print('Response: ${response.body}');
@@ -80,8 +78,9 @@ class ProjectController extends GetxController {
     if (token != null) {
       try {
         final decodedToken = JwtDecoder.decode(token);
-        return decodedToken['userId'] != null ? int.tryParse(
-            decodedToken['userId'].toString()) : null;
+        return decodedToken['userId'] != null
+            ? int.tryParse(decodedToken['userId'].toString())
+            : null;
       } catch (e) {
         print('Error decoding token: $e');
       }
@@ -97,11 +96,10 @@ class ProjectController extends GetxController {
         final responseData = jsonDecode(response.body);
         return responseData['member_role'];
       }
-    }
-    catch (e) {
+    } catch (e) {
       print('Error fetching Member_role: $e');
       return null;
     }
+    return null;
   }
 }
-

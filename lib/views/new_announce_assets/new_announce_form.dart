@@ -3,8 +3,6 @@ import 'package:collaboration_app_client/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../project_view.dart';
-
 class NewAnnounceForm extends StatefulWidget {
   const NewAnnounceForm({super.key});
 
@@ -37,7 +35,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
             // title
             const Text(
               "Title",
-              style: const TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 18),
             ),
             const SizedBox(
               height: 10,
@@ -172,7 +170,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
             ),
 
             // button set announce
-            SizedBox(height: 60),
+            const SizedBox(height: 60),
             SizedBox(
               width: double.infinity,
               height: 60,
@@ -200,7 +198,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        duration: Duration(seconds: 3),
+                        duration: const Duration(seconds: 3),
                       ),
                     );
                   }
@@ -211,7 +209,7 @@ class _NewAnnounceFormState extends State<NewAnnounceForm> {
                   ),
                   backgroundColor: btcolor,
                 ),
-                child: Text(
+                child: const Text(
                   "Set an Announcement",
                   style: TextStyle(fontSize: 18),
                 ),

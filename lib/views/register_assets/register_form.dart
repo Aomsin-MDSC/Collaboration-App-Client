@@ -1,4 +1,3 @@
-import 'package:collaboration_app_client/views/Login_View.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
