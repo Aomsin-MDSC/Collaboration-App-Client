@@ -171,6 +171,58 @@ class AuthenticationController extends GetxController {
           );
         }
       }
+      else if (response.statusCode == 409) {
+        try {
+          if (response.body.isNotEmpty) {
+            final responseData = json.decode(response.body);
+
+            String errorMessage = responseData['message'];
+
+            ScaffoldMessenger.of(Get.context!).showSnackBar(
+              SnackBar(
+                content: Row(
+                  children: [
+                    const Icon(Icons.error, color: Colors.white),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        errorMessage,
+                        style: const TextStyle(overflow: TextOverflow.ellipsis),
+                        maxLines: 1,
+                      ),
+                    ),
+                  ],
+                ),
+                action: SnackBarAction(label: "OK", onPressed: () {}),
+                backgroundColor: Colors.red,
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          }
+        } catch (e) {
+          print('Error decoding response: $e');
+          ScaffoldMessenger.of(Get.context!).showSnackBar(
+            SnackBar(
+              content: const Row(
+                children: [
+                  Icon(Icons.error, color: Colors.white),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Failed to decode error response.',
+                      style: TextStyle(overflow: TextOverflow.ellipsis),
+                      maxLines: 1,
+                    ),
+                  ),
+                ],
+              ),
+              action: SnackBarAction(label: "OK", onPressed: () {}),
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 3),
+            ),
+          );
+        }
+      }
       else {
         // If status code is not 200 or 400, show a generic failure message
         ScaffoldMessenger.of(Get.context!).showSnackBar(
